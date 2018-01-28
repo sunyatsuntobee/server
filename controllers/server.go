@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/negroni"
 )
 
+// NewServer initializes and returns a new negroni server
 func NewServer() *negroni.Negroni {
 	formatter := render.New(render.Options{
 		Directory:    "views/templates",
@@ -32,4 +33,8 @@ func initRouter(router *mux.Router, formatter *render.Render) {
 		http.FileServer(http.Dir("./static/"))))
 
 	initLoginRouter(router, formatter)
+
+	initRegisterRouter(router, formatter)
+
+	initIndexRouter(router, formatter)
 }

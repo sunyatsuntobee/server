@@ -9,16 +9,16 @@ import (
 	"github.com/unrolled/render"
 )
 
-func initLoginRouter(router *mux.Router, formatter *render.Render) {
-	router.HandleFunc("/login", loginHandler(formatter))
+func initRegisterRouter(router *mux.Router, formatter *render.Render) {
+	router.HandleFunc("/register", registerHandler(formatter))
 }
 
-func loginHandler(formatter *render.Render) http.HandlerFunc {
+func registerHandler(formatter *render.Render) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		html, _ := ioutil.ReadFile("./views/login.html")
+		html, _ := ioutil.ReadFile("./views/register.html")
 		page := layout{
-			Title:   "登录 - 图蜂后台管理系统",
+			Title:   "注册 - 图蜂后台管理系统",
 			Content: template.HTML(string(html)),
 		}
 		formatter.HTML(w, http.StatusOK, "layout", page)
