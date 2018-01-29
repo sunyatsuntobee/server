@@ -18,7 +18,7 @@ var (
 // NewServer initializes and returns a new negroni server
 func NewServer() *negroni.Negroni {
 	formatter = render.New(render.Options{
-		Directory:    "views/templates",
+		Directory:    "views",
 		IndentJSON:   true,
 		UnEscapeHTML: true,
 	})

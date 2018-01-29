@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"html/template"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -18,12 +16,7 @@ func initRegisterRouter(router *mux.Router) {
 func registerGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		html, _ := ioutil.ReadFile("./views/register.html")
-		page := layout{
-			Title:   "注册 - 图蜂后台管理系统",
-			Content: template.HTML(string(html)),
-		}
-		formatter.HTML(w, http.StatusOK, "layout", page)
+		formatter.HTML(w, http.StatusOK, "register", nil)
 	}
 
 }

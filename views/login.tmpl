@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/header"}}
+    <title>登陆 - 图蜂后台管理系统</title>
+  </head>
+
+  <body class="text-center">
+
+    <link href="/static/css/login.css" rel="stylesheet">
+
+    <form class="form-signin">
+      <img class="mb-5" src="/static/assets/tobee.png" alt="" width="72" height="72">
+      <h1 class="h3 mb-4 font-weight-normal">图蜂后台管理系统</h1>
+      <label for="inputPhone" class="sr-only">手机号码</label>
+      <input type="text" id="inputPhone" class="form-control" placeholder="手机号码" required autofocus>
+      <label for="inputPassword" class="sr-only">密码</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+      <input type="radio" name="inputType"> 个人
+      <input type="radio" name="inputType"> 社团
+      <input class="mb-5" type="radio" name="inputType"> 管理员
+      <button class="btn btn-primary btn-block" type="submit">登入</button>
+      <button class="btn btn-secondary btn-block" type="button">注册</button>
+      <p class="mt-5 mb-3 text-muted">&copy; ToBEE 2017-2018</p>
+    </form>
+
+    <script src="/static/js/login.js" charset="utf-8"></script>
+
+  </body>
+</html>

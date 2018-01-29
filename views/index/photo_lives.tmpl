@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    {{template "partials/header"}}
+
+    <title>图蜂运营管理系统</title>
+
+    <link rel="stylesheet" href="/static/css/index.css">
+  </head>
+
+  <body>
+
+    {{template "partials/index/nav"}}
+
+    <div class="container-fluid">
+      <div class="row">
+
+        {{template "partials/index/menu"}}
+
+        <main role="main" class="col-md-11 ml-sm-auto pt-3 px-4">
+
+          <h2>照片直播业务</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>活动名称</th>
+                  <th>主办方</th>
+                  <th>举办地</th>
+                  <th>起止时间</th>
+                  <th>预计人数</th>
+                  <th>广告谈判进度</th>
+                  <th>对接负责人</th>
+                  <th>摄影监理</th>
+                  <th>社团联络人</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range .}}
+                <tr class="h-150px">
+                  <td class="align-middle">{{.ID}}</td>
+                  <td class="align-middle">{{.ActivityName}}</td>
+                  <td class="align-middle">{{.OrganizationName}}</td>
+                  <td class="align-middle">{{.Location}}</td>
+                  <td class="align-middle">{{.StartTime}}<br>{{.EndTime}}</td>
+                  <td class="align-middle">{{.ExpectMembers}}</td>
+                  <td class="align-middle">{{.AdProgress}}</td>
+                  <td class="align-middle">{{.ManagerName}} {{.ManagerPhone}}</td>
+                  <td class="align-middle">{{.PhotographerManagerName}} {{.PhotographerManagerPhone}}</td>
+                  <td class="align-middle">
+                    {{range .Supervisors}}
+                      {{.Name}}<br>{{.Phone}}
+                    {{end}}
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+
+        </main>
+
+      </div>
+    </div>
+
+    <script src="/static/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>
+    <script src="/static/js/index.js" charset="utf-8"></script>
+
+  </body>
+
+</html>

@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"html/template"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -19,12 +17,7 @@ func initLoginRouter(router *mux.Router) {
 func loginGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		html, _ := ioutil.ReadFile("./views/login.html")
-		page := layout{
-			Title:   "登录 - 图蜂后台管理系统",
-			Content: template.HTML(string(html)),
-		}
-		formatter.HTML(w, http.StatusOK, "layout", page)
+		formatter.HTML(w, http.StatusOK, "login", nil)
 	}
 
 }
