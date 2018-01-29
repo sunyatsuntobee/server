@@ -19,7 +19,7 @@
   <body>
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-mowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-3 mr-0" href="/">控制台</a>
+      <a class="navbar-brand col-sm-3 col-md-1 mr-0" href="/">控制台</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="/login">登出</a>
@@ -29,7 +29,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+        <nav class="col-md-1 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
@@ -38,12 +38,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="/profile">账户</a>
               </li>
+              <li>
+                <a class="nav-link" href="/photolives">照片直播</a>
+              </li>
           </div>
         </nav>
+
+        {{.}}
+
       </div>
-
-      {{.}}
-
     </div>
 
     <script src="/static/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>

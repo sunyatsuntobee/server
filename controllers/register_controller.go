@@ -6,14 +6,16 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/unrolled/render"
+	"github.com/sunyatsuntobee/server/models"
 )
 
-func initRegisterRouter(router *mux.Router, formatter *render.Render) {
-	router.HandleFunc("/register", registerHandler(formatter))
+func initRegisterRouter(router *mux.Router) {
+	router.HandleFunc("/register", registerGetHandler()).Methods(http.MethodGet)
+	router.HandleFunc("/register", registerPostHandler()).
+		Methods(http.MethodPost)
 }
 
-func registerHandler(formatter *render.Render) http.HandlerFunc {
+func registerGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
 		html, _ := ioutil.ReadFile("./views/register.html")
@@ -22,6 +24,21 @@ func registerHandler(formatter *render.Render) http.HandlerFunc {
 			Content: template.HTML(string(html)),
 		}
 		formatter.HTML(w, http.StatusOK, "layout", page)
+	}
+
+}
+
+func registerPostHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		user := models.User{
+			Phone:    req.FormValue("phone"),
+			Password: req.FormValue("password"),
+			Location: req.FormValue("location"),
+		}
+		models.UserDAO.InsertOne(&user)
+		formatter.JSON(w, http.StatusCreated, nil)
 	}
 
 }
