@@ -1,3 +1,625 @@
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-  HAHAHA
-</main>
+<!DOCTYPE html>
+  <html>
+    <head>
+      {{template "partials/header"}}
+      <title>登陆 - 图蜂后台管理系统</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+  	<meta charset="utf-8">
+  	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+      {{template "partials/index/nav"}}
+      <div class = "container-fluid">
+        <div class = "row">
+          {{template "partials/index/menu"}}
+
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2>照片管理业务</h2>
+            <div class="panel-group" id="accordion">
+    	      <div class="panel panel-default">
+    		    <div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseOne">
+    					公关活动
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseOne" class="panel-collapse collapse in">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseTwo">
+    					地理自然
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseTwo" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseThree">
+    					肖像写真
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseThree" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseFour">
+    					新闻
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseFour" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseFive">
+    					体育
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseFive" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseSix">
+    					军事
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseSix" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseSeven">
+    					动物
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseSeven" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseEight">
+    					广告
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseEight" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseNine">
+    					微距
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseNine" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseTen">
+    					工业
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseTen" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseEleven">
+    					建筑
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseEleven" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseTwelve">
+    					天文
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseTwelve" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="panel panel-default">
+    		<div class="panel-heading">
+    			<h4 class="panel-title">
+    				<a data-toggle="collapse" data-parent="#accordion"
+    				   href="#collapseThirteen">
+    					其它
+    				</a>
+    			</h4>
+    		</div>
+    		<div id="collapseThirteen" class="panel-collapse collapse">
+    			<div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>照片</th>
+                    <th>是否通过</th>
+                    <th>如果不通过，原因</th>
+                    <th>拍摄地点</th>
+                    <th>拍摄时间</th>
+                    <th>发布时间</th>
+                    <th>点赞数</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr class="h-150px">
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    </main>
+  </div>
+</div>
+  </body>
+  </html>
