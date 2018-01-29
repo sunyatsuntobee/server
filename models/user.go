@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/sunyatsuntobee/server/logger"
+)
 
 // User Model
 type User struct {
@@ -15,4 +19,34 @@ type User struct {
 	Description string    `xorm:"description VARCHAR(45)"`
 	Occupation  string    `xorm:"occupation VARCHAR(45)"`
 	Collage     string    `xorm:"collage VARCHAR(45)"`
+}
+
+type UserDataAccessObject struct{}
+
+const UserTableName string = "users"
+
+var UserDAO *UserDataAccessObject
+
+func (*UserDataAccessObject) FindAll() []User {
+	l := make([]User, 0)
+	err := orm.Table(UserTableName).Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+func (*UserDataAccessObject) InsertOne(user *User) {
+	_, err := orm.Table(UserTableName).InsertOne(user)
+	logger.LogIfError(err)
+}
+
+func (*UserDataAccessObject) UpdateByID(id int, user *User) {
+	_, err := orm.Table(UserTableName).ID(id).Update(user)
+	logger.LogIfError(err)
+}
+
+func (*UserDataAccessObject) FindByPhone(phone string) (User, bool) {
+	var user User
+	has, err := orm.Table(UserTableName).Where("phone=?", phone).Get(&user)
+	logger.LogIfError(err)
+	return user, has
 }
