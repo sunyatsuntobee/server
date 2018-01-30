@@ -101,5 +101,8 @@ body {
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 .h-150px { height: 150px; }
-.my-img { height: 72px; width: 72px; }
+.h-200px { height: 200px; }
+.h-250px { height: 250px; }
 .h-350px { height: 350px; }
+.my-img { height: 72px; width: 72px; }
+.break-word { word-wrap: break-word; }

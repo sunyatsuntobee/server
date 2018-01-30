@@ -40,13 +40,13 @@ func indexPhotoLivesHandler() http.HandlerFunc {
 		photoLives := make([]photoLive, 0)
 		test := photoLive{
 			ID:                       0,
-			ActivityName:             "1758晚会",
+			ActivityName:             "1758晚会1111111111111111111111111111111111111111",
 			OrganizationName:         "团委",
 			Location:                 "中大某地",
-			StartTime:                "2012年01月01日 21:00",
-			EndTime:                  "2019年01月01日 21:00",
+			StartTime:                "2012/01/01 21:00",
+			EndTime:                  "2019/01/01 21:00",
 			ExpectMembers:            100,
-			AdProgress:               "谈判中",
+			AdProgress:               "谈判中111111111111111111111111111111111111111111111111111111111111111111111111111111111",
 			ManagerName:              "张铁林",
 			ManagerPhone:             "12345678901",
 			PhotographerManagerName:  "张铁林",

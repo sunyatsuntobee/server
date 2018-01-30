@@ -18,9 +18,10 @@ var (
 // NewServer initializes and returns a new negroni server
 func NewServer() *negroni.Negroni {
 	formatter = render.New(render.Options{
-		Directory:    "views",
-		IndentJSON:   true,
-		UnEscapeHTML: true,
+		Directory:     "views",
+		IndentJSON:    true,
+		UnEscapeHTML:  true,
+		IsDevelopment: true,
 	})
 
 	jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
