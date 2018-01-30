@@ -75,7 +75,16 @@ body {
 }
 
 .form-control-dark {
-  color: #fff;
+  color: #fff;        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="row">
+                <img src="/static/assets/tobee.png" class="my-img" alt=""/>
+
+              </div>
+            </div>
+          </li>
+        </ul>
   background-color: rgba(255, 255, 255, .1);
   border-color: rgba(255, 255, 255, .1);
 }
@@ -93,3 +102,4 @@ body {
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 .h-150px { height: 150px; }
 .my-img { height: 72px; width: 72px; }
+.h-350px { height: 350px; }

@@ -3,6 +3,12 @@
     <head>
       {{template "partials/header"}}
       <title>登陆 - 图蜂后台管理系统</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+      <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="/static/css/index.css">
     </head>
 
@@ -14,608 +20,556 @@
 
           <main role="main" class="col-md-11 ml-sm-auto pt-3 px-4">
             <h2>照片管理业务</h2>
-            <div class="panel-group" id="accordion">
-    	      <div class="panel panel-default">
-    		    <div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseOne">
-    					公关活动
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseOne" class="panel-collapse collapse in">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
+              <div id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        公关活动
+                      </button>
+                    </h5>
+                  </div>
 
-                  </tr>
-                </thead>
-                <tbody>
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        地理自然
+                      </button>
+                    </h5>
+                  </div>
 
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        肖像写真
+                      </button>
+                    </h5>
+                  </div>
 
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-    	<div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseTwo">
-    					地理自然
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseTwo" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                        新闻
+                      </button>
+                    </h5>
+                  </div>
 
-                  </tr>
-                </thead>
-                <tbody>
+                  <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        体育
+                      </button>
+                    </h5>
+                  </div>
 
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
+                  <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                        军事
+                      </button>
+                    </h5>
+                  </div>
 
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-    	<div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseThree">
-    					肖像写真
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseThree" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
+                  <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                        动物
+                      </button>
+                    </h5>
+                  </div>
 
-                  </tr>
-                </thead>
-                <tbody>
+                  <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingEight">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                        广告
+                      </button>
+                    </h5>
+                  </div>
 
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
+                  <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingNine">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                        微距
+                      </button>
+                    </h5>
+                  </div>
 
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseFour">
-    					新闻
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseFour" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
+                  <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTen">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseTen">
+                        工业
+                      </button>
+                    </h5>
+                  </div>
 
-                  </tr>
-                </thead>
-                <tbody>
+                  <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingEleven">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="true" aria-controls="collapseEleven">
+                        建筑
+                      </button>
+                    </h5>
+                  </div>
 
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
+                  <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwleve">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwelve" aria-expanded="true" aria-controls="collapseTwelve">
+                        天文
+                      </button>
+                    </h5>
+                  </div>
 
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseFive">
-    					体育
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseFive" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
+                  <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwleve" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThirteen">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThirteen" aria-expanded="true" aria-controls="collapseThirteen">
+                        其它
+                      </button>
+                    </h5>
+                  </div>
 
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseSix">
-    					军事
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseSix" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseSeven">
-    					动物
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseSeven" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseEight">
-    					广告
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseEight" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseNine">
-    					微距
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseNine" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseTen">
-    					工业
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseTen" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseEleven">
-    					建筑
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseEleven" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseTwelve">
-    					天文
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseTwelve" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-      <div class="panel panel-default">
-    		<div class="panel-heading">
-    			<h4 class="panel-title">
-    				<a data-toggle="collapse" data-parent="#accordion"
-    				   href="#collapseThirteen">
-    					其它
-    				</a>
-    			</h4>
-    		</div>
-    		<div id="collapseThirteen" class="panel-collapse collapse">
-    			<div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>照片</th>
-                    <th>是否通过</th>
-                    <th>如果不通过，原因</th>
-                    <th>拍摄地点</th>
-                    <th>拍摄时间</th>
-                    <th>发布时间</th>
-                    <th>点赞数</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr class="h-150px">
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                    <td class="align-middle"></td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    </main>
-  </div>
-</div>
-  </body>
+                  <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordion">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>照片</th>
+                              <th>是否通过</th>
+                              <th>如不通过，给出原因</th>
+                              <th>拍摄地点</th>
+                              <th>拍摄时间</th>
+                              <th>点赞数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="h-350px">
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"><br></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                              <td class="align-middle"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </main>
+        </div>
+      </div>
+    </body>
   </html>
