@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"html/template"
-	"time"
 )
 
 type layout struct {
@@ -20,8 +19,8 @@ type photoLive struct {
 	ActivityName             string    `json:"activity_name"`
 	OrganizationName         string    `json:"organization_name"`
 	Location                 string    `json:"location"`
-	StartTime                time.Time `json:"start_time"`
-	EndTime                  time.Time `json:"end_time"`
+	StartTime                string    `json:"start_time"`
+	EndTime                  string    `json:"end_time"`
 	ExpectMembers            int       `json:"expect_members"`
 	AdProgress               string    `json:"ad_progress"`
 	ManagerName              string    `json:"manager_name"`

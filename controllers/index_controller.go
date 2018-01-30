@@ -4,7 +4,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -14,6 +13,7 @@ func initIndexRouter(router *mux.Router) {
 	router.HandleFunc("/", indexHandler())
 	router.HandleFunc("/profile", indexProfileHandler())
 	router.HandleFunc("/photolives", indexPhotoLivesHandler())
+	router.HandleFunc("/photolives/add", indexPhotoLivesAddHandler())
 }
 
 func indexHandler() http.HandlerFunc {
@@ -43,8 +43,8 @@ func indexPhotoLivesHandler() http.HandlerFunc {
 			ActivityName:             "1758晚会",
 			OrganizationName:         "团委",
 			Location:                 "中大某地",
-			StartTime:                time.Now(),
-			EndTime:                  time.Now(),
+			StartTime:                "2012年01月01日 21:00",
+			EndTime:                  "2019年01月01日 21:00",
 			ExpectMembers:            100,
 			AdProgress:               "谈判中",
 			ManagerName:              "张铁林",
@@ -58,6 +58,14 @@ func indexPhotoLivesHandler() http.HandlerFunc {
 		}
 		photoLives = append(photoLives, test)
 		formatter.HTML(w, http.StatusOK, "index/photo_lives", photoLives)
+	}
+
+}
+
+func indexPhotoLivesAddHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		formatter.HTML(w, http.StatusOK, "index/photo_lives_add", nil)
 	}
 
 }
