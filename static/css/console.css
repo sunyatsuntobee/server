@@ -1,0 +1,16 @@
+.icon {
+  width: 184px;
+  height: 184px;
+}
+
+.icon-h {
+  height: 184px;
+}
+
+p, .text-small {
+  font-size: 10pt;
+}
+
+.display-none {
+  display: none;
+}

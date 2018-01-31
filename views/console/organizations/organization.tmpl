@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>社团详情 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      {{template "partials/console/edit_bar"}}
+      <form>
+        <div class="form-row">
+          <div class="col-sm-7">
+            <div class="form-group">
+              <label for="">社团名称</label>
+              <input class="form-control form-control-lg need-enable"
+                type="text" id=""
+                value="{{.Organization.Name}}" disabled>
+            </div>
+            <div class="form-group">
+              <label for="">所属学校</label>
+              <input class="form-control form-control-lg need-enable"
+                type="text" id=""
+                value="{{.Organization.Collage}}" disabled>
+            </div>
+          </div>
+          <div class="form-group ml-auto">
+            <label for="" class="sr-only">社团Logo</label>
+            <img src="{{.Organization.LogoURL}}" class="form-control icon">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">社团简介</label>
+          <textarea class="form-control need-enable" id=""
+            rows="4" disabled>{{.Organization.Description}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="">下辖部门</label>
+          <div class="department-group">
+            <input class="form-control mb-2 need-enable" type="text"
+              placeholder="部门名称" value="动画部" disabled>
+            {{range .Departments}}
+            <input class="form-control mb-2 need-enable" type="text"
+              placeholder="部门名称" value="动画部" disabled>
+            {{end}}
+          </div>
+          <button class="btn btn-primary col display-none need-appear"
+            type="button">添加</button>
+        </div>
+        <div class="form-group">
+          <label for="">社团联络人</label>
+          <div class="contactor-group">
+            {{range .Contactors}}
+            <input class="form-control mb-2 need-enable" type="text"
+              value="{{.Username}} {{.Phone}}" disabled>
+            {{end}}
+          </div>
+          <button class="btn btn-primary col display-none need-appear"
+            type="button">添加</button>
+        </div>
+        <label>品牌活动</label>
+        <a class="ml-auto"
+          href="/orgnizations/activities?oid={{.Organization.ID}}">
+          社团活动详情
+        </a>
+        <div class="card-deck">
+          <div class="card">
+            <h5 class="card-header">狼牙山五壮士</h5>
+            <p class="card-body">介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍</p>
+          </div>
+          <div class="card">
+            <h5 class="card-header">狼牙山五壮士</h5>
+          </div>
+          <div class="card">
+            <h5 class="card-header">狼牙山五壮士</h5>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

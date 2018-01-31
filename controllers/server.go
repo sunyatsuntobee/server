@@ -52,6 +52,8 @@ func initRouter(router *mux.Router) {
 	initRegisterRouter(router)
 
 	initIndexRouter(router)
+
+	initConsoleRouter(router)
 }
 
 func secureHandler(handler http.HandlerFunc) http.HandlerFunc {

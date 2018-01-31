@@ -3,7 +3,7 @@ package models
 import "time"
 
 // OrganizationLoginLog Model
-type OrganzationLoginLog struct {
+type OrganizationLoginLog struct {
 	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
 	LoginTime      time.Time `xorm:"login_time NOTNULL"`
 	LoginLocation  string    `xorm:"login_location NOTNULL"`

@@ -18,6 +18,10 @@ type JWTMessage struct {
 	Token string `json:"token"`
 }
 
+const (
+	TimeLayout string = "2006-01-02 15:04"
+)
+
 func MD5Hash(value string) string {
 	hash := md5.New()
 	io.WriteString(hash, value)

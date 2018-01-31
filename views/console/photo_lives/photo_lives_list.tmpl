@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片直播业务 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <div class="navbar navbar-expand-sm p-0">
+      </div>
+      {{range .}}
+      <div class="card w-100">
+        <div class="row">
+          <img src="/static/assets/tobee.png" alt="" class="icon">
+          <div class="card-body">
+            <h5 class="card-title">{{.Activity.Name}}</h5>
+            <h5 class="card-subtitle mb-3">
+              {{.Organization.Name}} {{.ActivityStage.Location}}
+            </h5>
+            <p class="card-text text-small">
+              开始时间 {{.ActivityStage.StartTime.Format "2006-01-02 15:04"}}
+              <br>
+              结束时间 {{.ActivityStage.EndTime.Format "2006-01-02 15:04"}}
+            </p>
+            <a href="/photolives?id={{.PhotoLive.ID}}"
+              class="btn btn-primary">
+              详情
+            </a>
+          </div>
+        </div>
+      </div>
+      {{end}}
+      <a class="btn btn-light btn-lg mt-3 w-100"
+        href="/photolives/add">添加</a>
+    </div>
+  </body>
+</html>

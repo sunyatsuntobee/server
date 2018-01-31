@@ -15,6 +15,7 @@ type User struct {
 	Location    string    `xorm:"location VARCHAR(45) NOTNULL"`
 	CreateTime  time.Time `xorm:"create_time TIMESTAMP NOTNULL CREATED"`
 	VIP         bool      `xorm:"vip INT NOTNULL"`
+	AvatarURL   string    `xorm:"avatar_url VARCHAR(45)"`
 	Camera      string    `xorm:"camera VARCHAR(45)"`
 	Description string    `xorm:"description VARCHAR(45)"`
 	Occupation  string    `xorm:"occupation VARCHAR(45)"`

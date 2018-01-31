@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>社团列表 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <div class="card w-100 mt-3">
+        {{range .}}
+        <div class="row">
+          <img src="{{.LogoURL}}" class="icon-h">
+          <div class="card-body">
+            <h5 class="card-title">{{.Name}}</h5>
+            <h5 class="card-subtitle mb-3">{{.Collage}}</h5>
+            <p class="card-text text-small">
+              {{.Description}}
+            </p>
+            <a href="/organizations?id={{.ID}}" class="btn btn-primary">详情</a>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>
