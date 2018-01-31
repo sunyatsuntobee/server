@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片直播业务 - 图蜂后台管理系统</title>
+    <script src="/static/js/console/photo_live.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      {{template "partials/console/edit_bar"}}
+      <form>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">活动名称</label>
+            <a class="form-control" href="#">{{.Activity.Name}}</a>
+          </div>
+          <div class="form-group col">
+            <label for="">主办社团</label>
+            <a class="form-control"
+              href="/organizations?id={{.Organization.ID}}">
+              {{.Organization.Name}}
+            </a>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">活动地点</label>
+            <input type="text" class="form-control" id=""
+              placeholder="活动地点"
+              value="{{.ActivityStage.Location}}" disabled>
+          </div>
+          <div class="form-group col">
+            <label for="inputExpectMembers">预计人数</label>
+            <input type="number" class="form-control need-enable"
+              id="inputExpectMembers"
+              placeholder="预计人数" value={{.PhotoLive.ExpectMembers}} disabled>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">开始时间</label>
+            <input type="datetime" class="form-control" id=""
+              value='{{.ActivityStage.StartTime.Format "2006-01-02 15:04"}}' disabled>
+          </div>
+          <div class="form-group col">
+            <label for="">结束时间</label>
+            <input type="datetime" class="form-control" id=""
+              value='{{.ActivityStage.EndTime.Format "2006-01-02 15:04"}}' disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">广告谈判进度</label>
+          <textarea class="form-control need-enable"
+            id="" rows="6" disabled>{{.PhotoLive.AdProgress}}</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">对接负责人</label>
+            <input class="form-control need-disappear" type="text"
+              value="{{.Manager.Username}} {{.Manager.Phone}}" disabled>
+            <select class="form-control display-none need-appear" id="">
+              <option>无</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="">摄影监理</label>
+            <input class="form-control need-disappear" type="text"
+              value="{{.PhotographerManager.Username}} {{.PhotographerManager.Phone}}"
+              disabled>
+            <select class="form-control display-none need-appear" id="">
+              <option>无</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">社团联络人</label>
+          <div class="supervisor-group">
+            {{range .Supervisors}}
+              <div class="row w-100 mx-auto">
+                <input class="form-control mb-2 col-sm-12" type="text"
+                  value="{{.Username}} {{.Phone}}" disabled>
+                <button class="btn btn-danger col h-100 ml-2 display-none need-appear"
+                  type="button">删除</button>
+              </div>
+            {{end}}
+          </div>
+          <select class="form-control display-none need-appear mb-2" id="">
+            <option>无</option>
+          </select>
+          <button class="btn btn-primary col display-none need-appear"
+            type="button">添加</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
