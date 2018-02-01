@@ -47,6 +47,11 @@ func initRouter(router *mux.Router) {
 	router.PathPrefix("/static").Handler(http.StripPrefix("/static/",
 		http.FileServer(http.Dir("./static/"))))
 
+	// Develop
+	router.HandleFunc("/dev", func(w http.ResponseWriter, req *http.Request) {
+		formatter.HTML(w, http.StatusOK, "dev", nil)
+	})
+
 	initLoginRouter(router)
 
 	initRegisterRouter(router)
