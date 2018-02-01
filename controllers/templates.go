@@ -16,6 +16,8 @@ type contact struct {
 	Phone string
 }
 
+// PhotoLiveDetail is a complete information of an
+// Entity PhotoLive
 type PhotoLiveDetail struct {
 	PhotoLive           *models.PhotoLive
 	Organization        *models.Organization
@@ -26,6 +28,8 @@ type PhotoLiveDetail struct {
 	Supervisors         []*models.User
 }
 
+// OrganizationDetail is a complete information of an
+// Entity Organization
 type OrganizationDetail struct {
 	Organization *models.Organization
 	Contactors   []*models.User

@@ -14,3 +14,7 @@ p, .text-small {
 .display-none {
   display: none;
 }
+
+.w-600px {
+  width: 600px;
+}
