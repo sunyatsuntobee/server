@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/models"
@@ -17,35 +18,12 @@ func consoleOrganizationsGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		if req.FormValue("id") == "" {
-			organizations := make([]models.Organization, 0)
-			data := models.Organization{
-				ID:          0,
-				Name:        "自嗨社",
-				Collage:     "深圳中学",
-				Description: "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介",
-				LogoURL:     "/static/assets/tobee.png",
-			}
-			organizations = append(organizations, data)
+			data := models.OrganizationDAO.FindAll()
 			formatter.HTML(w, http.StatusOK,
-				"console/organizations/organizations_list", organizations)
+				"console/organizations/organizations_list", data)
 		} else {
-			data := OrganizationDetail{
-				Organization: &models.Organization{
-					ID:          0,
-					Name:        "自嗨社",
-					Collage:     "深圳中学",
-					Description: "介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简",
-					LogoURL:     "/static/assets/tobee.png",
-				},
-				Contactors: []*models.User{
-					&models.User{
-						ID:       0,
-						Username: "r0beRT",
-						Location: "广东省深圳市",
-						Phone:    "12345678901",
-					},
-				},
-			}
+			id, _ := strconv.Atoi(req.FormValue("id"))
+			data := models.OrganizationFullDAO.FindFullByID(id)
 			formatter.HTML(w, http.StatusOK,
 				"console/organizations/organization", data)
 		}

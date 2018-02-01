@@ -45,6 +45,13 @@ func (*UserDataAccessObject) UpdateByID(id int, user *User) {
 	logger.LogIfError(err)
 }
 
+func (*UserDataAccessObject) FindByID(id int) (User, bool) {
+	var user User
+	has, err := orm.Table(UserTableName).Where("id=?", id).Get(&user)
+	logger.LogIfError(err)
+	return user, has
+}
+
 func (*UserDataAccessObject) FindByPhone(phone string) (User, bool) {
 	var user User
 	has, err := orm.Table(UserTableName).Where("phone=?", phone).Get(&user)

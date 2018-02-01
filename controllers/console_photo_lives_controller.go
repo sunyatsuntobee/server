@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/models"
@@ -21,100 +20,12 @@ func consolePhotoLivesGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		if req.FormValue("id") == "" {
-			photoLives := make([]PhotoLiveDetail, 0)
-			data := PhotoLiveDetail{
-				PhotoLive: &models.PhotoLive{
-					ID:            0,
-					ExpectMembers: 100,
-					AdProgress:    "谈判中111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-				},
-				Organization: &models.Organization{
-					ID:      0,
-					Name:    "中大团委",
-					LogoURL: "/static/assets/tobee.png",
-				},
-				Activity: &models.Activity{
-					ID:   0,
-					Name: "1758晚会",
-				},
-				ActivityStage: &models.ActivityStage{
-					ID:        0,
-					StartTime: time.Now(),
-					EndTime:   time.Now(),
-					Location:  "中大某地",
-				},
-				Manager: &models.User{
-					ID:       1,
-					Username: "张铁林",
-					Phone:    "12345678901",
-				},
-				PhotographerManager: &models.User{
-					ID:       1,
-					Username: "张铁林",
-					Phone:    "12345678901",
-				},
-				Supervisors: []*models.User{
-					&models.User{
-						ID:       1,
-						Username: "张铁林",
-						Phone:    "12345678901",
-					},
-					&models.User{
-						ID:       1,
-						Username: "张铁林",
-						Phone:    "12345678901",
-					},
-				},
-			}
-			photoLives = append(photoLives, data)
+			data := models.PhotoLiveDAO.FindFullAll()
 			formatter.HTML(w, http.StatusOK,
-				"console/photo_lives/photo_lives_list", photoLives)
+				"console/photo_lives/photo_lives_list", data)
 		} else {
 			id, _ := strconv.Atoi(req.FormValue("id"))
-			data := PhotoLiveDetail{
-				PhotoLive: &models.PhotoLive{
-					ID:            id,
-					ExpectMembers: 100,
-					AdProgress:    "谈判中111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-				},
-				Organization: &models.Organization{
-					ID:      0,
-					Name:    "中大团委",
-					LogoURL: "/static/assets/tobee.png",
-				},
-				Activity: &models.Activity{
-					ID:   0,
-					Name: "1758晚会",
-				},
-				ActivityStage: &models.ActivityStage{
-					ID:        0,
-					StartTime: time.Now(),
-					EndTime:   time.Now(),
-					Location:  "中大某地",
-				},
-				Manager: &models.User{
-					ID:       1,
-					Username: "张铁林",
-					Phone:    "12345678901",
-				},
-				PhotographerManager: &models.User{
-					ID:       1,
-					Username: "张铁林",
-					Phone:    "12345678901",
-				},
-				Supervisors: []*models.User{
-					&models.User{
-						ID:       1,
-						Username: "张铁林",
-						Phone:    "12345678901",
-					},
-					&models.User{
-						ID:       1,
-						Username: "张铁林",
-						Phone:    "12345678901",
-					},
-				},
-			}
+			data := models.PhotoLiveDAO.FindFullByID(id)
 			formatter.HTML(w, http.StatusOK,
 				"console/photo_lives/photo_live", data)
 		}

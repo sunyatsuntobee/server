@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/models"
 )
 
 func initConsolePhotosRouter(router *mux.Router) {
@@ -16,7 +17,8 @@ func consolePhotosGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		if req.FormValue("category") == "" {
-			formatter.HTML(w, http.StatusOK, "console/photos/photos", nil)
+			data := models.PhotoDAO.FindAll()
+			formatter.HTML(w, http.StatusOK, "console/photos/photos", data)
 		}
 	}
 
