@@ -31,4 +31,10 @@ type OrganizationDetail struct {
 	Contactors   []*models.User
 	Departments  []*models.OrganizationDepartment
 	LoginLogs    []*models.OrganizationLoginLog
+	Activities   []*ActivityDetail
+}
+
+type ActivityDetail struct {
+	Activity *models.Activity
+	Stages   []*models.ActivityStage
 }

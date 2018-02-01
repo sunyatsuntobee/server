@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>社团活动管理 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <div class="card w-100 mt-3">
+        <div class="row">
+          <img src="{{.Organization.LogoURL}}" class="icon-h">
+          <div class="card-body">
+            <h5 class="card-title">{{.Organization.Name}}</h5>
+            <h5 class="card-subtitle mb-3">{{.Organization.Collage}}</h5>
+            <p class="card-text text-small">
+              {{.Organization.Description}}
+            </p>
+            <a href="/organizations?id={{.ID}}" class="btn btn-primary">详情</a>
+          </div>
+        </div>
+      </div>
+      <div id="accordion">
+        {{.Activities}}
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <button class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOne" aria-expanded="true"
+              aria-controls="collapseOne">
+              Collapsible Group Item #1
+            </button>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
