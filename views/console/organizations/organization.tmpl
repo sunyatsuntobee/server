@@ -8,6 +8,8 @@
     <div class="container">
       {{template "partials/console/nav"}}
       {{template "partials/console/edit_bar"}}
+      {{$first := index . 0}}
+      {{$organization := $first.Organization}}
       <form>
         <div class="form-row">
           <div class="col-sm-7">
@@ -15,33 +17,35 @@
               <label for="">社团名称</label>
               <input class="form-control form-control-lg need-enable"
                 type="text" id=""
-                value="{{.Organization.Name}}" disabled>
+                value="{{$organization.Name}}" disabled>
             </div>
             <div class="form-group">
               <label for="">所属学校</label>
               <input class="form-control form-control-lg need-enable"
                 type="text" id=""
-                value="{{.Organization.Collage}}" disabled>
+                value="{{$organization.Collage}}" disabled>
             </div>
           </div>
           <div class="form-group ml-auto">
             <label for="" class="sr-only">社团Logo</label>
-            <img src="{{.Organization.LogoURL}}" class="form-control icon">
+            {{if $organization.LogoURL}}
+            <img src="{{$organization.LogoURL}}" class="form-control icon">
+            {{else}}
+            <img src="/static/assets/tobee.png" class="form-control icon">
+            {{end}}
           </div>
         </div>
         <div class="form-group">
           <label for="">社团简介</label>
           <textarea class="form-control need-enable" id=""
-            rows="4" disabled>{{.Organization.Description}}</textarea>
+            rows="4" disabled>{{$organization.Description}}</textarea>
         </div>
         <div class="form-group">
           <label for="">下辖部门</label>
           <div class="department-group">
+            {{range UniqueAt "Department" .}}
             <input class="form-control mb-2 need-enable" type="text"
-              placeholder="部门名称" value="动画部" disabled>
-            {{range .Departments}}
-            <input class="form-control mb-2 need-enable" type="text"
-              placeholder="部门名称" value="动画部" disabled>
+              placeholder="部门名称" value="{{.Department.Name}}" disabled>
             {{end}}
           </div>
           <button class="btn btn-light col display-none need-appear"
@@ -49,18 +53,24 @@
         </div>
         <div class="form-group">
           <label for="">社团联络人</label>
+          {{if $first.Contactor}}
           <div class="contactor-group">
-            {{range .Contactors}}
+            {{range UniqueAt "Contactor" .}}
+            {{if .Contactor.Username}}
             <input class="form-control mb-2 need-enable" type="text"
-              value="{{.Username}} {{.Phone}}" disabled>
+              value="{{.Contactor.Username}} {{.Contactor.Phone}}" disabled>
+            {{else}}
+            <a class="form-control mb-2 text-sm-center" href="#">暂无</a>
+            {{end}}
             {{end}}
           </div>
+          {{end}}
           <button class="btn btn-light col display-none need-appear"
             type="button">添加</button>
         </div>
         <label>品牌活动</label>
         <a class="ml-auto"
-          href="/activities?oid={{.Organization.ID}}">
+          href="/activities?oid={{$organization.ID}}">
           社团活动详情
         </a>
         <div class="card-deck">

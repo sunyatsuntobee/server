@@ -9,6 +9,9 @@
     <div class="container">
       {{template "partials/console/nav"}}
       {{template "partials/console/edit_bar"}}
+      {{$list := .}}
+      {{range $index := $list}}
+      {{if $index eq 0}}
       <form>
         <div class="form-row">
           <div class="form-group col">
@@ -41,12 +44,14 @@
           <div class="form-group col">
             <label for="">开始时间</label>
             <input type="datetime" class="form-control" id=""
-              value='{{.ActivityStage.StartTime.Format "2006-01-02 15:04"}}' disabled>
+              value='{{.ActivityStage.StartTime.Format "2006-01-02 15:04"}}'
+              disabled>
           </div>
           <div class="form-group col">
             <label for="">结束时间</label>
             <input type="datetime" class="form-control" id=""
-              value='{{.ActivityStage.EndTime.Format "2006-01-02 15:04"}}' disabled>
+              value='{{.ActivityStage.EndTime.Format "2006-01-02 15:04"}}'
+              disabled>
           </div>
         </div>
         <div class="form-group">
@@ -66,7 +71,8 @@
           <div class="form-group col">
             <label for="">摄影监理</label>
             <input class="form-control need-disappear" type="text"
-              value="{{.PhotographerManager.Username}} {{.PhotographerManager.Phone}}"
+              value="{{.PhotographerManager.Username}}
+               {{.PhotographerManager.Phone}}"
               disabled>
             <select class="form-control display-none need-appear" id="">
               <option>无</option>
@@ -76,11 +82,13 @@
         <div class="form-group">
           <label for="">社团联络人</label>
           <div class="supervisor-group">
-            {{range .Supervisors}}
+            {{range $list}}
               <div class="row w-100 mx-auto">
                 <input class="form-control mb-2 col-sm-12" type="text"
-                  value="{{.Username}} {{.Phone}}" disabled>
-                <button class="btn btn-danger col h-100 ml-2 display-none need-appear"
+                  value="{{.Supervisor.Username}} {{.Supervisor.Phone}}"
+                  disabled>
+                <button class="btn btn-danger col h-100 ml-2
+                  display-none need-appear"
                   type="button">删除</button>
               </div>
             {{end}}
@@ -92,6 +100,8 @@
             type="button">添加</button>
         </div>
       </form>
+      {{end}}
+      {{end}}
     </div>
   </body>
 </html>

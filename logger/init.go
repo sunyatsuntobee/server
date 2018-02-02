@@ -12,6 +12,8 @@ var I *log.Logger
 var E *log.Logger
 
 func init() {
+	truncate()
+
 	infoFile, err := os.OpenFile(IPath, os.O_CREATE|os.O_RDWR, os.ModePerm)
 	if err != nil {
 		panic(err)
@@ -29,4 +31,9 @@ func LogIfError(err error) {
 	if err != nil {
 		E.Println(err)
 	}
+}
+
+func truncate() {
+	os.Truncate(IPath, 0)
+	os.Truncate(EPath, 0)
 }

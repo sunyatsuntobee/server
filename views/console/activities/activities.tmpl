@@ -7,35 +7,50 @@
   <body>
     <div class="container">
       {{template "partials/console/nav"}}
-      <div class="card w-100 mt-3">
+      {{$first := index . 0}}
+      {{$organization := $first.Organization}}
+      {{$activity := $first.Activity}}
+      <div class="card w-100 mt-3 mb-3">
         <div class="row">
-          <img src="{{.Organization.LogoURL}}" class="icon-h">
+          {{if $activity.LogoURL}}
+          <img src="{{$activity.LogoURL}}" class="icon-h">
+          {{else if $organization.LogoURL}}
+          <img src="{{$organization.LogoURL}}" class="icon-h">
+          {{else}}
+          <img src="/static/assets/tobee.png" class="icon-h">
+          {{end}}
           <div class="card-body">
-            <h5 class="card-title">{{.Organization.Name}}</h5>
-            <h5 class="card-subtitle mb-3">{{.Organization.Collage}}</h5>
+            <h5 class="card-subtitle mb-3">{{$activity.Name}}</h5>
+            <h6 class="card-title">{{$organization.Name}}</h5>
             <p class="card-text text-small">
-              {{.Organization.Description}}
+              {{$activity.Description}}
             </p>
-            <a href="/organizations?id={{.ID}}" class="btn btn-primary">详情</a>
+            <a href="/organizations?id={{$organization.ID}}"
+              class="btn btn-primary">社团详情</a>
           </div>
         </div>
       </div>
       <div id="accordion">
-        {{.Activities}}
+        {{range .}}
         <div class="card">
-          <div class="card-header" id="headingOne">
-            <button class="btn btn-link" data-toggle="collapse"
-              data-target="#collapseOne" aria-expanded="true"
-              aria-controls="collapseOne">
-              Collapsible Group Item #1
+          <div class="card-header" id="heading{{.Stage.StageNum}}">
+            <button class="btn btn-link collapsed" data-toggle="collapse"
+              data-target="#collapse{{.Stage.StageNum}}" aria-expanded="true"
+              aria-controls="collapse">
+              阶段{{.Stage.StageNum}} {{.Stage.Location}}
+              {{.Stage.StartTime.Format "2006-01-02 15:04"}} ~
+              {{.Stage.EndTime.Format "2006-01-02 15:04"}}
             </button>
           </div>
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div id="collapse{{.Stage.StageNum}}" class="collapse"
+            aria-labelledby="heading{{.Stage.StageNum}}"
+            data-parent="#accordion">
             <div class="card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              {{.Stage.Content}}
             </div>
           </div>
         </div>
+        {{end}}
       </div>
     </div>
   </body>

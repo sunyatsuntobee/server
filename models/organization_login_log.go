@@ -10,3 +10,11 @@ type OrganizationLoginLog struct {
 	LoginDevice    string    `xorm:"login_device NOTNULL"`
 	OrganizationID int       `xorm:"organization_id NOTNULL INDEX(organization_id_idx)"`
 }
+
+type OrganizationLoginLogDataAccessObject struct{}
+
+var OrganizationLoginLogDAO *OrganizationLoginLogDataAccessObject
+
+func (*OrganizationLoginLogDataAccessObject) TableName() string {
+	return "organization_login_logs"
+}

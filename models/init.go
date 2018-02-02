@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	dbDSN string = "/tobee"
+	dbDSN string = "tobee:Passw0r_@tcp(120.79.53.185)/tobee"
 )
 
 var (

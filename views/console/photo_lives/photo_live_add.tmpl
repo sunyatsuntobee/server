@@ -18,8 +18,6 @@
           <div class="form-group col">
             <label for="inputOrganization">请选择社团</label>
             <select class="form-control" id="inputOrganization">
-              {{range .Organizations}}
-              {{end}}
             </select>
           </div>
           <div class="form-group col">
@@ -51,24 +49,18 @@
             <label for="inputManager">请选择对接负责人</label>
             <select class="form-control" id="inputManager">
               <option>无</option>
-              {{range .Users}}
-              {{end}}
             </select>
           </div>
           <div class="form-group col">
             <label for="inputPhotographerManager">请选择摄影监理</label>
             <select class="form-control" id="inputPhotographerManager">
               <option>无</option>
-              {{range .Users}}
-              {{end}}
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="inputSupervisor">社团联络人</label>
           <select class="form-control mb-2" id="inputSupervisor">
-            {{range .Users}}
-            {{end}}
           </select>
           <button type="button" class="btn btn-primary col">添加联络人</button>
         </div>

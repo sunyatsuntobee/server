@@ -21,29 +21,45 @@ type Photo struct {
 
 type PhotoDataAccessObject struct{}
 
-const PhotoTableName string = "photos"
-
 var PhotoDAO *PhotoDataAccessObject
+
+func (*PhotoDataAccessObject) TableName() string {
+	return "photos"
+}
 
 func (*PhotoDataAccessObject) FindAll() []Photo {
 	photos := make([]Photo, 0)
-	err := orm.Table(PhotoTableName).Find(&photos)
+	err := orm.Table(PhotoDAO.TableName()).Find(&photos)
 	logger.LogIfError(err)
 	return photos
 }
 
 func (*PhotoDataAccessObject) InsertOne(photo *Photo) {
-	_, err := orm.Table(PhotoTableName).InsertOne(photo)
+	_, err := orm.Table(PhotoDAO.TableName()).InsertOne(photo)
 	logger.LogIfError(err)
 }
 
 func (*PhotoDataAccessObject) UpdateByID(id int, photo *Photo) {
-	_, err := orm.Table(PhotoTableName).ID(id).Update(photo)
+	_, err := orm.Table(PhotoDAO.TableName()).ID(id).Update(photo)
 	logger.LogIfError(err)
 }
 
 func (*PhotoDataAccessObject) DeleteByID(id int) {
 	var photo Photo
-	_, err := orm.Table(PhotoTableName).ID(id).Unscoped().Delete(&photo)
+	_, err := orm.Table(PhotoDAO.TableName()).ID(id).Unscoped().Delete(&photo)
 	logger.LogIfError(err)
+}
+
+func (*PhotoDataAccessObject) FindByID(id int) (Photo, bool) {
+	var photo Photo
+	has, err := orm.Table(PhotoDAO.TableName()).ID(id).Get(&photo)
+	logger.LogIfError(err)
+	return photo, has
+}
+
+func (*PhotoDataAccessObject) FindByCategory(category string) []Photo {
+	l := make([]Photo, 0)
+	err := orm.Table(PhotoDAO.TableName()).Where("category=", category).Find(&l)
+	logger.LogIfError(err)
+	return l
 }

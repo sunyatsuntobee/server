@@ -36,5 +36,5 @@ func NewServer() *negroni.Negroni {
 }
 
 func InitRouter(router *mux.Router) {
-
+	initCollectionUsersRouter(router)
 }

@@ -12,3 +12,11 @@ type ActivityStage struct {
 	Content    string    `xorm:"content VARCHAR(200) NOTNULL"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)"`
 }
+
+type ActivityStageDataAccessObject struct{}
+
+var ActivityStageDAO *ActivityStageDataAccessObject
+
+func (*ActivityStageDataAccessObject) TableName() string {
+	return "activity_stages"
+}

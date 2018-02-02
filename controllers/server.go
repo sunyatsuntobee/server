@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"html/template"
 	"net/http"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/models"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
 )
@@ -22,6 +24,9 @@ func NewServer() *negroni.Negroni {
 		IndentJSON:    true,
 		UnEscapeHTML:  true,
 		IsDevelopment: true,
+		Funcs: []template.FuncMap{
+			template.FuncMap{"UniqueAt": models.UniqueAt},
+		},
 	})
 
 	jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{

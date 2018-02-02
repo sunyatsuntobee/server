@@ -23,7 +23,7 @@ func consoleOrganizationsGetHandler() http.HandlerFunc {
 				"console/organizations/organizations_list", data)
 		} else {
 			id, _ := strconv.Atoi(req.FormValue("id"))
-			data := models.OrganizationFullDAO.FindFullByID(id)
+			data := models.OrganizationDAO.FindFullByID(id)
 			formatter.HTML(w, http.StatusOK,
 				"console/organizations/organization", data)
 		}

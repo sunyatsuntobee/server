@@ -7,10 +7,14 @@
   <body>
     <div class="container">
       {{template "partials/console/nav"}}
+      {{range .}}
       <div class="card w-100 mt-3">
-        {{range .}}
         <div class="row">
+          {{if .LogoURL}}
           <img src="{{.LogoURL}}" class="icon-h">
+          {{else}}
+          <img src="/static/assets/tobee.png" class="icon-h">
+          {{end}}
           <div class="card-body">
             <h5 class="card-title">{{.Name}}</h5>
             <h5 class="card-subtitle mb-3">{{.Collage}}</h5>
@@ -20,8 +24,8 @@
             <a href="/organizations?id={{.ID}}" class="btn btn-primary">详情</a>
           </div>
         </div>
-        {{end}}
       </div>
+      {{end}}
     </div>
   </body>
 </html>

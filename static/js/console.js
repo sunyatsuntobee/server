@@ -1,7 +1,7 @@
 $(function() {
   $(".nav-link[href='"+window.location.pathname+"']").addClass("active")
   $("a.back").click(function() {
-    window.location = window.location.pathname;
+    window.history.back();
   });
   $("a.edit").click(function() {
     $(".need-enable").prop("disabled", false);
