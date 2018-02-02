@@ -11,6 +11,10 @@ p, .text-small {
   font-size: 10pt;
 }
 
+p {
+  word-wrap: break-word !important;
+}
+
 .display-none {
   display: none;
 }

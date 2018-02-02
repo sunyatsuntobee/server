@@ -6,7 +6,7 @@ type Activity struct {
 	Name           string `xorm:"name VARCHAR(45) NOTNULL"`
 	Description    string `xorm:"description VARCHAR(100) NOTNULL"`
 	Category       string `xorm:"category VARCHAR(45) NOTNULL"`
-	PosterUrl      string `xorm:"poster_url VARCHAR(45)"`
+	PosterURL      string `xorm:"poster_url VARCHAR(45)"`
 	LogoURL        string `xorm:"logo_url VARCHAR(45)"`
 	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)"`
 }

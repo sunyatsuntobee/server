@@ -12,21 +12,31 @@
       {{$activity := $first.Activity}}
       <div class="card w-100 mt-3 mb-3">
         <div class="row">
-          {{if $activity.LogoURL}}
-          <img src="{{$activity.LogoURL}}" class="icon-h">
-          {{else if $organization.LogoURL}}
-          <img src="{{$organization.LogoURL}}" class="icon-h">
-          {{else}}
-          <img src="/static/assets/tobee.png" class="icon-h">
-          {{end}}
-          <div class="card-body">
-            <h5 class="card-subtitle mb-3">{{$activity.Name}}</h5>
-            <h6 class="card-title">{{$organization.Name}}</h5>
+          <div class="col-sm-2 my-auto">
+            {{if $activity.LogoURL}}
+            <img src="{{$activity.LogoURL}}" class="icon-h col-sm-3">
+            {{else if $organization.LogoURL}}
+            <img src="{{$organization.LogoURL}}" class="icon-h">
+            {{else}}
+            <img src="/static/assets/tobee.png" class="icon-h">
+            {{end}}
+          </div>
+          <div class="card-body col-sm-10">
+            <h5 class="card-title">
+              {{$activity.Name}} [{{$activity.Category}}]
+            </h5>
+            <h6 class="card-subtitle mb-3">{{$organization.Name}}</h5>
             <p class="card-text text-small">
               {{$activity.Description}}
             </p>
-            <a href="/organizations?id={{$organization.ID}}"
-              class="btn btn-primary">社团详情</a>
+            <div class="mt-5">
+              <a href="/organizations?id={{$organization.ID}}">社团详情</a>
+              {{if $activity.PosterURL}}
+                <a href="{{$activity.PosterURL}}">海报下载</a>
+              {{else}}
+                <a href="#" class="ml-3 text-muted">暂无海报</a>
+              {{end}}
+            </div>
           </div>
         </div>
       </div>
