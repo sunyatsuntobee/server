@@ -1,0 +1,50 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# ToBEE
+
+RESTful API for ToBEE Application.
+
+## Collection Users [/users]
+
+### List all users [GET /users]
+
++ Response 200 (application/json)
+
+## Collection Organizations [/organizations]
+
+### List all organizations [GET /organizations]
+
++ Response 200 (application/json)
+
+## Collection Activities [/activities]
+
+### List activities [GET /activities{?oid}]
+
++ Parameters
+
+    - oid : 1 (int) - ID of an organization
+
++ Response 200 (application/json)
+
+## Collection ActivityStages [/activitystages]
+
+### List activity stages [GET /activitystages{?aid}]
+
++ Parameters
+
+    - aid : 1 (int) - ID of an activity
+    
++ Response 200 (application/json)
+
+## Collection PhotoLives [/photolives]
+
+### List photo lives [GET /photolives]
+
++ Response 200 (application/json)
+
+### Create a new photo live [POST /photolives]
+
++ Request (application/json)
+
++ Response 201
