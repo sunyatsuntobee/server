@@ -17,6 +17,7 @@ func usersGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
+		w.Header().Set("Access-Control-Allow-Origin", cor)
 		if req.FormValue("id") == "" {
 			users := models.UserDAO.FindAll()
 			formatter.JSON(w, http.StatusOK, users)

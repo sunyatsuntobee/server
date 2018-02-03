@@ -30,9 +30,15 @@ type OrganizationFull struct {
 
 // ActivityFull contains all information for an Entity Activity
 type ActivityFull struct {
-	Activity     `xorm:"extends"`
-	Stage        ActivityStage `xorm:"extends"`
-	Organization `xorm:"extends"`
+	Activity     `xorm:"extends" json:"activity"`
+	Stage        ActivityStage `xorm:"extends" json:"stage"`
+	Organization `xorm:"extends" json:"organization"`
+}
+
+// PhotoFull contains all information for an Entity Photo
+type PhotoFull struct {
+	Photo `xorm:"extends"`
+	User  `xorm:"extends"`
 }
 
 func UniqueAt(col string, from interface{}) interface{} {

@@ -16,13 +16,18 @@
       <form>
         <div class="form-row">
           <div class="form-group col">
-            <label for="inputOrganization">请选择社团</label>
+            <label for="inputOrganization">社团</label>
             <select class="form-control" id="inputOrganization">
+              <option value=-1>请选择</option>
+              {{range .}}
+              <option value={{.ID}}>{{.Name}}</option>
+              {{end}}
             </select>
           </div>
           <div class="form-group col">
             <label for="inputActivity">请选择社团活动</label>
             <select class="form-control" id="inputActivity">
+              <option value=-1>请选择</option>
             </select>
           </div>
         </div>
@@ -30,7 +35,7 @@
           <div class="form-group col">
             <label for="inputActivityStage">请选择活动阶段</label>
             <select class="form-control" id="inputActivityStage">
-              <option>无</option>
+              <option value=-1>请选择</option>
             </select>
           </div>
           <div class="form-group col">
@@ -48,23 +53,28 @@
           <div class="form-group col">
             <label for="inputManager">请选择对接负责人</label>
             <select class="form-control" id="inputManager">
-              <option>无</option>
+              <option value=-1>无</option>
             </select>
           </div>
           <div class="form-group col">
             <label for="inputPhotographerManager">请选择摄影监理</label>
             <select class="form-control" id="inputPhotographerManager">
-              <option>无</option>
+              <option value=-1>无</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="inputSupervisor">社团联络人</label>
-          <select class="form-control mb-2" id="inputSupervisor">
-          </select>
-          <button type="button" class="btn btn-primary col">添加联络人</button>
+          <div id="supervisor-group">
+            <select class="form-control mb-2 inputSupervisor">
+              <option value=-1>无</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-light col">添加联络人</button>
         </div>
       </form>
     </div>
+
+    <script src="/static/js/console/photo_live_add.js" charset="utf-8"></script>
   </body>
 </html>

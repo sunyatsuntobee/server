@@ -36,7 +36,7 @@ INSERT INTO organization_departments(name, organization_id) VALUES(
     1
 );
 
-INSERT INTO activities(name, description, category, poster_url, logo,
+INSERT INTO activities(name, description, category, poster_url, logo_url,
 	organization_id) VALUES(
 	'长白山山顶自嗨活动',
     '丰富学生课余生活',
@@ -46,13 +46,23 @@ INSERT INTO activities(name, description, category, poster_url, logo,
     1
 );
 
-INSERT INTO activities(name, description, category, poster_url, logo,
+INSERT INTO activities(name, description, category, poster_url, logo_url,
 	organization_id) VALUES(
 	'麻将大赛',
     '丰富学生课余生活',
     '益智',
     null,
     null,
+    2
+);
+
+INSERT INTO activity_stages(stage_num, start_time, end_time, location, content,
+	activity_id) VALUES(
+	1,
+    '2018-12-25 13:00:00',
+    '2018-12-25 18:00:00',
+    '广东省白山市',
+    '点炮',
     2
 );
 
@@ -110,7 +120,7 @@ INSERT INTO photos(url, took_time, took_location, release_time,
 	'2019-1-25 13:00:00',
     '广州大山中学',
     '2019-1-25 14:00:00',
-    '风景',
+    '新闻',
     1,
     '无',
     1
@@ -122,7 +132,7 @@ INSERT INTO photos(url, took_time, took_location, release_time,
 	'2019-1-24 13:00:00',
     '广州华师',
     '2019-1-24 14:00:00',
-    '建筑',
+    '微距',
     1,
     '无',
     1
@@ -218,12 +228,12 @@ INSERT INTO administrator_login_logs(login_time, login_location,
     1
 );
 
-INSERT INTO user_organization_relationships(user_id, organizaton_id) VALUES(
+INSERT INTO user_organization_relationships(user_id, organization_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO user_organization_relationships(user_id, organizaton_id) VALUES(
+INSERT INTO user_organization_relationships(user_id, organization_id) VALUES(
 	2,
     2
 );

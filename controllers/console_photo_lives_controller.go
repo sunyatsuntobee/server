@@ -38,8 +38,10 @@ func consolePhotoLivesGetHandler() http.HandlerFunc {
 func consolePhotoLivesAddGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		data := models.OrganizationDAO.FindAll()
 		formatter.HTML(w, http.StatusOK,
-			"console/photo_lives/photo_live_add", nil)
+			"console/photo_lives/photo_live_add", data)
 	}
 
 }

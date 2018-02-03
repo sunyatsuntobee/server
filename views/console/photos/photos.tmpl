@@ -47,7 +47,7 @@
                   class="dropdown-item">天文</a>
               </div>
               <div class="col">
-                <a href="/photos?category=其它e"
+                <a href="/photos?category=其它"
                   class="dropdown-item">其它</a>
                 <a href="/photos?category=未通过"
                   class="dropdown-item">未通过</a>
@@ -57,6 +57,24 @@
         </div>
         <a class="nav-link w-50 text-sm-center"
           href="/photos?category=未审核">未审核</a>
+      </div>
+      <div class="row w-100 mx-auto mt-3">
+        {{range .}}
+        <a href="/photos?id={{.Photo.ID}}" class="card col-sm-3">
+          <img src="{{.URL}}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{.Photo.TookLocation}}</h5>
+            <p class="card-text">
+              {{.User.Username}}
+            </p>
+            <footer>
+              <small class="text-muted">
+                拍摄于 {{.Photo.TookTime.Format "2006-01-02 15:04"}}
+              </small>
+            </footer>
+          </div>
+        </a>
+        {{end}}
       </div>
     </div>
   </body>

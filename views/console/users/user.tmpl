@@ -26,7 +26,11 @@
           </div>
           <div class="form-group ml-auto">
             <label for="" class="sr-only">用户头像</label>
+            {{if .AvatarURL}}
             <img src="{{.AvatarURL}}" class="form-control icon">
+            {{else}}
+            <img src="/static/assets/tobee.png" class="form-control icon">
+            {{end}}
           </div>
         </div>
         <div class="form-group">

@@ -63,3 +63,30 @@ func (*PhotoDataAccessObject) FindByCategory(category string) []Photo {
 	logger.LogIfError(err)
 	return l
 }
+
+func (*PhotoDataAccessObject) FindFullByCategory(category string) []PhotoFull {
+	l := make([]PhotoFull, 0)
+	err := orm.Table(PhotoDAO.TableName()).
+		Join("INNER", UserDAO.TableName(), "photos.photographer_id=users.id").
+		Where("photos.category=?", category).Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+func (*PhotoDataAccessObject) FindFullAll() []PhotoFull {
+	l := make([]PhotoFull, 0)
+	err := orm.Table(PhotoDAO.TableName()).
+		Join("INNER", UserDAO.TableName(), "photos.photographer_id=users.id").
+		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+func (*PhotoDataAccessObject) FindFullByID(id int) (PhotoFull, bool) {
+	var photo PhotoFull
+	has, err := orm.Table(PhotoDAO.TableName()).
+		Join("INNER", UserDAO.TableName(), "photos.photographer_id=users.id").
+		Where("photos.id=?", id).Get(&photo)
+	logger.LogIfError(err)
+	return photo, has
+}

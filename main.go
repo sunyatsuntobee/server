@@ -8,5 +8,5 @@ import (
 func main() {
 	server := controllers.NewServer()
 	server.Run(":8080")
-	logger.I.Println("Server is running")
+	logger.I.Println("Web Server is running")
 }

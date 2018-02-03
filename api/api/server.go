@@ -8,6 +8,10 @@ import (
 	"github.com/urfave/negroni"
 )
 
+const (
+	cor string = "*"
+)
+
 var (
 	formatter     *render.Render
 	jwtMiddleware *jwtmiddleware.JWTMiddleware
@@ -28,13 +32,15 @@ func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	router := mux.NewRouter()
 
-	InitRouter(router)
+	initRouter(router)
 
 	n.UseHandler(router)
 
 	return n
 }
 
-func InitRouter(router *mux.Router) {
+func initRouter(router *mux.Router) {
 	initCollectionUsersRouter(router)
+	initCollectionActivitiesRouter(router)
+	initCollectionActivityStagesRouter(router)
 }
