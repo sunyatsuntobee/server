@@ -1,49 +1,38 @@
-[ERROR]2018/02/02 16:24:33 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:24:39 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:24:45 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:26:30 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:26:33 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:26:35 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:26:37 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:26:42 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:28:24 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:28:36 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:28:41 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:29:15 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:31:28 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:31:44 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:31:46 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:31:48 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:32:16 Error 1066: Not unique table/alias: 'users'
-[ERROR]2018/02/02 16:32:20 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:39:58 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:40:17 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:40:22 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:40:41 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:40:44 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:41:02 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:41:12 invalid connection
-[ERROR]2018/02/02 16:41:59 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:41:59 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:23 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:23 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:24 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:28 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:42:45 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:43:55 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:43:55 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:44:52 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:44:55 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:44:58 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:45:00 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
-[ERROR]2018/02/02 16:45:02 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+[ERROR]2018/02/02 19:09:13 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 19:09:18 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 20:03:09 invalid connection
+[ERROR]2018/02/02 21:09:16 invalid connection
+[ERROR]2018/02/02 21:20:47 invalid connection
+[ERROR]2018/02/02 21:20:52 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 21:21:43 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 21:32:53 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 21:39:01 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+[ERROR]2018/02/02 21:39:03 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+[ERROR]2018/02/02 21:39:06 Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+[ERROR]2018/02/02 21:39:09 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 21:39:15 invalid connection
+[ERROR]2018/02/02 21:53:33 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 21:53:37 invalid connection
+[ERROR]2018/02/02 21:59:54 invalid connection
+[ERROR]2018/02/02 22:16:20 invalid connection
+[ERROR]2018/02/02 22:35:08 invalid connection
+[ERROR]2018/02/02 22:40:53 invalid connection
+[ERROR]2018/02/02 22:59:15 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 22:59:17 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 22:59:26 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 22:59:32 invalid connection
+[ERROR]2018/02/02 23:05:25 invalid connection
+[ERROR]2018/02/02 23:12:39 invalid connection
+[ERROR]2018/02/02 23:23:39 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 23:23:43 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/02 23:33:39 invalid connection
+[ERROR]2018/02/02 23:43:56 invalid connection
+[ERROR]2018/02/02 23:52:39 invalid connection
+[ERROR]2018/02/02 23:55:08 Error 1066: Not unique table/alias: 'users'
+[ERROR]2018/02/03 00:05:56 invalid connection
+[ERROR]2018/02/03 00:13:10 invalid connection
+[ERROR]2018/02/03 00:25:27 invalid connection
+[ERROR]2018/02/03 00:36:13 invalid connection
+[ERROR]2018/02/03 00:41:50 invalid connection
+[ERROR]2018/02/03 00:53:20 invalid connection
+[ERROR]2018/02/03 00:53:21 invalid connection
