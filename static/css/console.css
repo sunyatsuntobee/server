@@ -22,14 +22,20 @@ p {
 .w-600px {
   width: 600px;
 }
+
 .head-sculpture {
   box-shadow: 0 1px 3px rgba(0,0,0,.25);
   border-radius: 4px;
-  height: 40px;
-  width: 40px;
+  height: 20px;
+  width: 20px;
   background-size: cover;
   display: inline-block;
 }
+
+.table-radius{
+  border-radius: 15px;
+}
+
 .user-link {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -38,6 +44,7 @@ p {
   -ms-flex-align: center;
   align-items: center;
 }
+
 .user-name {
   margin-left: 15px;
 }
@@ -47,6 +54,15 @@ p {
 }
 
 .user-rank {
-  padding-top: 8px;
-  padding-left: 12px;
+  padding-left: 10px;
+}
+
+.user-page {
+  margin-bottom: 10px;
+  padding: 15px 20px 0;
+  background-color: #FFF;
+}
+
+.table-backcolor {
+  background-color: #FFF;
 }
