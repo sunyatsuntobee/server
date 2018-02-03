@@ -6,6 +6,7 @@
   </head>
   <body>
     <div class="container">
+
       {{template "partials/console/nav"}}
       <table class="table table-striped table-bordered">
         <thead class="col-md-12">
@@ -17,20 +18,22 @@
             </tr>
         </thead>
         <tbody class="col-md-12">
-          {{range .}}
+          {{ range .}}
+
           <tr class="row mx-0">
-
             <td class="col-6">
-              <a class="user-link" href="/users?id={{.ID}}">
-              {{if .AvatarURL}}
-              <span class = "head-sculpture" style = "background-image:url('{{.LogoURL}}');"></span>
-              {{else}}
-              <span class = "head-sculpture" style = "background-image:url('/static/assets/tobee.png');" ></span>
-              {{end}}
-              <span class = "user-name">{{.Username}}</span>
-              </a>
+              <div class="row">
+                <div class="col-md-1 user-rank">#1</div>
+                <a class="col-md-11 user-link" href="/users?id={{.ID}}">
+                {{if .AvatarURL}}
+                <span class = "head-sculpture" style = "background-image:url('{{.LogoURL}}');"></span>
+                {{else}}
+                <span class = "head-sculpture" style = "background-image:url('/static/assets/tobee.png');" ></span>
+                {{end}}
+                <span class = "user-name">{{.Username}}</span>
+                </a>
+              </div>
             </td>
-
             <td class="col-2 text-center">{{.Location}}</td>
             <td class="col-2 text-center">{{.CreateTime}}</td>
             <td class="col-2 text-center">{{.VIP}}</td>
