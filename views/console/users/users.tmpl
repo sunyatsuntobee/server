@@ -8,41 +8,44 @@
     <div class="container">
 
       {{template "partials/console/nav"}}
-      <div class="user-page">
-      <table class="table text-nowrap" style="border-collapse:separate; border-spacing:0 2px">
-        <thead class="col-md-12">
-            <tr class="row mx-0">
+      <table class="table table-sm table-hover border-none">
+        <thead>
+            <tr class="row mx-0 px-5">
               <th class="col-6 text-center"></th>
               <th class="col-2 text-center text-muted">地区</th>
               <th class="col-2 text-center text-muted">创建时间</th>
-              <th class="col-2 text-center text-muted">是否为VIP</th>
+              <th class="col-2 text-center text-muted">否VIP</th>
             </tr>
         </thead>
-        <tbody class="col-md-12">
-          {{ range .}}
-
-          <tr class="row mx-0 table-radius table-active">
-            <td class="col-6">
-              <div class="row">
-                <div class="col-md-1 user-rank">#1</div>
-                <a class="col-md-11 user-link" href="/users?id={{.ID}}">
-                {{if .AvatarURL}}
-                <span class = "head-sculpture" style = "background-image:url('{{.LogoURL}}');"></span>
-                {{else}}
-                <span class = "head-sculpture" style = "background-image:url('/static/assets/tobee.png');" ></span>
-                {{end}}
-                <span class = "user-name">{{.Username}}</span>
-                </a>
-              </div>
+        <tbody>
+          {{range .}}
+          <tr class="row mx-0 table-radius px-5" style="height: 50px">
+            <input id="userID" type="hidden" value="{{.ID}}">
+            <td class="col-6 my-auto">
+              {{if .AvatarURL}}
+              <img class="head-sculpture" src="{{.AvatarURL}}">
+              {{else}}
+              <img class="head-sculpture" src="/static/assets/tobee.png">
+              {{end}}
+              <span class = "user-name">{{.Username}}</span>
             </td>
-            <td class="col-2 text-center text-muted">{{.Location}}</td>
-            <td class="col-2 text-center text-muted">{{.CreateTime}}</td>
-            <td class="col-2 text-center text-muted">{{.VIP}}</td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{.Location}}
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{.CreateTime.Format "2006-01-02 15:04"}}
+            </td>
+            {{if .VIP}}
+            <td class="col-2 text-center text-muted my-auto">是</td>
+            {{else}}
+            <td class="col-2 text-center text-muted my-auto">否</td>
+            {{end}}
           </tr>
           {{end}}
         </tbody>
       </table>
     </div>
-    </div>
+
+    <script src="/static/js/console/users.js" charset="utf-8"></script>
   </body>
 </html>
