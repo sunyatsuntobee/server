@@ -7,10 +7,7 @@
   <body>
     <div class="container">
       {{template "partials/console/nav"}}
-      {{$list := .}}
-      {{$lastID := -1}}
-      {{range $index := $list}}
-      {{if $lastID ne .PhotoLive.ID}}
+      {{range UniqueAt "PhotoLive" .}}
       <div class="card w-100">
         <div class="row">
           <img src="/static/assets/tobee.png" alt="" class="icon">
@@ -31,8 +28,6 @@
           </div>
         </div>
       </div>
-      {{end}}
-      {{$lastID := .PhotoLive.ID}}
       {{end}}
       <a class="btn btn-light btn-lg mt-3 w-100"
         href="/photolives/add">添加</a>

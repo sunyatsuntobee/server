@@ -7,6 +7,7 @@ import (
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/api/api"
 	"github.com/sunyatsuntobee/server/models"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
@@ -40,6 +41,7 @@ func NewServer() *negroni.Negroni {
 	router := mux.NewRouter()
 
 	initRouter(router)
+	api.InitRouter(router)
 
 	n.UseHandler(router)
 

@@ -3,7 +3,6 @@
   <head>
     {{template "partials/console/header"}}
     <title>照片直播业务 - 图蜂后台管理系统</title>
-    <script src="/static/js/console/photo_live.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="container">
@@ -18,7 +17,7 @@
           <div class="form-group col">
             <label for="inputOrganization">社团</label>
             <select class="form-control" id="inputOrganization">
-              <option value=-1>请选择</option>
+              <option value=0>请选择</option>
               {{range .}}
               <option value={{.ID}}>{{.Name}}</option>
               {{end}}
@@ -27,7 +26,7 @@
           <div class="form-group col">
             <label for="inputActivity">请选择社团活动</label>
             <select class="form-control" id="inputActivity">
-              <option value=-1>请选择</option>
+              <option value=0>请选择</option>
             </select>
           </div>
         </div>
@@ -35,7 +34,7 @@
           <div class="form-group col">
             <label for="inputActivityStage">请选择活动阶段</label>
             <select class="form-control" id="inputActivityStage">
-              <option value=-1>请选择</option>
+              <option value=0>请选择</option>
             </select>
           </div>
           <div class="form-group col">
@@ -53,24 +52,29 @@
           <div class="form-group col">
             <label for="inputManager">请选择对接负责人</label>
             <select class="form-control" id="inputManager">
-              <option value=-1>无</option>
+              <option value=0>无</option>
             </select>
           </div>
           <div class="form-group col">
             <label for="inputPhotographerManager">请选择摄影监理</label>
             <select class="form-control" id="inputPhotographerManager">
-              <option value=-1>无</option>
+              <option value=0>无</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="inputSupervisor">社团联络人</label>
-          <div id="supervisor-group">
-            <select class="form-control mb-2 inputSupervisor">
-              <option value=-1>无</option>
-            </select>
+          <div class="supervisor-group">
+            <div class="row w-100 mx-auto">
+              <select class="form-control mb-2 col-sm-11 inputSupervisor">
+                <option value=0>无</option>
+              </select>
+              <button class="btn btn-danger col h-100 ml-2 del">
+                删除
+              </button>
+            </div>
           </div>
-          <button type="button" class="btn btn-light col">添加联络人</button>
+          <button type="button" class="btn btn-light col add">添加联络人</button>
         </div>
       </form>
     </div>
