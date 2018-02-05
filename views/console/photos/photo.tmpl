@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片详情 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <h2 class="h2">
+        {{.Photo.TookLocation}}
+        <span class="text-muted h5">Liked {{.Photo.Likes}}</span>
+      </h2>
+      <h3 class="h3">{{.User.Username}}</h3>
+      <small class="text-muted">
+        拍摄于 {{.Photo.TookTime.Format "2006-01-02 15:04"}}
+      </small><br>
+      <small class="text-muted">
+        发布于 {{.Photo.ReleaseTime.Format "2006-01-02 15:04"}}
+      </small>
+      <hr>
+      <img src="{{.Photo.URL}}" class="display-block mx-auto">
+    </div>
+  </body>
+</html>

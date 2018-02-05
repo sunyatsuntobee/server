@@ -8,15 +8,15 @@ import (
 
 // Photo Model
 type Photo struct {
-	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
-	URL            string    `xorm:"url VARCHAR(45) NOTNULL"`
-	TookTime       time.Time `xorm:"took_time DATETIME NOTNULL"`
-	TookLocation   string    `xorm:"took_location VARCHAR(45) NOTNULL"`
-	ReleaseTime    time.Time `xorm:"release_time DATETIME"`
-	Category       string    `xorm:"category VARCHAR(45) NOTNULL"`
-	Likes          int       `xorm:"likes INT NOTNULL"`
-	RejectReason   string    `xorm:"reject_reason VARCHAR(100)"`
-	PhotographerID int       `xorm:"photographer_id INT NOTNULL INDEX(photographer_id_idx)"`
+	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	URL            string    `xorm:"url VARCHAR(45) NOTNULL" json:"url"`
+	TookTime       time.Time `xorm:"took_time DATETIME NOTNULL" json:"took_time"`
+	TookLocation   string    `xorm:"took_location VARCHAR(45) NOTNULL" json:"took_location"`
+	ReleaseTime    time.Time `xorm:"release_time DATETIME" json:"release_time"`
+	Category       string    `xorm:"category VARCHAR(45) NOTNULL" json:"category"`
+	Likes          int       `xorm:"likes INT NOTNULL" json:"likes"`
+	RejectReason   string    `xorm:"reject_reason VARCHAR(100)" json:"reject_reason"`
+	PhotographerID int       `xorm:"photographer_id INT NOTNULL INDEX(photographer_id_idx)" json:"photographer_id"`
 }
 
 type PhotoDataAccessObject struct{}
@@ -39,8 +39,8 @@ func (*PhotoDataAccessObject) InsertOne(photo *Photo) {
 	logger.LogIfError(err)
 }
 
-func (*PhotoDataAccessObject) UpdateByID(id int, photo *Photo) {
-	_, err := orm.Table(PhotoDAO.TableName()).ID(id).Update(photo)
+func (*PhotoDataAccessObject) UpdateOne(photo *Photo) {
+	_, err := orm.Table(PhotoDAO.TableName()).ID(photo.ID).Update(photo)
 	logger.LogIfError(err)
 }
 
@@ -78,6 +78,15 @@ func (*PhotoDataAccessObject) FindFullAll() []PhotoFull {
 	err := orm.Table(PhotoDAO.TableName()).
 		Join("INNER", UserDAO.TableName(), "photos.photographer_id=users.id").
 		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+func (*PhotoDataAccessObject) FindFullAllWithoutUnchecked() []PhotoFull {
+	l := make([]PhotoFull, 0)
+	err := orm.Table(PhotoDAO.TableName()).
+		Join("INNER", UserDAO.TableName(), "photos.photographer_id=users.id").
+		Where("photos.category!=?", "未审核").Find(&l)
 	logger.LogIfError(err)
 	return l
 }

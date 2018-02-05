@@ -79,3 +79,7 @@ tbody tr:hover {
 table.border-none td,table.border-none th{
  border: none !important;
 }
+
+.display-block {
+  display: block !important;
+}

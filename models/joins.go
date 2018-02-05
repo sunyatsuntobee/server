@@ -37,8 +37,8 @@ type ActivityFull struct {
 
 // PhotoFull contains all information for an Entity Photo
 type PhotoFull struct {
-	Photo `xorm:"extends"`
-	User  `xorm:"extends"`
+	Photo `xorm:"extends" json:"photo"`
+	User  `xorm:"extends" json:"user"`
 }
 
 func UniqueAt(col string, from interface{}) interface{} {

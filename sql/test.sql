@@ -138,6 +138,46 @@ INSERT INTO photos(url, took_time, took_location, release_time,
     1
 );
 
+INSERT INTO photos(url, took_time, took_location,
+	category, likes, photographer_id) VALUES(
+    '/static/assets/tobee.png',
+	'2019-1-24 13:00:00',
+    '未审核1',
+    '未审核',
+    1,
+    1
+);
+
+INSERT INTO photos(url, took_time, took_location,
+	category, likes, photographer_id) VALUES(
+    '/static/assets/tobee.png',
+	'2019-1-24 13:00:00',
+    '未审核2',
+    '未审核',
+    1,
+    1
+);
+
+INSERT INTO photos(url, took_time, took_location,
+	category, likes, photographer_id) VALUES(
+    '/static/assets/tobee.png',
+	'2019-1-24 13:00:00',
+    '未审核3',
+    '未审核',
+    1,
+    1
+);
+
+INSERT INTO photos(url, took_time, took_location,
+	category, likes, photographer_id) VALUES(
+    '/static/assets/tobee.png',
+	'2019-1-24 13:00:00',
+    '未审核4',
+    '未审核',
+    1,
+    1
+);
+
 INSERT INTO photo_tags(tag, photo_id) VALUES(	
 	'风景',
     1

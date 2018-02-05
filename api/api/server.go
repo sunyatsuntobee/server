@@ -27,6 +27,7 @@ func InitRouter(router *mux.Router) {
 	initCollectionActivitiesRouter(router)
 	initCollectionActivityStagesRouter(router)
 	initCollectionPhotoLivesRouter(router)
+	initCollectionPhotosRouter(router)
 }
 
 func optionsHandler() http.HandlerFunc {

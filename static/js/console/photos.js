@@ -2,7 +2,8 @@ $(function() {
   var category = getParameterByName("category");
   if (category == "未审核") {
     $('a[href="/photos?category=未审核"]').addClass("active");
-    $('a[href="#"]').removeClass("active")
+    $('a[href="#"]').removeClass("active");
+    $("a.display-none").show().addClass("display-block");
   }
 });
 

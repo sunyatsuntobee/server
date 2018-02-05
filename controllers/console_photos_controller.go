@@ -11,6 +11,8 @@ import (
 func initConsolePhotosRouter(router *mux.Router) {
 	router.HandleFunc("/photos", consolePhotosGetHandler()).
 		Methods(http.MethodGet)
+	router.HandleFunc("/photos/check", consolePhotosCheckGetHandler()).
+		Methods(http.MethodGet)
 }
 
 func consolePhotosGetHandler() http.HandlerFunc {
@@ -20,7 +22,7 @@ func consolePhotosGetHandler() http.HandlerFunc {
 		category := req.FormValue("category")
 		strID := req.FormValue("id")
 		if category == "" && strID == "" {
-			data := models.PhotoDAO.FindFullAll()
+			data := models.PhotoDAO.FindFullAllWithoutUnchecked()
 			formatter.HTML(w, http.StatusOK, "console/photos/photos", data)
 		} else if category == "" {
 			id, _ := strconv.Atoi(strID)
@@ -34,6 +36,14 @@ func consolePhotosGetHandler() http.HandlerFunc {
 			data := models.PhotoDAO.FindFullByCategory(category)
 			formatter.HTML(w, http.StatusOK, "console/photos/photos", data)
 		}
+	}
+
+}
+
+func consolePhotosCheckGetHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		formatter.HTML(w, http.StatusOK, "console/photos/check", nil)
 	}
 
 }
