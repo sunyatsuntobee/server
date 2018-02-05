@@ -4,13 +4,13 @@ import "github.com/sunyatsuntobee/server/logger"
 
 // Organization Model
 type Organization struct {
-	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
-	Name        string `xorm:"name VARCHAR(45) NOTNULL"`
-	Phone       string `xorm:"phone VARCHAR(45) NOTNULL UNIQUE"`
-	Password    string `xorm:"password VARCHAR(45) NOTNULL"`
-	Collage     string `xorm:"collage VARCHAR(45) NOTNULL"`
-	LogoURL     string `xorm:"logo_url VARCHAR(45)"`
-	Description string `xorm:"description VARCHAR(45)"`
+	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	Name        string `xorm:"name VARCHAR(45) NOTNULL" json:"name"`
+	Phone       string `xorm:"phone VARCHAR(45) NOTNULL UNIQUE" json:"phone"`
+	Password    string `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
+	Collage     string `xorm:"collage VARCHAR(45) NOTNULL" json:"collage"`
+	LogoURL     string `xorm:"logo_url VARCHAR(45)" json:"logo_url"`
+	Description string `xorm:"description VARCHAR(45)" json:"description"`
 }
 
 type OrganizationDataAccessObject struct{}
@@ -47,4 +47,16 @@ func (*OrganizationDataAccessObject) FindFullByID(id int) []OrganizationFull {
 	logger.LogIfError(err)
 	return organizations
 
+}
+
+func (*OrganizationDataAccessObject) FindByID(id int) (Organization, bool) {
+	var o Organization
+	has, err := orm.Table(OrganizationDAO.TableName()).ID(id).Get(&o)
+	logger.LogIfError(err)
+	return o, has
+}
+
+func (*OrganizationDataAccessObject) UpdateOne(o *Organization) {
+	_, err := orm.Table(OrganizationDAO.TableName()).ID(o.ID).Update(o)
+	logger.LogIfError(err)
 }

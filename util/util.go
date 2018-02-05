@@ -1,9 +1,13 @@
 package util
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/base64"
 	"fmt"
+	"image/png"
 	"io"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -39,4 +43,15 @@ func NewJWT(id int, typ int) string {
 	signed, err := token.SignedString("secret")
 	logger.LogIfError(err)
 	return signed
+}
+
+func SaveBase64AsPNG(code string, path string) {
+	unbased, err := base64.StdEncoding.DecodeString(code)
+	logger.LogIfError(err)
+	r := bytes.NewReader(unbased)
+	img, err := png.Decode(r)
+	logger.LogIfError(err)
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, os.ModePerm)
+	logger.LogIfError(err)
+	png.Encode(file, img)
 }

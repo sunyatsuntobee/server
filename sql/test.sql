@@ -102,8 +102,8 @@ INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
 
 INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
 	description, occupation, collage) VALUES(
-	'test_user1',
-    '15814092425',
+	'test_user2',
+    '15814444444',
     '5f4dcc3b5aa765d61d8327deb882cf99',
 	'广东省广州市',
     0,
