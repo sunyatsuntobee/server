@@ -3,7 +3,6 @@ package api
 import (
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/models"
@@ -66,9 +65,7 @@ func organizationsPutHandler() http.HandlerFunc {
 		old.Password = req.FormValue("password")
 		old.Collage = req.FormValue("collage")
 		path := "static/assets/" + req.FormValue("id") + ".png"
-		uri := req.FormValue("logo_url")
-		b64data := uri[strings.IndexByte(uri, ',')+1:]
-		util.SaveBase64AsPNG(b64data, path)
+		util.SaveBase64AsPNG(req.FormValue("logo_url"), path)
 		old.LogoURL = "/" + path
 
 		old.Description = req.FormValue("description")

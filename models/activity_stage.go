@@ -14,8 +14,7 @@ type ActivityStage struct {
 	EndTime    time.Time `xorm:"end_time DATETIME NOTNULL" json:"end_time"`
 	Location   string    `xorm:"location VARCHAR(45) NOTNULL" json:"location"`
 	Content    string    `xorm:"content VARCHAR(200) NOTNULL" json:"content"`
-	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)"
-	json:"activity_id"`
+	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
 }
 
 type ActivityStageDataAccessObject struct{}
@@ -26,10 +25,22 @@ func (*ActivityStageDataAccessObject) TableName() string {
 	return "activity_stages"
 }
 
+func (*ActivityStageDataAccessObject) InsertOne(stage *ActivityStage) {
+	_, err := orm.Table(ActivityStageDAO.TableName()).Insert(stage)
+	logger.LogIfError(err)
+}
+
 func (*ActivityStageDataAccessObject) FindByAID(aid int) []ActivityStage {
 	l := make([]ActivityStage, 0)
 	err := orm.Table(ActivityStageDAO.TableName()).Where("activity_id=?", aid).
 		Find(&l)
 	logger.LogIfError(err)
 	return l
+}
+
+func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
+	var buf ActivityStage
+	_, err := orm.Table(ActivityStageDAO.TableName()).
+		Where("activity_id=?", aid).Unscoped().Delete(&buf)
+	logger.LogIfError(err)
 }

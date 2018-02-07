@@ -21,6 +21,32 @@ func (*ActivityDataAccessObject) TableName() string {
 	return "activities"
 }
 
+func (*ActivityDataAccessObject) UpdateOne(activity *Activity) {
+	_, err := orm.Table(ActivityDAO.TableName()).ID(activity.ID).
+		Update(activity)
+	logger.LogIfError(err)
+}
+
+func (*ActivityDataAccessObject) FindByID(id int) (Activity, bool) {
+	var activity Activity
+	has, err := orm.Table(ActivityDAO.TableName()).ID(id).Get(&activity)
+	logger.LogIfError(err)
+	return activity, has
+}
+
+func (*ActivityDataAccessObject) FindFullByID(id int) []ActivityFull {
+	l := make([]ActivityFull, 0)
+	err := orm.Table(ActivityDAO.TableName()).
+		Join("INNER", ActivityStageDAO.TableName(),
+			"activities.id=activity_stages.activity_id").
+		Join("INNER", OrganizationDAO.TableName(),
+			"activities.organization_id=organizations.id").
+		Where("activities.id=?", id).Asc("stage_num").
+		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
 func (*ActivityDataAccessObject) FindFullByOID(oid int) []ActivityFull {
 	activities := make([]ActivityFull, 0)
 	err := orm.Table(ActivityDAO.TableName()).

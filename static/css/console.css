@@ -1,10 +1,27 @@
 .icon {
+  display: block;
+  max-width: 184px;
+  max-height: 184px;
+  width: auto;
+  height: auto;
+}
+
+.icon-container {
   width: 184px;
   height: 184px;
 }
 
 .icon-h {
   height: 184px;
+}
+
+.croppie-container {
+  position: relative;
+  z-index: 2000 !important;
+}
+
+.cr-slider-wrap {
+  background-color: white;
 }
 
 p, .text-small {

@@ -11,20 +11,21 @@ $(function() {
     $("label[for='inputLogo']").html(file.name);
     var reader = new FileReader();
     reader.onload = function(e) {
-      $("img.icon").attr("src", e.target.result);
-      var avatarCroppie = $("img.icon").croppie({
+      $(".croppie-container").children().remove();
+      var avatarCroppie = $("div.logo-croppie").croppie({
         viewport: {
           width: 184,
           height: 184
         }
       });
+      avatarCroppie.croppie("bind", {
+        url: e.target.result
+      });
+      $(".croppie-container").show();
       $("button.upload").off("click").click(function() {
         avatarCroppie.croppie("result", "base64").then(function(base64) {
-          $("div.form-avatar").prepend(
-            "<img class='form-control icon mb-4 mx-auto'>"
-          );
           $("img.icon").attr("src", base64);
-          $(".croppie-container").remove();
+          $(".croppie-container").hide();
         });
       });
     }

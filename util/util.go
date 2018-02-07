@@ -8,6 +8,7 @@ import (
 	"image/png"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -46,6 +47,7 @@ func NewJWT(id int, typ int) string {
 }
 
 func SaveBase64AsPNG(code string, path string) {
+	code = code[strings.IndexByte(code, ',')+1:]
 	unbased, err := base64.StdEncoding.DecodeString(code)
 	logger.LogIfError(err)
 	r := bytes.NewReader(unbased)

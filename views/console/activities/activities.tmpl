@@ -7,59 +7,74 @@
   <body>
     <div class="container">
       {{template "partials/console/nav"}}
-      {{$first := index . 0}}
-      {{$organization := $first.Organization}}
-      {{$activity := $first.Activity}}
-      <div class="card w-100 mt-3 mb-3">
+      {{$list := .}}
+      {{$first := index $list 0}}
+      <div class="card w-100 mt-3">
         <div class="row w-100 mx-auto p-4">
-          {{if $activity.LogoURL}}
-          <img src="{{$activity.LogoURL}}" class="icon-h col-sm-3">
-          {{else if $organization.LogoURL}}
-          <img src="{{$organization.LogoURL}}" class="icon-h">
+          {{if $first.Organization.LogoURL}}
+          <img src="{{$first.Organization.LogoURL}}" class="icon-h">
           {{else}}
           <img src="/static/assets/tobee.png" class="icon-h">
           {{end}}
-          <div class="card-body ml-3">
-            <h5 class="card-title">
-              {{$activity.Name}} [{{$activity.Category}}]
-            </h5>
-            <h6 class="card-subtitle mb-3">{{$organization.Name}}</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{$first.Organization.Name}}</h5>
+            <h5 class="card-subtitle mb-3">{{$first.Organization.Collage}}</h5>
             <p class="card-text text-small">
-              {{$activity.Description}}
+              {{$first.Organization.Description}}
             </p>
-            <div class="mt-5">
-              <a href="/organizations?id={{$organization.ID}}">社团详情</a>
-              {{if $activity.PosterURL}}
-                <a href="{{$activity.PosterURL}}">海报下载</a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-sm table-hover border-none">
+        <thead>
+            <tr class="row mx-0 px-5">
+              <th class="col-6 text-center"></th>
+              <th class="col-2 text-center text-muted">类别</th>
+              <th class="col-2 text-center text-muted">海报</th>
+              <th class="col-2 text-center text-muted"></th>
+            </tr>
+        </thead>
+        <tbody id="accordion">
+          {{range $index, $ele := UniqueAt "Activity" $list}}
+          <tr class="row mx-0 table-radius px-5"
+            data-toggle="collapse" data-target="#{{$index}}"
+            aria-expanded="true" aria-controls="{{$index}}">
+            <td class="col-6 my-auto py-4">
+              {{if .Activity.LogoURL}}
+              <img class="head-sculpture" src="{{.Activity.LogoURL}}">
               {{else}}
-                <a href="#" class="ml-3 text-muted">暂无海报</a>
+              <img class="head-sculpture" src="/static/assets/tobee.png">
               {{end}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="accordion">
-        {{range .}}
-        <div class="card">
-          <div class="card-header" id="heading{{.Stage.StageNum}}">
-            <button class="btn btn-link collapsed" data-toggle="collapse"
-              data-target="#collapse{{.Stage.StageNum}}" aria-expanded="true"
-              aria-controls="collapse">
-              阶段{{.Stage.StageNum}} {{.Stage.Location}}
-              {{.Stage.StartTime.Format "2006-01-02 15:04"}} ~
-              {{.Stage.EndTime.Format "2006-01-02 15:04"}}
-            </button>
-          </div>
-          <div id="collapse{{.Stage.StageNum}}" class="collapse"
-            aria-labelledby="heading{{.Stage.StageNum}}"
-            data-parent="#accordion">
-            <div class="card-body">
-              {{.Stage.Content}}
-            </div>
-          </div>
-        </div>
-        {{end}}
-      </div>
+              <span class="h5">{{.Activity.Name}}</span>
+              <p class="text-small mt-3 mb-0">{{.Activity.Description}}</p>
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{.Activity.Category}}
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{if .Activity.PosterURL}}
+              <a href="{{.Activity.PosterURL}}">海报链接</a>
+              {{else}}
+              <a href="#">暂无海报</a>
+              {{end}}
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              <a href="/activity?id={{.Activity.ID}}">编辑</a>
+            </td>
+          </tr>
+          <tr class="row mx-0 table-radius px-5">
+            <td class="td-collapse">
+              <input type="hidden" value="{{.Activity.ID}}">
+              <div id="{{$index}}" class="collapse"
+                data-parent="#accordion">
+              </div>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
     </div>
+    <script src="/static/js/moment/moment.min.js" charset="utf-8"></script>
+    <script src="/static/js/console/activities.js" charset="utf-8"></script>
   </body>
 </html>
