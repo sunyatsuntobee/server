@@ -8,19 +8,18 @@ import (
 
 // User Model
 type User struct {
-	ID         int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Username   string    `xorm:"username VARCHAR(45) NOTNULL" json:"username"`
-	Phone      string    `xorm:"phone PK VARCHAR(45) NOTNULL" json:"phone"`
-	Password   string    `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
-	Location   string    `xorm:"location VARCHAR(45) NOTNULL" json:"location"`
-	CreateTime time.Time `xorm:"create_time TIMESTAMP NOTNULL CREATED"
-	json:"create_time"`
-	VIP         bool   `xorm:"vip INT NOTNULL" json:"vip"`
-	AvatarURL   string `xorm:"avatar_url VARCHAR(45)" json:"avatar_url"`
-	Camera      string `xorm:"camera VARCHAR(45)" json:"camera"`
-	Description string `xorm:"description VARCHAR(45)" json:"description"`
-	Occupation  string `xorm:"occupation VARCHAR(45)" json:"occupation"`
-	Collage     string `xorm:"collage VARCHAR(45)" json:"collage"`
+	ID          int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	Username    string    `xorm:"username VARCHAR(45) NOTNULL" json:"username"`
+	Phone       string    `xorm:"phone VARCHAR(45) NOTNULL" json:"phone"`
+	Password    string    `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
+	Location    string    `xorm:"location VARCHAR(45) NOTNULL" json:"location"`
+	CreateTime  time.Time `xorm:"create_time TIMESTAMP NOTNULL CREATED" json:"create_time"`
+	VIP         bool      `xorm:"vip INT NOTNULL" json:"vip"`
+	AvatarURL   string    `xorm:"avatar_url VARCHAR(45)" json:"avatar_url"`
+	Camera      string    `xorm:"camera VARCHAR(45)" json:"camera"`
+	Description string    `xorm:"description VARCHAR(45)" json:"description"`
+	Occupation  string    `xorm:"occupation VARCHAR(45)" json:"occupation"`
+	Collage     string    `xorm:"collage VARCHAR(45)" json:"collage"`
 }
 
 type UserDataAccessObject struct{}
@@ -43,8 +42,8 @@ func (*UserDataAccessObject) InsertOne(user *User) {
 	logger.LogIfError(err)
 }
 
-func (*UserDataAccessObject) UpdateByID(id int, user *User) {
-	_, err := orm.Table(UserDAO.TableName()).ID(id).Update(user)
+func (*UserDataAccessObject) UpdateOne(user *User) {
+	_, err := orm.Table(UserDAO.TableName()).ID(user.ID).Update(user)
 	logger.LogIfError(err)
 }
 
