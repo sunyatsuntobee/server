@@ -15,13 +15,13 @@ type Organization struct {
 
 // NewOrganization creates a new organization
 func NewOrganization(name string, phone string, password string,
-	college string, logoUrl string, description string) *Organization {
+	college string, logoURL string, description string) *Organization {
 	return &Organization{
 		Name:        name,
 		Phone:       phone,
 		Password:    password,
 		College:     college,
-		LogoURL:     logoUrl,
+		LogoURL:     logoURL,
 		Description: description,
 	}
 }

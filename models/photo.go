@@ -19,10 +19,7 @@ type Photo struct {
 	PhotographerID int       `xorm:"photographer_id INT NOTNULL INDEX(photographer_id_idx)" json:"photographer_id"`
 }
 
-type PhotoDataAccessObject struct{}
-
-var PhotoDAO *PhotoDataAccessObject
-
+// NewPhoto creates a new photo
 func NewPhoto(url string, tookTime time.Time, tookLocation string,
 	releaseTime time.Time, category string, likes int,
 	rejectReason string, photographerID int) *Photo {
@@ -38,10 +35,18 @@ func NewPhoto(url string, tookTime time.Time, tookLocation string,
 	}
 }
 
+// PhotoDataAccessObject provides database access for Model Photo
+type PhotoDataAccessObject struct{}
+
+// PhotoDAO instance of PhotoDataAccessObject
+var PhotoDAO *PhotoDataAccessObject
+
+// TableName returns table name
 func (*PhotoDataAccessObject) TableName() string {
 	return "photos"
 }
 
+// FindAll finds all photos
 func (*PhotoDataAccessObject) FindAll() []Photo {
 	photos := make([]Photo, 0)
 	err := orm.Table(PhotoDAO.TableName()).Find(&photos)
@@ -49,22 +54,26 @@ func (*PhotoDataAccessObject) FindAll() []Photo {
 	return photos
 }
 
+// InsertOne inserts a photo
 func (*PhotoDataAccessObject) InsertOne(photo *Photo) {
 	_, err := orm.Table(PhotoDAO.TableName()).InsertOne(photo)
 	logger.LogIfError(err)
 }
 
+// UpdateOne updates a photo
 func (*PhotoDataAccessObject) UpdateOne(photo *Photo) {
 	_, err := orm.Table(PhotoDAO.TableName()).ID(photo.ID).Update(photo)
 	logger.LogIfError(err)
 }
 
+// DeleteByID deletes a photo according to ID
 func (*PhotoDataAccessObject) DeleteByID(id int) {
 	var photo Photo
-	_, err := orm.Table(PhotoDAO.TableName()).ID(id).Unscoped().Delete(&photo)
+	_, err := orm.Table(PhotoDAO.TableName()).ID(id).Delete(&photo)
 	logger.LogIfError(err)
 }
 
+// FindByID finds a photo by ID
 func (*PhotoDataAccessObject) FindByID(id int) (Photo, bool) {
 	var photo Photo
 	has, err := orm.Table(PhotoDAO.TableName()).ID(id).Get(&photo)
@@ -72,6 +81,7 @@ func (*PhotoDataAccessObject) FindByID(id int) (Photo, bool) {
 	return photo, has
 }
 
+// FindByCategory finds photos by category
 func (*PhotoDataAccessObject) FindByCategory(category string) []Photo {
 	l := make([]Photo, 0)
 	err := orm.Table(PhotoDAO.TableName()).Where("category=", category).Find(&l)
@@ -79,6 +89,7 @@ func (*PhotoDataAccessObject) FindByCategory(category string) []Photo {
 	return l
 }
 
+// FindFullByCategory finds joined photos according to category
 func (*PhotoDataAccessObject) FindFullByCategory(category string) []PhotoFull {
 	l := make([]PhotoFull, 0)
 	err := orm.Table(PhotoDAO.TableName()).
@@ -88,6 +99,7 @@ func (*PhotoDataAccessObject) FindFullByCategory(category string) []PhotoFull {
 	return l
 }
 
+// FindFullAll finds all joined photos
 func (*PhotoDataAccessObject) FindFullAll() []PhotoFull {
 	l := make([]PhotoFull, 0)
 	err := orm.Table(PhotoDAO.TableName()).
@@ -97,6 +109,7 @@ func (*PhotoDataAccessObject) FindFullAll() []PhotoFull {
 	return l
 }
 
+// FindFullAllWithoutUnchecked finds all checked joined photos
 func (*PhotoDataAccessObject) FindFullAllWithoutUnchecked() []PhotoFull {
 	l := make([]PhotoFull, 0)
 	err := orm.Table(PhotoDAO.TableName()).
@@ -106,6 +119,7 @@ func (*PhotoDataAccessObject) FindFullAllWithoutUnchecked() []PhotoFull {
 	return l
 }
 
+// FindFullByID finds a joined photo by ID
 func (*PhotoDataAccessObject) FindFullByID(id int) (PhotoFull, bool) {
 	var photo PhotoFull
 	has, err := orm.Table(PhotoDAO.TableName()).

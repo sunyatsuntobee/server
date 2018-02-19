@@ -11,6 +11,7 @@ type UserLoginLog struct {
 	UserID        int       `xorm:"user_id INT NOTNULL INDEX(user_id_idx)"`
 }
 
+// NewUserLoginLog creates a new user login log
 func NewUserLoginLog(loginTime time.Time, loginLocation string,
 	loginDevice string, userID int) *UserLoginLog {
 	return &UserLoginLog{
