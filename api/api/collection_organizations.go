@@ -27,7 +27,7 @@ func organizationsContactsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		models.OrganizationContactRelationshipDAO.DeleteByOID(id)
+		models.OrganizationsContactorsDAO.DeleteByOID(id)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 
@@ -39,10 +39,10 @@ func organizationsContactsPostHandler() http.HandlerFunc {
 		req.ParseForm()
 		oid, _ := strconv.Atoi(req.FormValue("organization_id"))
 		cid, _ := strconv.Atoi(req.FormValue("contact_id"))
-		models.OrganizationContactRelationshipDAO.InsertOne(
-			&models.OrganizationContactRelatonship{
+		models.OrganizationsContactorsDAO.InsertOne(
+			&models.OrganizationsContactors{
 				OrganizationID: oid,
-				ContactID:      cid,
+				ContactorID:    cid,
 			})
 		formatter.JSON(w, http.StatusCreated, nil)
 	}

@@ -5,11 +5,11 @@ import "github.com/sunyatsuntobee/server/logger"
 // Activity Model
 type Activity struct {
 	ID             int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name           string `xorm:"name VARCHAR(45) NOTNULL" json:"name"`
-	Description    string `xorm:"description VARCHAR(100) NOTNULL" json:"description"`
-	Category       string `xorm:"category VARCHAR(45) NOTNULL" json:"category"`
-	PosterURL      string `xorm:"poster_url VARCHAR(45)" json:"poster_url"`
-	LogoURL        string `xorm:"logo_url VARCHAR(45)" json:"logo_url"`
+	Name           string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
+	Description    string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
+	Category       string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
+	PosterURL      string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
+	LogoURL        string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 }
 

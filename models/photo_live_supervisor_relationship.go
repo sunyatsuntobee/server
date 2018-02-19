@@ -2,30 +2,30 @@ package models
 
 import "github.com/sunyatsuntobee/server/logger"
 
-// PhotoLiveSupervisorRelationship Model
-type PhotoLiveSupervisorRelationship struct {
+// PhotoLivesSupervisors Model
+type PhotoLivesSupervisors struct {
 	ID           int `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
 	PhotoLiveID  int `xorm:"photo_live_id INT NOTNULL INDEX(photo_live_id_idx)"`
 	SupervisorID int `xorm:"supervisor_id INT NOTNULL INDEX(supervisor_id_idx)"`
 }
 
-type PhotoLiveSupervisorRDataAccessObject struct{}
+type PhotoLivesSupervisorsDataAccessObject struct{}
 
-var PhotoLiveSupervisorRDAO *PhotoLiveSupervisorRDataAccessObject
+var PhotoLivesSupervisorsDAO *PhotoLivesSupervisorsDataAccessObject
 
-func (*PhotoLiveSupervisorRDataAccessObject) TableName() string {
-	return "photo_live_supervisor_relationships"
+func (*PhotoLivesSupervisorsDataAccessObject) TableName() string {
+	return "photo_lives_supervisors"
 }
 
-func (*PhotoLiveSupervisorRDataAccessObject) InsertOne(
-	r *PhotoLiveSupervisorRelationship) {
-	_, err := orm.Table(PhotoLiveSupervisorRDAO.TableName()).InsertOne(r)
+func (*PhotoLivesSupervisorsDataAccessObject) InsertOne(
+	r *PhotoLivesSupervisors) {
+	_, err := orm.Table(PhotoLivesSupervisorsDAO.TableName()).InsertOne(r)
 	logger.LogIfError(err)
 }
 
-func (*PhotoLiveSupervisorRDataAccessObject) ClearByPLID(plID int) {
-	var buf PhotoLiveSupervisorRelationship
-	_, err := orm.Table(PhotoLiveSupervisorRDAO.TableName()).
+func (*PhotoLivesSupervisorsDataAccessObject) ClearByPLID(plID int) {
+	var buf PhotoLivesSupervisors
+	_, err := orm.Table(PhotoLivesSupervisorsDAO.TableName()).
 		Where("photo_live_id=?", plID).
 		Unscoped().Delete(&buf)
 	logger.LogIfError(err)

@@ -19,17 +19,17 @@ USE `tobee` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `location` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `location` VARCHAR(50) NOT NULL,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `vip` INT NOT NULL,
-  `avatar_url` VARCHAR(45) NULL,
-  `camera` VARCHAR(45) NULL,
-  `description` VARCHAR(100) NULL,
-  `occupation` VARCHAR(45) NULL,
-  `collage` VARCHAR(45) NULL,
+  `avatar_url` VARCHAR(50) NULL,
+  `camera` VARCHAR(50) NULL,
+  `description` VARCHAR(200) NULL,
+  `occupation` VARCHAR(50) NULL,
+  `collage` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
@@ -39,13 +39,13 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`photos` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `url` VARCHAR(45) NOT NULL,
+  `url` VARCHAR(50) NOT NULL,
   `took_time` DATETIME NOT NULL,
-  `took_location` VARCHAR(45) NOT NULL,
+  `took_location` VARCHAR(50) NOT NULL,
   `release_time` DATETIME NULL,
-  `category` VARCHAR(45) NOT NULL,
+  `category` VARCHAR(20) NOT NULL,
   `likes` INT NOT NULL,
-  `reject_reason` VARCHAR(100) NULL,
+  `reject_reason` VARCHAR(200) NULL,
   `photographer_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -63,7 +63,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`photo_tags` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `tag` VARCHAR(45) NOT NULL,
+  `tag` VARCHAR(20) NOT NULL,
   `photo_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -81,12 +81,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`organizations` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `collage` VARCHAR(45) NOT NULL,
-  `logo_url` VARCHAR(45) NULL,
-  `description` VARCHAR(100) NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `collage` VARCHAR(20) NOT NULL,
+  `logo_url` VARCHAR(50) NULL,
+  `description` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `phone_UNIQUE` (`phone` ASC))
@@ -98,7 +98,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`photo_comments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(20) NOT NULL,
   `content` VARCHAR(200) NOT NULL,
   `user_id` INT NOT NULL,
   `photo_id` INT NOT NULL,
@@ -142,11 +142,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`activities` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(100) NOT NULL,
-  `category` VARCHAR(45) NOT NULL,
-  `poster_url` VARCHAR(45) NULL,
-  `logo_url` VARCHAR(45) NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `description` VARCHAR(200) NOT NULL,
+  `category` VARCHAR(10) NOT NULL,
+  `poster_url` VARCHAR(50) NULL,
+  `logo_url` VARCHAR(50) NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -167,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activity_stages` (
   `stage_num` INT NOT NULL,
   `start_time` DATETIME NOT NULL,
   `end_time` DATETIME NOT NULL,
-  `location` VARCHAR(45) NOT NULL,
-  `content` VARCHAR(200) NOT NULL,
+  `location` VARCHAR(20) NOT NULL,
+  `content` VARCHAR(400) NOT NULL,
   `activity_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -188,7 +188,7 @@ COMMENT = '社团活动阶段';
 CREATE TABLE IF NOT EXISTS `tobee`.`photo_lives` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `expect_members` INT NOT NULL,
-  `ad_progress` VARCHAR(100) NOT NULL,
+  `ad_progress` VARCHAR(200) NOT NULL,
   `activity_stage_id` INT NULL,
   `manager_id` INT NULL,
   `photographer_manager_id` INT NULL,
@@ -221,8 +221,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tobee`.`user_login_logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(45) NOT NULL,
-  `login_device` VARCHAR(45) NOT NULL,
+  `login_location` VARCHAR(50) NOT NULL,
+  `login_device` VARCHAR(20) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -241,8 +241,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tobee`.`organization_login_logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(45) NOT NULL,
-  `login_device` VARCHAR(45) NOT NULL,
+  `login_location` VARCHAR(20) NOT NULL,
+  `login_device` VARCHAR(20) NOT NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -260,8 +260,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`administrators` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
   `level` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
@@ -274,8 +274,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tobee`.`administrator_login_logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(45) NOT NULL,
-  `login_device` VARCHAR(45) NOT NULL,
+  `login_location` VARCHAR(20) NOT NULL,
+  `login_device` VARCHAR(20) NOT NULL,
   `administrator_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -289,9 +289,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`user_organization_relationships`
+-- Table `tobee`.`users_organizations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`user_organization_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_organizations` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `organization_id` INT NOT NULL,
@@ -313,9 +313,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`user_user_relationships`
+-- Table `tobee`.`users_users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`user_user_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `liked_user_id` INT NOT NULL,
@@ -337,9 +337,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`user_photo_relationships`
+-- Table `tobee`.`users_photos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`user_photo_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_photos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `liked_photo_id` INT NOT NULL,
@@ -361,9 +361,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`user_activity_relationships`
+-- Table `tobee`.`users_activities`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`user_activity_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_activities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `activity_id` INT NOT NULL,
@@ -385,9 +385,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`organization_contact_relationships`
+-- Table `tobee`.`organizations_contactors`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`organization_contact_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`organizations_contactors` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `organization_id` INT NOT NULL,
   `contact_id` INT NOT NULL,
@@ -409,9 +409,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`photo_live_supervisor_relationships`
+-- Table `tobee`.`photo_lives_supervisors`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`photo_live_supervisor_relationships` (
+CREATE TABLE IF NOT EXISTS `tobee`.`photo_lives_supervisors` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `photo_live_id` INT NOT NULL,
   `supervisor_id` INT NOT NULL,
@@ -435,3 +435,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+activitiesactivities

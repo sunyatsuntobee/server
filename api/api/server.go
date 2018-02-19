@@ -23,6 +23,7 @@ func NewServer() *negroni.Negroni {
 }
 
 func InitRouter(router *mux.Router) {
+	initAuthorizationRouter(router)
 	initCollectionUsersRouter(router)
 	initCollectionActivitiesRouter(router)
 	initCollectionActivityStagesRouter(router)

@@ -12,8 +12,8 @@ type ActivityStage struct {
 	StageNum   int       `xorm:"stage_num INT NOTNULL" json:"stage_num"`
 	StartTime  time.Time `xorm:"start_time DATETIME NOTNULL" json:"start_time"`
 	EndTime    time.Time `xorm:"end_time DATETIME NOTNULL" json:"end_time"`
-	Location   string    `xorm:"location VARCHAR(45) NOTNULL" json:"location"`
-	Content    string    `xorm:"content VARCHAR(200) NOTNULL" json:"content"`
+	Location   string    `xorm:"location VARCHAR(20) NOTNULL" json:"location"`
+	Content    string    `xorm:"content VARCHAR(400) NOTNULL" json:"content"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
 }
 

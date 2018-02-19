@@ -6,7 +6,7 @@ import "github.com/sunyatsuntobee/server/logger"
 type PhotoLive struct {
 	ID                    int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
 	ExpectMembers         int    `xorm:"expect_members INT NOTNULL" json:"expect_members"`
-	AdProgress            string `xorm:"ad_progress VARCHAR(100) NOTNULL" json:"ad_progress"`
+	AdProgress            string `xorm:"ad_progress VARCHAR(200) NOTNULL" json:"ad_progress"`
 	ActivityStageID       int    `xorm:"activity_stage_id INT INDEX(activity_stage_id_idx)" json:"activity_stage_id"`
 	ManagerID             int    `xorm:"manager_id INT INDEX(manager_id_idx)" json:"manager_id"`
 	PhotographerManagerID int    `xorm:"photographer_manager_id INT INDEX(photographer_manager_id_idx)" json:"photographer_manager_id"`

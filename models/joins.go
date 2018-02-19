@@ -7,25 +7,25 @@ import (
 
 // PhotoLiveFull contains all information for an Entity PhotoLive
 type PhotoLiveFull struct {
-	PhotoLive                       `xorm:"extends"`
-	ActivityStage                   `xorm:"extends"`
-	Activity                        `xorm:"extends"`
-	Organization                    `xorm:"extends"`
-	Manager                         User `xorm:"extends"`
-	PhotographerManager             User `xorm:"extends"`
-	PhotoLiveSupervisorRelationship `xorm:"extends"`
-	Supervisor                      User `xorm:"extends"`
+	PhotoLive             `xorm:"extends"`
+	ActivityStage         `xorm:"extends"`
+	Activity              `xorm:"extends"`
+	Organization          `xorm:"extends"`
+	Manager               User `xorm:"extends"`
+	PhotographerManager   User `xorm:"extends"`
+	PhotoLivesSupervisors `xorm:"extends"`
+	Supervisor            User `xorm:"extends"`
 }
 
 // OrganizationFull contains all information for an Entity Organization
 type OrganizationFull struct {
-	Organization                   `xorm:"extends"`
-	OrganizationContactRelatonship `xorm:"extends"`
-	Contactor                      User                   `xorm:"extends"`
-	Department                     OrganizationDepartment `xorm:"extends"`
-	LoginLog                       OrganizationLoginLog   `xorm:"extends"`
-	Activity                       `xorm:"extends"`
-	Stage                          ActivityStage `xorm:"extends"`
+	Organization            `xorm:"extends"`
+	OrganizationsContactors `xorm:"extends"`
+	Contactor               User                   `xorm:"extends"`
+	Department              OrganizationDepartment `xorm:"extends"`
+	LoginLog                OrganizationLoginLog   `xorm:"extends"`
+	Activity                `xorm:"extends"`
+	Stage                   ActivityStage `xorm:"extends"`
 }
 
 // ActivityFull contains all information for an Entity Activity

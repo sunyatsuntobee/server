@@ -37,11 +37,11 @@ func photoLivesPostHandler() http.HandlerFunc {
 			if supervisorID == 0 {
 				continue
 			}
-			relationship := models.PhotoLiveSupervisorRelationship{
+			relationship := models.PhotoLivesSupervisors{
 				PhotoLiveID:  photoLive.ID,
 				SupervisorID: supervisorID,
 			}
-			models.PhotoLiveSupervisorRDAO.InsertOne(&relationship)
+			models.PhotoLivesSupervisorsDAO.InsertOne(&relationship)
 		}
 		formatter.JSON(w, http.StatusCreated, nil)
 	}
@@ -63,17 +63,17 @@ func photoLivesPutHandler() http.HandlerFunc {
 		photoLive.ID, _ = strconv.Atoi(req.FormValue("id"))
 		models.PhotoLiveDAO.UpdateOne(&photoLive)
 		supervisors := strings.Split(req.FormValue("supervisor_ids"), ",")
-		models.PhotoLiveSupervisorRDAO.ClearByPLID(photoLive.ID)
+		models.PhotoLivesSupervisorsDAO.ClearByPLID(photoLive.ID)
 		for i := range supervisors {
 			supervisorID, _ := strconv.Atoi(supervisors[i])
 			if supervisorID == 0 {
 				continue
 			}
-			relationship := models.PhotoLiveSupervisorRelationship{
+			relationship := models.PhotoLivesSupervisors{
 				PhotoLiveID:  photoLive.ID,
 				SupervisorID: supervisorID,
 			}
-			models.PhotoLiveSupervisorRDAO.InsertOne(&relationship)
+			models.PhotoLivesSupervisorsDAO.InsertOne(&relationship)
 		}
 		formatter.JSON(w, http.StatusCreated, nil)
 	}
