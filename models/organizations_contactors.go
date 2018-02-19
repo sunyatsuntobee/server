@@ -9,14 +9,20 @@ type OrganizationsContactors struct {
 	ContactorID    int `xorm:"contactor_id INT NOTNULL INDEX(contact_id_idx)" json:"contact_id"`
 }
 
+// OrganizationsContactorsDataAccessObject provides database access for Model
+// OrganizationsContactors
 type OrganizationsContactorsDataAccessObject struct{}
 
+// OrganizationsContactorsDAO instance of
+// OrganizationsContactorsDataAccessObject
 var OrganizationsContactorsDAO *OrganizationsContactorsDataAccessObject
 
+// TableName returns table name
 func (*OrganizationsContactorsDataAccessObject) TableName() string {
 	return "organizations_contactors"
 }
 
+// NewOrganizationsContactors creates a new relationship
 func NewOrganizationsContactors(organizationID int,
 	contactID int) *OrganizationsContactors {
 	return &OrganizationsContactors{
@@ -25,6 +31,7 @@ func NewOrganizationsContactors(organizationID int,
 	}
 }
 
+// DeleteByOID deletes all contactors according to an organization ID
 func (*OrganizationsContactorsDataAccessObject) DeleteByOID(oid int) {
 	var buf OrganizationsContactors
 	_, err := orm.Table(OrganizationsContactorsDAO.TableName()).
@@ -32,6 +39,7 @@ func (*OrganizationsContactorsDataAccessObject) DeleteByOID(oid int) {
 	logger.LogIfError(err)
 }
 
+// InsertOne inserts a new relationship
 func (*OrganizationsContactorsDataAccessObject) InsertOne(
 	r *OrganizationsContactors) {
 	_, err := orm.Table(OrganizationsContactorsDAO.TableName()).

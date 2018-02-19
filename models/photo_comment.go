@@ -9,6 +9,7 @@ type PhotoComment struct {
 	PhotoID int    `xorm:"photo_id INT NOTNULL INDEX(photo_id_idx)"`
 }
 
+// NewPhotoComment creates a new photo comment
 func NewPhotoComment(title string, content string, userID int,
 	photoID int) *PhotoComment {
 	return &PhotoComment{

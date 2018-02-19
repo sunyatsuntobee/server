@@ -22,12 +22,9 @@ type User struct {
 	College     string    `xorm:"college VARCHAR(45)" json:"college"`
 }
 
-type UserDataAccessObject struct{}
-
-var UserDAO *UserDataAccessObject
-
+// NewUser creates a new user
 func NewUser(username string, phone string, password string, location string,
-	createTime time.Time, vip bool, avatarUrl string, camera string,
+	createTime time.Time, vip bool, avatarURL string, camera string,
 	description string, occupation string, college string) *User {
 	return &User{
 		Username:    username,
@@ -36,7 +33,7 @@ func NewUser(username string, phone string, password string, location string,
 		Location:    location,
 		CreateTime:  createTime,
 		VIP:         vip,
-		AvatarURL:   avatarUrl,
+		AvatarURL:   avatarURL,
 		Camera:      camera,
 		Description: description,
 		Occupation:  occupation,
@@ -44,10 +41,18 @@ func NewUser(username string, phone string, password string, location string,
 	}
 }
 
+// UserDataAccessObject provides database access for Model User
+type UserDataAccessObject struct{}
+
+// UserDAO instance of UserDataAccessObject
+var UserDAO *UserDataAccessObject
+
+// TableName returns table name
 func (*UserDataAccessObject) TableName() string {
 	return "users"
 }
 
+// FindAll finds all users
 func (*UserDataAccessObject) FindAll() []User {
 	l := make([]User, 0)
 	err := orm.Table(UserDAO.TableName()).Find(&l)
@@ -55,16 +60,19 @@ func (*UserDataAccessObject) FindAll() []User {
 	return l
 }
 
+// InsertOne inserts a user
 func (*UserDataAccessObject) InsertOne(user *User) {
 	_, err := orm.Table(UserDAO.TableName()).InsertOne(user)
 	logger.LogIfError(err)
 }
 
+// UpdateOne updates a user
 func (*UserDataAccessObject) UpdateOne(user *User) {
 	_, err := orm.Table(UserDAO.TableName()).ID(user.ID).Update(user)
 	logger.LogIfError(err)
 }
 
+// FindByID finds a user by ID
 func (*UserDataAccessObject) FindByID(id int) (User, bool) {
 	var user User
 	has, err := orm.Table(UserDAO.TableName()).Where("id=?", id).Get(&user)
@@ -72,6 +80,7 @@ func (*UserDataAccessObject) FindByID(id int) (User, bool) {
 	return user, has
 }
 
+// FindByPhone finds a user by phone number
 func (*UserDataAccessObject) FindByPhone(phone string) (User, bool) {
 	var user User
 	has, err := orm.Table(UserDAO.TableName()).Where("phone=?", phone).Get(&user)

@@ -12,10 +12,13 @@ type PhotoLive struct {
 	PhotographerManagerID int    `xorm:"photographer_manager_id INT INDEX(photographer_manager_id_idx)" json:"photographer_manager_id"`
 }
 
+// PhotoLiveDataAccessObject provides database access for Model PhotoLive
 type PhotoLiveDataAccessObject struct{}
 
+// PhotoLiveDAO instance of PhotoLiveDataAccessObject
 var PhotoLiveDAO *PhotoLiveDataAccessObject
 
+// NewPhotoLive creates a new photo live
 func NewPhotoLive(expectMembers int, adProgress string, activityStageID int,
 	managerID int, photographerManagerID int) *PhotoLive {
 	return &PhotoLive{
@@ -27,15 +30,18 @@ func NewPhotoLive(expectMembers int, adProgress string, activityStageID int,
 	}
 }
 
+// TableName returns table name
 func (*PhotoLiveDataAccessObject) TableName() string {
 	return "photo_lives"
 }
 
+// InsertOne inserts a photo live
 func (*PhotoLiveDataAccessObject) InsertOne(photoLive *PhotoLive) {
 	_, err := orm.Table(PhotoLiveDAO.TableName()).InsertOne(photoLive)
 	logger.LogIfError(err)
 }
 
+// FindAll finds all photo lives
 func (*PhotoLiveDataAccessObject) FindAll() []PhotoLive {
 	l := make([]PhotoLive, 0)
 	err := orm.Table(PhotoLiveDAO.TableName()).Find(&l)
@@ -43,19 +49,22 @@ func (*PhotoLiveDataAccessObject) FindAll() []PhotoLive {
 	return l
 }
 
+// UpdateOne updates a photo live
 func (*PhotoLiveDataAccessObject) UpdateOne(photoLive *PhotoLive) {
 	_, err := orm.Table(PhotoLiveDAO.TableName()).ID(photoLive.ID).
 		Update(photoLive)
 	logger.LogIfError(err)
 }
 
+// DeleteByID deletes a photo live according to ID
 func (*PhotoLiveDataAccessObject) DeleteByID(id int) {
 	var photoLive PhotoLive
-	_, err := orm.Table(PhotoLiveDAO.TableName()).ID(id).Unscoped().
+	_, err := orm.Table(PhotoLiveDAO.TableName()).ID(id).
 		Delete(&photoLive)
 	logger.LogIfError(err)
 }
 
+// FindFullAll finds all joined photo lives
 func (*PhotoLiveDataAccessObject) FindFullAll() []PhotoLiveFull {
 	l := make([]PhotoLiveFull, 0)
 	err := orm.Table(PhotoLiveDAO.TableName()).
@@ -78,6 +87,7 @@ func (*PhotoLiveDataAccessObject) FindFullAll() []PhotoLiveFull {
 	return l
 }
 
+// FindFullByID finds joined photo lives according to ID
 func (*PhotoLiveDataAccessObject) FindFullByID(id int) []PhotoLiveFull {
 	l := make([]PhotoLiveFull, 0)
 	err := orm.Table(PhotoLiveDAO.TableName()).
