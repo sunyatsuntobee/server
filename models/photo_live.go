@@ -17,7 +17,7 @@ type PhotoLiveDataAccessObject struct{}
 var PhotoLiveDAO *PhotoLiveDataAccessObject
 
 func NewPhotoLive(expect_members int, ad_progress string, activity_stage_id int,
-	manager_id int, photographer_manager_id int) PhotoLive {
+	manager_id int, photographer_manager_id int) *PhotoLive {
 	return &PhotoLive{
 		ExpectMembers:         expect_members,
 		AdProgress:            ad_progress,

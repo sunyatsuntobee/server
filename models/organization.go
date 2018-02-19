@@ -19,7 +19,7 @@ var OrganizationDAO *OrganizationDataAccessObject
 
 func NewOrganization(name string, phone string, password string,
 	college string, logo_url string, description string) *Organization {
-	return &TableName{
+	return &Organization{
 		Name:        name,
 		Phone:       phone,
 		Password:    password,
