@@ -1,7 +1,7 @@
 package models
 
 import (
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // Mysql Driver
 	"github.com/go-xorm/xorm"
 )
 

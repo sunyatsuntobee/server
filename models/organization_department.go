@@ -9,21 +9,29 @@ type OrganizationDepartment struct {
 	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 }
 
+// OrganizationDepartmentDataAccessObject provides database access for Model
+// OrganizationDepartment
 type OrganizationDepartmentDataAccessObject struct{}
 
+// OrganizationDepartmentDAO instance of OrganizationDepartmentDataAccessObject
 var OrganizationDepartmentDAO *OrganizationDepartmentDataAccessObject
 
-func NewOrganizationDepartment(name string, organizationId int) *OrganizationDepartment {
+// NewOrganizationDepartment creates a new organization department
+func NewOrganizationDepartment(name string,
+	organizationID int) *OrganizationDepartment {
 	return &OrganizationDepartment{
 		Name:           name,
-		OrganizationID: organizationId,
+		OrganizationID: organizationID,
 	}
 }
 
+// TableName returns table name
 func (*OrganizationDepartmentDataAccessObject) TableName() string {
 	return "organization_departments"
 }
 
+// DeleteByOID deletes all organization departments according to an
+// organization ID
 func (*OrganizationDepartmentDataAccessObject) DeleteByOID(oid int) {
 	var buf OrganizationDepartment
 	_, err := orm.Table(OrganizationDepartmentDAO.TableName()).
@@ -32,6 +40,7 @@ func (*OrganizationDepartmentDataAccessObject) DeleteByOID(oid int) {
 	logger.LogIfError(err)
 }
 
+// InsertOne inserts a new Organization Department
 func (*OrganizationDepartmentDataAccessObject) InsertOne(
 	department *OrganizationDepartment) {
 	_, err := orm.Table(OrganizationDepartmentDAO.TableName()).

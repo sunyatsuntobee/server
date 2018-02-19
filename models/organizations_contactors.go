@@ -17,11 +17,11 @@ func (*OrganizationsContactorsDataAccessObject) TableName() string {
 	return "organizations_contactors"
 }
 
-func NewOrganizationsContactors(organizationId int,
-	contactId int) *OrganizationsContactors {
+func NewOrganizationsContactors(organizationID int,
+	contactID int) *OrganizationsContactors {
 	return &OrganizationsContactors{
-		OrganizationID: organizationId,
-		ContactorID:    contactId,
+		OrganizationID: organizationID,
+		ContactorID:    contactID,
 	}
 }
 

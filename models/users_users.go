@@ -7,9 +7,9 @@ type UsersUsers struct {
 	LikedUserID int `xorm:"liked_user_id INT NOTNULL INDEX(liked_user_id_idx)"`
 }
 
-func NewUsersUsers(userId int, likedUserId int) *UsersUsers {
+func NewUsersUsers(userID int, likedUserID int) *UsersUsers {
 	return &UsersUsers{
-		UserID:      userId,
-		LikedUserID: likedUserId,
+		UserID:      userID,
+		LikedUserID: likedUserID,
 	}
 }

@@ -13,32 +13,38 @@ type Activity struct {
 	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 }
 
+// ActivityDataAccessObject provides database access for Model Activity
 type ActivityDataAccessObject struct{}
 
+// ActivityDAO instance of ActivityDataAccessObject
 var ActivityDAO *ActivityDataAccessObject
 
+// NewActivity creates a new activity
 func NewActivity(name string, description string, category string,
-	posterUrl string, logoUrl string, organizationId int) *Activity {
+	posterURL string, logoURL string, organizationID int) *Activity {
 	return &Activity{
 		Name:           name,
 		Description:    description,
 		Category:       category,
-		PosterURL:      posterUrl,
-		LogoURL:        logoUrl,
-		OrganizationID: organizationId,
+		PosterURL:      posterURL,
+		LogoURL:        logoURL,
+		OrganizationID: organizationID,
 	}
 }
 
+// TableName returns table name
 func (*ActivityDataAccessObject) TableName() string {
 	return "activities"
 }
 
+// UpdateOne updates an activity
 func (*ActivityDataAccessObject) UpdateOne(activity *Activity) {
 	_, err := orm.Table(ActivityDAO.TableName()).ID(activity.ID).
 		Update(activity)
 	logger.LogIfError(err)
 }
 
+// FindByID finds an activity according to an ID
 func (*ActivityDataAccessObject) FindByID(id int) (Activity, bool) {
 	var activity Activity
 	has, err := orm.Table(ActivityDAO.TableName()).ID(id).Get(&activity)
@@ -46,6 +52,7 @@ func (*ActivityDataAccessObject) FindByID(id int) (Activity, bool) {
 	return activity, has
 }
 
+// FindFullByID finds joined activities according to an ID
 func (*ActivityDataAccessObject) FindFullByID(id int) []ActivityFull {
 	l := make([]ActivityFull, 0)
 	err := orm.Table(ActivityDAO.TableName()).
@@ -59,6 +66,7 @@ func (*ActivityDataAccessObject) FindFullByID(id int) []ActivityFull {
 	return l
 }
 
+// FindFullByOID finds joined activities according to an organization ID
 func (*ActivityDataAccessObject) FindFullByOID(oid int) []ActivityFull {
 	activities := make([]ActivityFull, 0)
 	err := orm.Table(ActivityDAO.TableName()).
@@ -72,6 +80,7 @@ func (*ActivityDataAccessObject) FindFullByOID(oid int) []ActivityFull {
 	return activities
 }
 
+// FindFullAll finds all joined activities
 func (*ActivityDataAccessObject) FindFullAll() []ActivityFull {
 	activities := make([]ActivityFull, 0)
 	err := orm.Table(ActivityDAO.TableName()).
@@ -85,6 +94,7 @@ func (*ActivityDataAccessObject) FindFullAll() []ActivityFull {
 	return activities
 }
 
+// FindByOID finds activities according to an organization ID
 func (*ActivityDataAccessObject) FindByOID(oid int) []Activity {
 	activities := make([]Activity, 0)
 	err := orm.Table(ActivityDAO.TableName()).Where("organization_id=?", oid).

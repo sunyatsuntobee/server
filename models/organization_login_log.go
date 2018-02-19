@@ -11,20 +11,25 @@ type OrganizationLoginLog struct {
 	OrganizationID int       `xorm:"organization_id NOTNULL INDEX(organization_id_idx)"`
 }
 
+// OrganizationLoginLogDataAccessObject provides database access for Model
+// OrganizationLoginLog
 type OrganizationLoginLogDataAccessObject struct{}
 
+// OrganizationLoginLogDAO instance of OrganizationLoginLogDataAccessObject
 var OrganizationLoginLogDAO *OrganizationLoginLogDataAccessObject
 
+// NewOrganizationLoginLog creates a new NewOrganizationLoginLog
 func NewOrganizationLoginLog(loginTime time.Time, loginLocation string,
-	loginDevice string, organizationId int) *OrganizationLoginLog {
+	loginDevice string, organizationID int) *OrganizationLoginLog {
 	return &OrganizationLoginLog{
 		LoginTime:      loginTime,
 		LoginLocation:  loginLocation,
 		LoginDevice:    loginDevice,
-		OrganizationID: organizationId,
+		OrganizationID: organizationID,
 	}
 }
 
+// TableName returns table name
 func (*OrganizationLoginLogDataAccessObject) TableName() string {
 	return "organization_login_logs"
 }

@@ -41,6 +41,7 @@ type PhotoFull struct {
 	User  `xorm:"extends" json:"user"`
 }
 
+// UniqueAt deletes duplicated rows according to a column
 func UniqueAt(col string, from interface{}) interface{} {
 	fromVal := reflect.ValueOf(from)
 	toVal := reflect.MakeSlice(reflect.TypeOf(from), 0, 0)

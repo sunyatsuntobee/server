@@ -13,10 +13,7 @@ type Organization struct {
 	Description string `xorm:"description VARCHAR(45)" json:"description"`
 }
 
-type OrganizationDataAccessObject struct{}
-
-var OrganizationDAO *OrganizationDataAccessObject
-
+// NewOrganization creates a new organization
 func NewOrganization(name string, phone string, password string,
 	college string, logoUrl string, description string) *Organization {
 	return &Organization{
@@ -29,10 +26,19 @@ func NewOrganization(name string, phone string, password string,
 	}
 }
 
+// OrganizationDataAccessObject provides database access for Model
+// Organization
+type OrganizationDataAccessObject struct{}
+
+// OrganizationDAO instance of OrganizationDataAccessObject
+var OrganizationDAO *OrganizationDataAccessObject
+
+// TableName returns table name
 func (*OrganizationDataAccessObject) TableName() string {
 	return "organizations"
 }
 
+// FindAll finds all organizations
 func (*OrganizationDataAccessObject) FindAll() []Organization {
 	organizations := make([]Organization, 0)
 	err := orm.Table(OrganizationDAO.TableName()).Find(&organizations)
@@ -40,6 +46,7 @@ func (*OrganizationDataAccessObject) FindAll() []Organization {
 	return organizations
 }
 
+// FindFullByID finds all joined organizations according to ID
 func (*OrganizationDataAccessObject) FindFullByID(id int) []OrganizationFull {
 	organizations := make([]OrganizationFull, 0)
 	err := orm.Table(OrganizationDAO.TableName()).
@@ -61,6 +68,7 @@ func (*OrganizationDataAccessObject) FindFullByID(id int) []OrganizationFull {
 
 }
 
+// FindByID finds an organization according to ID
 func (*OrganizationDataAccessObject) FindByID(id int) (Organization, bool) {
 	var o Organization
 	has, err := orm.Table(OrganizationDAO.TableName()).ID(id).Get(&o)
@@ -68,6 +76,7 @@ func (*OrganizationDataAccessObject) FindByID(id int) (Organization, bool) {
 	return o, has
 }
 
+// UpdateOne updates an organization
 func (*OrganizationDataAccessObject) UpdateOne(o *Organization) {
 	_, err := orm.Table(OrganizationDAO.TableName()).ID(o.ID).Update(o)
 	logger.LogIfError(err)

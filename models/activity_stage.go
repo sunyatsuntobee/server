@@ -17,31 +17,37 @@ type ActivityStage struct {
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
 }
 
-type ActivityStageDataAccessObject struct{}
-
-var ActivityStageDAO *ActivityStageDataAccessObject
-
+// NewActivityStage creates a new activity stage
 func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,
-	location string, content string, activityId int) *ActivityStage {
+	location string, content string, activityID int) *ActivityStage {
 	return &ActivityStage{
 		StageNum:   stageNum,
 		StartTime:  startTime,
 		EndTime:    endTime,
 		Location:   location,
 		Content:    content,
-		ActivityID: activityId,
+		ActivityID: activityID,
 	}
 }
 
+// ActivityStageDataAccessObject provides database access for ActivityStage
+type ActivityStageDataAccessObject struct{}
+
+// ActivityStageDAO instance of ActivityStageDataAccessObject
+var ActivityStageDAO *ActivityStageDataAccessObject
+
+// TableName returns the table name
 func (*ActivityStageDataAccessObject) TableName() string {
 	return "activity_stages"
 }
 
+// InsertOne inserts a new activity stage
 func (*ActivityStageDataAccessObject) InsertOne(stage *ActivityStage) {
 	_, err := orm.Table(ActivityStageDAO.TableName()).Insert(stage)
 	logger.LogIfError(err)
 }
 
+// FindByAID finds activity stages of an activity
 func (*ActivityStageDataAccessObject) FindByAID(aid int) []ActivityStage {
 	l := make([]ActivityStage, 0)
 	err := orm.Table(ActivityStageDAO.TableName()).Where("activity_id=?", aid).
@@ -50,9 +56,10 @@ func (*ActivityStageDataAccessObject) FindByAID(aid int) []ActivityStage {
 	return l
 }
 
+// DeleteByAID deletes all activity stages of an activity
 func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
 	var buf ActivityStage
 	_, err := orm.Table(ActivityStageDAO.TableName()).
-		Where("activity_id=?", aid).Unscoped().Delete(&buf)
+		Where("activity_id=?", aid).Delete(&buf)
 	logger.LogIfError(err)
 }
