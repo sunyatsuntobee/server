@@ -26,16 +26,16 @@ var PhotoDAO *PhotoDataAccessObject
 func NewPhoto(url string, took_time time.Time, took_location string,
 	release_time time.Time, category string, likes int,
 	reject_reason string, photographer_id int) *Photo {
-	return &Photo {
-				URL:            url, 
-				TookTime:       took_time, 
-				TookLocation:   took_location,
-				ReleaseTime:    release_time, 
-				Category:       category, 
-				Likes:          likes,
-				RejectReason:   reject_reason,
-				PhotographerID: photographer_id
-			}
+	return &Photo{
+		URL:            url,
+		TookTime:       took_time,
+		TookLocation:   took_location,
+		ReleaseTime:    release_time,
+		Category:       category,
+		Likes:          likes,
+		RejectReason:   reject_reason,
+		PhotographerID: photographer_id,
+	}
 }
 
 func (*PhotoDataAccessObject) TableName() string {

@@ -12,11 +12,11 @@ type UserLoginLog struct {
 }
 
 func NewUserLoginLog(login_time time.Time, login_location string,
-					 login_device string, user_id int) *UserLoginLog {
-	return &UserLoginLog {
-				LoginTime:     login_time, 
-				LoginLocation: login_location,
-				LoginDevice:   login_device, 
-				UserID:        user_id
-			}
+	login_device string, user_id int) *UserLoginLog {
+	return &UserLoginLog{
+		LoginTime:     login_time,
+		LoginLocation: login_location,
+		LoginDevice:   login_device,
+		UserID:        user_id,
+	}
 }

@@ -17,12 +17,12 @@ var OrganizationLoginLogDAO *OrganizationLoginLogDataAccessObject
 
 func NewOrganizationLoginLog(login_time time.Time, login_location string,
 	login_device string, organization_id int) *OrganizationLoginLog {
-	return &OrganizationLoginLog {
-				LoginTime:      login_time, 
-				LoginLocation:  login_location,
-				LoginDevice:    login_device, 
-				OrganizationID: organization_id
-			}
+	return &OrganizationLoginLog{
+		LoginTime:      login_time,
+		LoginLocation:  login_location,
+		LoginDevice:    login_device,
+		OrganizationID: organization_id,
+	}
 }
 
 func (*OrganizationLoginLogDataAccessObject) TableName() string {

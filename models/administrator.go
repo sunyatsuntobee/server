@@ -10,8 +10,8 @@ type Administrator struct {
 
 func NewAdministrator(name string, password string, level int) *Administrator {
 	return Administrator{
-				Name:     name, 
-				Password: password, 
-				Level:    level
-			}
+		Name:     name,
+		Password: password,
+		Level:    level,
+	}
 }

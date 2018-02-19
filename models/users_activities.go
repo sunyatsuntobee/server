@@ -8,8 +8,8 @@ type UsersActivities struct {
 }
 
 func NewUsersActivities(user_id int, activity_id int) *UsersActivities {
-	return &UsersActivities {
-		UserID:     user_id, 
-		ActivityID: activity_id
+	return &UsersActivities{
+		UserID:     user_id,
+		ActivityID: activity_id,
 	}
 }

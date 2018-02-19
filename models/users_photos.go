@@ -8,8 +8,8 @@ type UsersPhotos struct {
 }
 
 func NewUsersPhotos(user_id int, liked_photo_id int) *UsersPhotos {
-	return &UsersPhotos {
-				UserID:       user_id, 
-				LikedPhotoID: liked_photo_id
-			}
+	return &UsersPhotos{
+		UserID:       user_id,
+		LikedPhotoID: liked_photo_id,
+	}
 }

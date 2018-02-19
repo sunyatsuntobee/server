@@ -20,9 +20,9 @@ func (*OrganizationsContactorsDataAccessObject) TableName() string {
 func NewOrganizationsContactors(organization_id int,
 	contact_id int) *OrganizationsContactors {
 	return &OrganizationsContactors{
-				OrganizationID: organization_id,
-				ContactorID:    contact_id
-			}
+		OrganizationID: organization_id,
+		ContactorID:    contact_id,
+	}
 }
 
 func (*OrganizationsContactorsDataAccessObject) DeleteByOID(oid int) {
