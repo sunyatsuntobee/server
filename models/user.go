@@ -15,16 +15,24 @@ type User struct {
 	Location    string    `xorm:"location VARCHAR(50) NOTNULL" json:"location"`
 	CreateTime  time.Time `xorm:"create_time TIMESTAMP NOTNULL CREATED" json:"create_time"`
 	VIP         bool      `xorm:"vip INT NOTNULL" json:"vip"`
-	AvatarURL   string    `xorm:"avatar_url VARCHAR(50)" json:"avatar_url"`
-	Camera      string    `xorm:"camera VARCHAR(50)" json:"camera"`
-	Description string    `xorm:"description VARCHAR(200)" json:"description"`
-	Occupation  string    `xorm:"occupation VARCHAR(50)" json:"occupation"`
-	Collage     string    `xorm:"collage VARCHAR(50)" json:"collage"`
+	AvatarURL   string    `xorm:"avatar_url VARCHAR(45)" json:"avatar_url"`
+	Camera      string    `xorm:"camera VARCHAR(45)" json:"camera"`
+	Description string    `xorm:"description VARCHAR(45)" json:"description"`
+	Occupation  string    `xorm:"occupation VARCHAR(45)" json:"occupation"`
+	College     string    `xorm:"college VARCHAR(45)" json:"college"`
 }
 
 type UserDataAccessObject struct{}
 
 var UserDAO *UserDataAccessObject
+
+func NewUser(username string, phone string, password string, location string,
+	create_time time.Time, vip bool, avatar_url string, camera string,
+	description string, occupation string, college string) {
+	return &User{Username: username, Phone: phone, Password: password, Location: location,
+		CreateTime: create_time, VIP: vip, AvatarURL: avatar_url, Camera: camera,
+		Description: description, Occupation: occupation, College: college}
+}
 
 func (*UserDataAccessObject) TableName() string {
 	return "users"

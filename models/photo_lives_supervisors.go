@@ -17,6 +17,10 @@ func (*PhotoLivesSupervisorsDataAccessObject) TableName() string {
 	return "photo_lives_supervisors"
 }
 
+func NewPhotoLivesSupervisors(photo_live_id int, supervisor_id int) {
+	return &TableName{PhotoLiveID: photo_live_id, SupervisorID: supervisor_id}
+}
+
 func (*PhotoLivesSupervisorsDataAccessObject) InsertOne(
 	r *PhotoLivesSupervisors) {
 	_, err := orm.Table(PhotoLivesSupervisorsDAO.TableName()).InsertOne(r)

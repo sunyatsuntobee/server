@@ -5,17 +5,23 @@ import "github.com/sunyatsuntobee/server/logger"
 // Organization Model
 type Organization struct {
 	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name        string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
-	Phone       string `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
-	Password    string `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	Collage     string `xorm:"collage VARCHAR(20) NOTNULL" json:"collage"`
-	LogoURL     string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
-	Description string `xorm:"description VARCHAR(200)" json:"description"`
+	Name        string `xorm:"name VARCHAR(45) NOTNULL" json:"name"`
+	Phone       string `xorm:"phone VARCHAR(45) NOTNULL UNIQUE" json:"phone"`
+	Password    string `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
+	College     string `xorm:"college VARCHAR(45) NOTNULL" json:"college"`
+	LogoURL     string `xorm:"logo_url VARCHAR(45)" json:"logo_url"`
+	Description string `xorm:"description VARCHAR(45)" json:"description"`
 }
 
 type OrganizationDataAccessObject struct{}
 
 var OrganizationDAO *OrganizationDataAccessObject
+
+func NewTableName(name string, phone string, password string, college string,
+	logo_url string, description string) {
+	return &TableName{Name: name, Phone: phone, Password: password, College: college,
+		LogoURL: logo_url, Description: description}
+}
 
 func (*OrganizationDataAccessObject) TableName() string {
 	return "organizations"

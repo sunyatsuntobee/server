@@ -17,6 +17,13 @@ func (*OrganizationsContactorsDataAccessObject) TableName() string {
 	return "organizations_contactors"
 }
 
+func NewOrganizationsContactors(organization_id int,
+	contact_id int) *OrganizationsContactors {
+	return &OrganizationsContactors{
+		OrganizationID: organization_id,
+		ContactorID:    contact_id}
+}
+
 func (*OrganizationsContactorsDataAccessObject) DeleteByOID(oid int) {
 	var buf OrganizationsContactors
 	_, err := orm.Table(OrganizationsContactorsDAO.TableName()).
