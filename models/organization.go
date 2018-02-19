@@ -76,6 +76,14 @@ func (*OrganizationDataAccessObject) FindByID(id int) (Organization, bool) {
 	return o, has
 }
 
+// FindByPhone finds an organization according to Phone
+func (*OrganizationDataAccessObject) FindByPhone(phone string) (Organization, bool) {
+	var o Organization
+	has, err := orm.Table(OrganizationDAO.TableName()).Where("phone=", phone).Get(&o)
+	logger.LogIfError(err)
+	return o, has
+}
+
 // UpdateOne updates an organization
 func (*OrganizationDataAccessObject) UpdateOne(o *Organization) {
 	_, err := orm.Table(OrganizationDAO.TableName()).ID(o.ID).Update(o)
