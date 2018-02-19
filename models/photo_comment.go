@@ -9,12 +9,12 @@ type PhotoComment struct {
 	PhotoID int    `xorm:"photo_id INT NOTNULL INDEX(photo_id_idx)"`
 }
 
-func NewPhotoComment(title string, content string, user_id int,
-	photo_id int) *PhotoComment {
+func NewPhotoComment(title string, content string, userId int,
+	photoId int) *PhotoComment {
 	return &PhotoComment{
 		Title:   title,
 		Content: content,
-		UserID:  user_id,
-		PhotoID: photo_id,
+		UserID:  userId,
+		PhotoID: photoId,
 	}
 }

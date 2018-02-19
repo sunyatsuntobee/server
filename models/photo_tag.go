@@ -15,10 +15,10 @@ const PhotoTagTableName string = "photo_tags"
 
 var PhotoTagDAO *PhotoTagDataAccessObject
 
-func NewPhotoTag(tag string, photo_id int) *PhotoTag {
+func NewPhotoTag(tag string, photoId int) *PhotoTag {
 	return &PhotoTag{
 		Tag:     tag,
-		PhotoID: photo_id,
+		PhotoID: photoId,
 	}
 }
 

@@ -16,14 +16,14 @@ type PhotoLiveDataAccessObject struct{}
 
 var PhotoLiveDAO *PhotoLiveDataAccessObject
 
-func NewPhotoLive(expect_members int, ad_progress string, activity_stage_id int,
-	manager_id int, photographer_manager_id int) *PhotoLive {
+func NewPhotoLive(expectMembers int, adProgress string, activityStageId int,
+	managerId int, photographerManagerId int) *PhotoLive {
 	return &PhotoLive{
-		ExpectMembers:         expect_members,
-		AdProgress:            ad_progress,
-		ActivityStageID:       activity_stage_id,
-		ManagerID:             manager_id,
-		PhotographerManagerID: photographer_manager_id,
+		ExpectMembers:         expectMembers,
+		AdProgress:            adProgress,
+		ActivityStageID:       activityStageId,
+		ManagerID:             managerId,
+		PhotographerManagerID: photographerManagerId,
 	}
 }
 

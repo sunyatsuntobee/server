@@ -27,16 +27,16 @@ type UserDataAccessObject struct{}
 var UserDAO *UserDataAccessObject
 
 func NewUser(username string, phone string, password string, location string,
-	create_time time.Time, vip bool, avatar_url string, camera string,
+	createTime time.Time, vip bool, avatarUrl string, camera string,
 	description string, occupation string, college string) *User {
 	return &User{
 		Username:    username,
 		Phone:       phone,
 		Password:    password,
 		Location:    location,
-		CreateTime:  create_time,
+		CreateTime:  createTime,
 		VIP:         vip,
-		AvatarURL:   avatar_url,
+		AvatarURL:   avatarUrl,
 		Camera:      camera,
 		Description: description,
 		Occupation:  occupation,

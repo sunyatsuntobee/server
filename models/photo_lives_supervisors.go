@@ -17,10 +17,10 @@ func (*PhotoLivesSupervisorsDataAccessObject) TableName() string {
 	return "photo_lives_supervisors"
 }
 
-func NewPhotoLivesSupervisors(photo_live_id int, supervisor_id int) *PhotoLivesSupervisors {
+func NewPhotoLivesSupervisors(photoLiveId int, supervisorId int) *PhotoLivesSupervisors {
 	return &TableName{
-		PhotoLiveID:  photo_live_id,
-		SupervisorID: supervisor_id,
+		PhotoLiveID:  photoLiveId,
+		SupervisorID: supervisorId,
 	}
 }
 

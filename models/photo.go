@@ -23,18 +23,18 @@ type PhotoDataAccessObject struct{}
 
 var PhotoDAO *PhotoDataAccessObject
 
-func NewPhoto(url string, took_time time.Time, took_location string,
-	release_time time.Time, category string, likes int,
-	reject_reason string, photographer_id int) *Photo {
+func NewPhoto(url string, tookTime time.Time, tookLocation string,
+	releaseTime time.Time, category string, likes int,
+	rejectReason string, photographerId int) *Photo {
 	return &Photo{
 		URL:            url,
-		TookTime:       took_time,
-		TookLocation:   took_location,
-		ReleaseTime:    release_time,
+		TookTime:       tookTime,
+		TookLocation:   tookLocation,
+		ReleaseTime:    releaseTime,
 		Category:       category,
 		Likes:          likes,
-		RejectReason:   reject_reason,
-		PhotographerID: photographer_id,
+		RejectReason:   rejectReason,
+		PhotographerID: photographerId,
 	}
 }
 

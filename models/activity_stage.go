@@ -21,15 +21,15 @@ type ActivityStageDataAccessObject struct{}
 
 var ActivityStageDAO *ActivityStageDataAccessObject
 
-func NewActivityStage(stage_num int, start_time time.Time, end_time time.Time,
-	location string, content string, activity_id int) *ActivityStage {
+func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,
+	location string, content string, activityId int) *ActivityStage {
 	return &ActivityStage{
-		StageNum:   stage_num,
-		StartTime:  start_time,
-		EndTime:    end_time,
+		StageNum:   stageNum,
+		StartTime:  startTime,
+		EndTime:    endTime,
 		Location:   location,
 		Content:    content,
-		ActivityID: activity_id,
+		ActivityID: activityId,
 	}
 }
 

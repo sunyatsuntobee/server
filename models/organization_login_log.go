@@ -15,13 +15,13 @@ type OrganizationLoginLogDataAccessObject struct{}
 
 var OrganizationLoginLogDAO *OrganizationLoginLogDataAccessObject
 
-func NewOrganizationLoginLog(login_time time.Time, login_location string,
-	login_device string, organization_id int) *OrganizationLoginLog {
+func NewOrganizationLoginLog(loginTime time.Time, loginLocation string,
+	loginDevice string, organizationId int) *OrganizationLoginLog {
 	return &OrganizationLoginLog{
-		LoginTime:      login_time,
-		LoginLocation:  login_location,
-		LoginDevice:    login_device,
-		OrganizationID: organization_id,
+		LoginTime:      loginTime,
+		LoginLocation:  loginLocation,
+		LoginDevice:    loginDevice,
+		OrganizationID: organizationId,
 	}
 }
 

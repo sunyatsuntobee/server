@@ -7,9 +7,9 @@ type UsersActivities struct {
 	ActivityID int `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)"`
 }
 
-func NewUsersActivities(user_id int, activity_id int) *UsersActivities {
+func NewUsersActivities(userId int, activityId int) *UsersActivities {
 	return &UsersActivities{
-		UserID:     user_id,
-		ActivityID: activity_id,
+		UserID:     userId,
+		ActivityID: activityId,
 	}
 }

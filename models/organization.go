@@ -18,13 +18,13 @@ type OrganizationDataAccessObject struct{}
 var OrganizationDAO *OrganizationDataAccessObject
 
 func NewOrganization(name string, phone string, password string,
-	college string, logo_url string, description string) *Organization {
+	college string, logoUrl string, description string) *Organization {
 	return &Organization{
 		Name:        name,
 		Phone:       phone,
 		Password:    password,
 		College:     college,
-		LogoURL:     logo_url,
+		LogoURL:     logoUrl,
 		Description: description,
 	}
 }

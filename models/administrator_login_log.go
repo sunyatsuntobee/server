@@ -11,12 +11,12 @@ type AdministratorLoginLog struct {
 	AdministratorID int       `xorm:"administrator_id INT NOTNULL INDEX(administrator_id_idx)"`
 }
 
-func NewAdministratorLoginLog(login_time time.Time, login_location string,
-	login_device string, administrator_id int) *AdministratorLoginLog {
+func NewAdministratorLoginLog(loginTime time.Time, loginLocation string,
+	loginDevice string, administratorId int) *AdministratorLoginLog {
 	return &AdministratorLoginLog{
-		LoginTime:       login_time,
-		LoginLocation:   login_location,
-		LoginDevice:     login_device,
-		AdministratorID: administrator_id,
+		LoginTime:       loginTime,
+		LoginLocation:   loginLocation,
+		LoginDevice:     loginDevice,
+		AdministratorID: administratorId,
 	}
 }
