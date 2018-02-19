@@ -13,8 +13,11 @@ type OrganizationDepartmentDataAccessObject struct{}
 
 var OrganizationDepartmentDAO *OrganizationDepartmentDataAccessObject
 
-func NewOrganizationDepartment(name string, organization_id int) {
-	return &OrganizationDepartment{Name:name, OrganizationID:organization_id}
+func NewOrganizationDepartment(name string, organization_id int) *OrganizationDepartment {
+	return &OrganizationDepartment {
+				Name:           name, 
+				OrganizationID: organization_id
+			}
 }
 
 func (*OrganizationDepartmentDataAccessObject) TableName() string {

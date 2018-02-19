@@ -28,10 +28,20 @@ var UserDAO *UserDataAccessObject
 
 func NewUser(username string, phone string, password string, location string,
 	create_time time.Time, vip bool, avatar_url string, camera string,
-	description string, occupation string, college string) {
-	return &User{Username: username, Phone: phone, Password: password, Location: location,
-		CreateTime: create_time, VIP: vip, AvatarURL: avatar_url, Camera: camera,
-		Description: description, Occupation: occupation, College: college}
+	description string, occupation string, college string) *User {
+	return &User {
+				Username:    username, 
+				Phone:       phone, 
+				Password:    password, 
+				Location:    location,
+				CreateTime:  create_time, 
+				VIP:         vip, 
+				AvatarURL:   avatar_url,
+				Camera:      camera,
+				Description: description, 
+				Occupation:  occupation, 
+				College:     college
+			}
 }
 
 func (*UserDataAccessObject) TableName() string {

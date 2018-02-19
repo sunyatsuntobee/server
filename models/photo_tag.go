@@ -15,8 +15,11 @@ const PhotoTagTableName string = "photo_tags"
 
 var PhotoTagDAO *PhotoTagDataAccessObject
 
-func NewPhotoTag(tag string, photo_id int) {
-	return &PhotoTag{Tag:tag, PhotoID:photo_id}
+func NewPhotoTag(tag string, photo_id int) *PhotoTag {
+	return &PhotoTag {
+				Tag:     tag, 
+				PhotoID: photo_id
+			}
 }
 
 func (*PhotoTagDataAccessObject) FindAll() []PhotoTag {

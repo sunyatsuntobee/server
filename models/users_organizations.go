@@ -7,6 +7,9 @@ type UsersOrganizations struct {
 	OrganizationID int `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)"`
 }
 
-func NewUserOrganizationRelationship(user_id int, organization_id int) {
-	return &UserOrganizationRelationship{UserID:user_id, OrganizationID:organization_id}
+func NewUsersOrganizations(user_id int, organization_id int) *UsersOrganizations {
+	return &UsersOrganizations {
+				UserID:         user_id, 
+				OrganizationID: organization_id
+			}
 }

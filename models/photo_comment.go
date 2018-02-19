@@ -10,7 +10,11 @@ type PhotoComment struct {
 }
 
 func NewPhotoComment(title string, content string, user_id int,
-					 photo_id int) {
-	return &PhotoComment{Title:title, Content:content, UserID:user_id,
-						 PhotoID:photo_id}
+	photo_id int) *PhotoComment {
+	return &PhotoComment{
+				Title:   title, 
+				Content: content, 
+				UserID:  user_id,
+				PhotoID: photo_id
+			}
 }

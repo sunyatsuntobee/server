@@ -8,6 +8,10 @@ type Administrator struct {
 	Level    int    `xorm:"level INT NOTNULL"`
 }
 
-func NewAdministrator(name string, password string, level int) {
-	return Administrator{Name:name, Password:password, Level:level}
+func NewAdministrator(name string, password string, level int) *Administrator {
+	return Administrator{
+				Name:     name, 
+				Password: password, 
+				Level:    level
+			}
 }

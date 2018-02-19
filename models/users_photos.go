@@ -7,6 +7,9 @@ type UsersPhotos struct {
 	LikedPhotoID int `xorm:"liked_photo_id INT NOTNULL INDEX(liked_photo_id_idx)"`
 }
 
-func NewUserPhotoRelationship(user_id int, liked_photo_id int) {
-	return &UserPhotoRelationship{UserID:user_id, LikedPhotoID:liked_photo_id}
+func NewUsersPhotos(user_id int, liked_photo_id int) *UsersPhotos {
+	return &UsersPhotos {
+				UserID:       user_id, 
+				LikedPhotoID: liked_photo_id
+			}
 }
