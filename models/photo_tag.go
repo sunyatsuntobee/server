@@ -15,6 +15,10 @@ const PhotoTagTableName string = "photo_tags"
 
 var PhotoTagDAO *PhotoTagDataAccessObject
 
+func NewPhotoTag(tag string, photo_id int) {
+	return &PhotoTag{Tag:tag, PhotoID:photo_id}
+}
+
 func (*PhotoTagDataAccessObject) FindAll() []PhotoTag {
 	l := make([]PhotoTag, 0)
 	err := orm.Table(PhotoTagTableName).Find(&l)

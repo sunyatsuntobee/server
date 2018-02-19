@@ -8,7 +8,7 @@ type Organization struct {
 	Name        string `xorm:"name VARCHAR(45) NOTNULL" json:"name"`
 	Phone       string `xorm:"phone VARCHAR(45) NOTNULL UNIQUE" json:"phone"`
 	Password    string `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
-	Collage     string `xorm:"collage VARCHAR(45) NOTNULL" json:"collage"`
+	College     string `xorm:"college VARCHAR(45) NOTNULL" json:"college"`
 	LogoURL     string `xorm:"logo_url VARCHAR(45)" json:"logo_url"`
 	Description string `xorm:"description VARCHAR(45)" json:"description"`
 }
@@ -16,6 +16,12 @@ type Organization struct {
 type OrganizationDataAccessObject struct{}
 
 var OrganizationDAO *OrganizationDataAccessObject
+func NewTableName(name string, phone string, password string, college string,
+				  logo_url string, description string) {
+	return &TableName{Name:name, Phone phone, Password password, College college,
+					  LogoURL:logo_url, Description:description}
+}
+
 
 func (*OrganizationDataAccessObject) TableName() string {
 	return "organizations"

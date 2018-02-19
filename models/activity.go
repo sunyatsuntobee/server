@@ -17,6 +17,10 @@ type ActivityDataAccessObject struct{}
 
 var ActivityDAO *ActivityDataAccessObject
 
+func NewActivity(name string, description string, category string, poster_url string, logo_url string, organization_id int) {
+	return &Activity{Name:name, Description:description, Category:category, PosterURL:poster_url, LogoURL:logo_url, OrganizationID:organization_id}
+}
+
 func (*ActivityDataAccessObject) TableName() string {
 	return "activities"
 }

@@ -13,6 +13,10 @@ type OrganizationContactRelationshipDataAccessObject struct{}
 
 var OrganizationContactRelationshipDAO *OrganizationContactRelationshipDataAccessObject
 
+func NewOrganizationContactRealationship(organization_id int, contact_id int) {
+	return &OrganizationContactRelatonship{OrganizationID:organization_id, ContactID:contact_id}
+}
+
 func (*OrganizationContactRelationshipDataAccessObject) TableName() string {
 	return "organization_contact_relationships"
 }

@@ -13,6 +13,10 @@ type PhotoLiveSupervisorRDataAccessObject struct{}
 
 var PhotoLiveSupervisorRDAO *PhotoLiveSupervisorRDataAccessObject
 
+func NewTableName(photo_live_id int, supervisor_id int) {
+	return &TableName{PhotoLiveID:photo_live_id, SupervisorID:supervisor_id}
+}
+
 func (*PhotoLiveSupervisorRDataAccessObject) TableName() string {
 	return "photo_live_supervisor_relationships"
 }

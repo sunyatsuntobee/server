@@ -7,3 +7,7 @@ type Administrator struct {
 	Password string `xorm:"password VARCHAR(45) NOTNULL"`
 	Level    int    `xorm:"level INT NOTNULL"`
 }
+
+func NewAdministrator(name string, password string, level int) {
+	return Administrator{Name:name, Password:password, Level:level}
+}
