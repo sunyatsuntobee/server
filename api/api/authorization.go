@@ -17,12 +17,12 @@ func initAuthorizationRouter(router *mux.Router) {
 func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		var flag bool
-		var right_password string
+		var rightpassword string
+		var id int
 		req.ParseForm()
-		//users := models.UserDAO.FindAll()
-		type_, _ := strconv.Atoi(req.FormValue("type"))
+		typ, _ := strconv.Atoi(req.FormValue("type"))
 
-		switch type_ {
+		switch typ {
 		case 0:
 			_, flag = models.AdministratorDAO.FindByUsername(req.FormValue("username"))
 		case 1:
@@ -37,28 +37,30 @@ func authHandler() http.HandlerFunc {
 			})
 		}
 
-		switch type_ {
+		switch typ {
 		case 0:
 			administrator, _ := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
-			right_password := administrator.Password
+			rightpassword = util.MD5Hash(administrator.Password)
+			id = administrator.ID
 		case 1:
 			user, _ := models.UserDAO.FindByPhone(req.FormValue("username"))
-			right_password := user.Password
+			rightpassword = util.MD5Hash(user.Password)
+			id = user.ID
 		case 2:
 			organization, _ := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
-			right_password := organization.Password
+			rightpassword = util.MD5Hash(organization.Password)
+			id = organization.ID
 		}
 
 		inputpassword := req.FormValue("password")
 
-		if right_password != inputpassword {
+		if rightpassword != inputpassword {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
 				Msg: "Password not right",
 			})
 		}
 
-		id, _ := strconv.Atoi(req.FormValue("id"))
-		Signed := util.NewJWT(id, type_)
+		Signed := util.NewJWT(id, typ)
 		formatter.JSON(w, http.StatusOK, Signed)
 	}
 }
