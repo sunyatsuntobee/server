@@ -30,14 +30,14 @@ type OrganizationFull struct {
 
 // ActivityFull contains all information for an Entity Activity
 type ActivityFull struct {
-	Activity     `xorm:"extends" json:"activity"`
-	Stage        ActivityStage `xorm:"extends" json:"activity_stage"`
-	Organization `xorm:"extends" json:"organization"`
+	Activity      `xorm:"extends" json:"activity"`
+	ActivityStage `xorm:"extends" json:"activity_stage"`
+	Organization  `xorm:"extends" json:"organization"`
 }
 
 // ActivityStageFull contains all information for an Entity Activity Stage
 type ActivityStageFull struct {
-	ActivityStage `xorm:"extends" json:"activity_stage"`
+	ActivityStage `xorm:"extends"`
 	Activity      `xorm:"extends" json:"activity"`
 }
 
