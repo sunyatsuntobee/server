@@ -63,7 +63,7 @@ func organizationsPutHandler() http.HandlerFunc {
 		old.Name = req.FormValue("name")
 		old.Phone = req.FormValue("phone")
 		old.Password = req.FormValue("password")
-		old.College = req.FormValue("collage")
+		old.College = req.FormValue("college")
 		path := "static/assets/" + req.FormValue("id") + ".png"
 		util.SaveBase64AsPNG(req.FormValue("logo_url"), path)
 		old.LogoURL = "/" + path

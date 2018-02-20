@@ -29,7 +29,7 @@ func usersPutHandler() http.HandlerFunc {
 		user.Camera = req.FormValue("camera")
 		user.Description = req.FormValue("description")
 		user.Occupation = req.FormValue("occupation")
-		user.College = req.FormValue("collage")
+		user.College = req.FormValue("college")
 		models.UserDAO.UpdateOne(&user)
 		formatter.JSON(w, http.StatusCreated, nil)
 	}
