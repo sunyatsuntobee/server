@@ -67,7 +67,7 @@ func authHandler() http.HandlerFunc {
 			return
 		}
 
-		Signed := util.NewJWT(id, typ)
-		formatter.JSON(w, http.StatusOK, Signed)
+		signed := util.NewJWT(id, typ)
+		formatter.JSON(w, http.StatusOK, signed)
 	}
 }
