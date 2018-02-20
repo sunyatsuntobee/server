@@ -18,7 +18,6 @@ func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		var flagUsername bool
 		var flagPassword bool
-		var rightPassword string
 		var id int
 		req.ParseForm()
 		inputUsername := req.FormValue("username")
@@ -31,8 +30,7 @@ func authHandler() http.HandlerFunc {
 			administrator, flagUsername =
 				models.AdministratorDAO.FindByUsername(inputUsername)
 			if flagUsername == true {
-				rightPassword = util.MD5Hash(administrator.Password)
-				if rightPassword != inputPassword {
+				if administrator.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}
 				id = administrator.ID
@@ -42,8 +40,7 @@ func authHandler() http.HandlerFunc {
 			user, flagUsername =
 				models.UserDAO.FindByPhone(inputUsername)
 			if flagUsername == true {
-				rightPassword = util.MD5Hash(user.Password)
-				if rightPassword != inputPassword {
+				if user.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}
 				id = user.ID
@@ -53,8 +50,7 @@ func authHandler() http.HandlerFunc {
 			organization, flagUsername =
 				models.OrganizationDAO.FindByPhone(inputUsername)
 			if flagUsername == true {
-				rightPassword = util.MD5Hash(organization.Password)
-				if rightPassword != inputPassword {
+				if organization.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}
 				id = organization.ID
