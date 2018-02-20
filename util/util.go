@@ -41,7 +41,7 @@ func NewJWT(id int, typ int) string {
 		"aud":  id,
 		"type": typ,
 	})
-	signed, err := token.SignedString("secret")
+	signed, err := token.SignedString([]byte("abcd"))
 	logger.LogIfError(err)
 	return signed
 }
