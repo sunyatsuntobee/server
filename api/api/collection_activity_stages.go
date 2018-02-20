@@ -56,7 +56,7 @@ func activityStagesGetHandler() http.HandlerFunc {
 				return
 			}
 			data := models.ActivityStageDAO.FindFullByMonth(date)
-			formatter.JSON(w, http.StatusBadRequest,
+			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "成功获取活动列表", data))
 		}
 	}

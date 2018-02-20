@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -30,6 +31,7 @@ func authHandler() http.HandlerFunc {
 			administrator, flagUsername =
 				models.AdministratorDAO.FindByUsername(inputUsername)
 			if flagUsername == true {
+				fmt.Println(administrator.Password, util.MD5Hash(inputPassword))
 				if administrator.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}

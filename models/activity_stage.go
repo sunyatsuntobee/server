@@ -68,15 +68,17 @@ func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
 func (*ActivityStageDataAccessObject) FindFullByDay(
 	date time.Time) []ActivityStageFull {
 
-	start := time.Date(date.Year(), date.Month(), date.Day(),
+	startDate := time.Date(date.Year(), date.Month(), date.Day(),
 		0, 0, 0, 0, time.Local)
-	endDate := start.AddDate(0, 0, 1)
+	endDate := startDate.AddDate(0, 0, 1)
+	start := startDate.Format(mysqlTimeFormat)
 	end := time.Date(endDate.Year(), endDate.Month(), endDate.Day(),
-		0, 0, 0, 0, time.Local)
+		0, 0, 0, 0, time.Local).Format(mysqlTimeFormat)
 	result := make([]ActivityStageFull, 0)
 	err := orm.Table(ActivityStageDAO.TableName()).
 		Where("start_time>=?", start).And("end_time<?", end).
-		Join("INNER", ActivityDAO.TableName(), "activity_id=activities.id").
+		Join("INNER", ActivityDAO.TableName(),
+			"activity_stages.activity_id=activities.id").
 		Find(&result)
 	logger.LogIfError(err)
 	return result
