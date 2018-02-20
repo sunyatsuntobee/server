@@ -6,9 +6,19 @@ import (
 	"github.com/unrolled/render"
 )
 
+type JSON struct {
+	Status  string      `json:"status"`
+	Message string      `json:"msg"`
+	Data    interface{} `json:"data"`
+}
+
 var (
 	formatter     *render.Render
 	jwtMiddleware *jwtmiddleware.JWTMiddleware
+)
+
+const (
+	dateLayout string = "06-01-02"
 )
 
 func init() {
@@ -22,4 +32,12 @@ func init() {
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})
+}
+
+func NewJSON(status, msg string, data interface{}) *JSON {
+	return &JSON{
+		Status:  status,
+		Message: msg,
+		Data:    data,
+	}
 }

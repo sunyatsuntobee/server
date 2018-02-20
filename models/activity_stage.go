@@ -63,3 +63,36 @@ func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
 		Where("activity_id=?", aid).Delete(&buf)
 	logger.LogIfError(err)
 }
+
+// FindFullByDay finds all joined activity stages on a day
+func (*ActivityStageDataAccessObject) FindFullByDay(
+	date time.Time) []ActivityStageFull {
+
+	start := time.Date(date.Year(), date.Month(), date.Day(),
+		0, 0, 0, 0, time.Local)
+	endDate := start.AddDate(0, 0, 1)
+	end := time.Date(endDate.Year(), endDate.Month(), endDate.Day(),
+		0, 0, 0, 0, time.Local)
+	result := make([]ActivityStageFull, 0)
+	err := orm.Table(ActivityStageDAO.TableName()).
+		Where("start_time>=?", start).And("end_time<?", end).
+		Join("INNER", ActivityDAO.TableName(), "activity_id=activities.id").
+		Find(&result)
+	logger.LogIfError(err)
+	return result
+}
+
+// FindFullByMonth finds all joined activity stages in a month
+func (*ActivityStageDataAccessObject) FindFullByMonth(
+	date time.Time) [][]ActivityStageFull {
+
+	start := time.Date(date.Year(), date.Month(), 1, 0, 0, 0, 0, time.Local)
+	end := start.AddDate(0, 1, 0).AddDate(0, 0, -1)
+	result := make([][]ActivityStageFull, 0)
+	for i := start.Day(); i <= end.Day(); i++ {
+		curDate := time.Date(date.Year(), date.Month(), i, 0, 0, 0, 0,
+			time.Local)
+		result = append(result, ActivityStageDAO.FindFullByDay(curDate))
+	}
+	return result
+}

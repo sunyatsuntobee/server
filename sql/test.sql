@@ -1,12 +1,12 @@
 INSERT INTO administrators(name, password, level) VALUES(
-	'admin',
-    'admin',
+	'admin0',
+    '5f4dcc3b5aa765d61d8327deb882cf99',
     0
 );
 
 INSERT INTO administrators(name, password, level) VALUES(
 	'admin1',
-    'admin1',
+    '5f4dcc3b5aa765d61d8327deb882cf99',
     0
 );
 
@@ -15,7 +15,7 @@ INSERT INTO organizations(name, phone, password, collage, description) VALUES(
     '15814092425',
     '5f4dcc3b5aa765d61d8327deb882cf99',
     '深圳市深圳中学',
-    '简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介'
+    '简介'
 );
 
 INSERT INTO organizations(name, phone, password, collage, description) VALUES(
@@ -95,7 +95,7 @@ INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
     0,
     null,
     '相机X',
-    '个性签名个性签名个性签名个性签名个性签名个性签名个性签名',
+    '个性签名',
     '在校学生',
     '中山大学'
 );
@@ -103,13 +103,13 @@ INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
 INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
 	description, occupation, collage) VALUES(
 	'test_user2',
-    '15814444444',
+    '120',
     '5f4dcc3b5aa765d61d8327deb882cf99',
 	'广东省广州市',
     0,
     null,
     '相机Y',
-    '签名个性签名个性签名个性签名个性签名个性签名个性签名个性签名个性',
+    '签名个性',
     '在校学生',
     '深圳中学'
 );
@@ -178,12 +178,12 @@ INSERT INTO photos(url, took_time, took_location,
     1
 );
 
-INSERT INTO photo_tags(tag, photo_id) VALUES(	
+INSERT INTO photo_tags(tag, photo_id) VALUES(
 	'风景',
     1
 );
 
-INSERT INTO photo_tags(tag, photo_id) VALUES(	
+INSERT INTO photo_tags(tag, photo_id) VALUES(
 	'建筑',
     2
 );
