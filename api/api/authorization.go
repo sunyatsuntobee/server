@@ -20,33 +20,38 @@ func authHandler() http.HandlerFunc {
 		var flagPassword bool
 		var rightPassword string
 		var id int
+		var inputUsername string = "username"
+		var inputPassword string = "password"
 		req.ParseForm()
 		typ, _ := strconv.Atoi(req.FormValue("type"))
 
 		switch typ {
 		case 0:
-			administrator, flagUsername := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
+			administrator, flagUsername :=
+				models.AdministratorDAO.FindByUsername(req.FormValue(inputUsername))
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(administrator.Password)
-				if rightPassword != req.FormValue("password") {
+				if rightPassword != req.FormValue(inputPassword) {
 					flagPassword = false
 				}
 				id = administrator.ID
 			}
 		case 1:
-			user, flagUsername := models.UserDAO.FindByPhone(req.FormValue("username"))
+			user, flagUsername :=
+				models.UserDAO.FindByPhone(req.FormValue(inputUsername))
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(user.Password)
-				if rightPassword != req.FormValue("password") {
+				if rightPassword != req.FormValue(inputUsername) {
 					flagPassword = false
 				}
 				id = user.ID
 			}
 		case 2:
-			organization, flagUsername := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
+			organization, flagUsername :=
+				models.OrganizationDAO.FindByPhone(req.FormValue(inputUsername))
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(organization.Password)
-				if rightPassword != req.FormValue("password") {
+				if rightPassword != req.FormValue(inputPassword) {
 					flagPassword = false
 				}
 				id = organization.ID
