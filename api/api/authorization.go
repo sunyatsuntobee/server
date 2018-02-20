@@ -16,7 +16,8 @@ func initAuthorizationRouter(router *mux.Router) {
 
 func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var flag bool
+		var flagusername bool
+		var flagpassword bool
 		var rightpassword string
 		var id int
 		req.ParseForm()
@@ -24,40 +25,46 @@ func authHandler() http.HandlerFunc {
 
 		switch typ {
 		case 0:
-			_, flag = models.AdministratorDAO.FindByUsername(req.FormValue("username"))
+			administrator, flagusername := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
+			if flagusername == true {
+				rightpassword = util.MD5Hash(administrator.Password)
+				if rightpassword != req.FormValue("password") {
+					flagpassword = false
+				}
+				id = administrator.ID
+			}
 		case 1:
-			_, flag = models.UserDAO.FindByPhone(req.FormValue("username"))
+			user, flagusername := models.UserDAO.FindByPhone(req.FormValue("username"))
+			if flagusername == true {
+				rightpassword = util.MD5Hash(user.Password)
+				if rightpassword != req.FormValue("password") {
+					flagpassword = false
+				}
+				id = user.ID
+			}
 		case 2:
-			_, flag = models.OrganizationDAO.FindByPhone(req.FormValue("username"))
+			organization, flagusername := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
+			if flagusername == true {
+				rightpassword = util.MD5Hash(organization.Password)
+				if rightpassword != req.FormValue("password") {
+					flagpassword = false
+				}
+				id = organization.ID
+			}
 		}
 
-		if flag == false {
+		if flagusername == false {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
 				Msg: "Username not found",
 			})
+			return
 		}
 
-		switch typ {
-		case 0:
-			administrator, _ := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
-			rightpassword = util.MD5Hash(administrator.Password)
-			id = administrator.ID
-		case 1:
-			user, _ := models.UserDAO.FindByPhone(req.FormValue("username"))
-			rightpassword = util.MD5Hash(user.Password)
-			id = user.ID
-		case 2:
-			organization, _ := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
-			rightpassword = util.MD5Hash(organization.Password)
-			id = organization.ID
-		}
-
-		inputpassword := req.FormValue("password")
-
-		if rightpassword != inputpassword {
+		if flagpassword == false {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
 				Msg: "Password not right",
 			})
+			return
 		}
 
 		Signed := util.NewJWT(id, typ)
