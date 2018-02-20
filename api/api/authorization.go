@@ -21,8 +21,8 @@ func authHandler() http.HandlerFunc {
 		var rightPassword string
 		var id int
 		req.ParseForm()
-		var inputUsername string = req.FormValue("username")
-		var inputPassword string = req.FormValue("password")
+		inputUsername := req.FormValue("username")
+		inputPassword := req.FormValue("password")
 		typ, _ := strconv.Atoi(req.FormValue("type"))
 
 		switch typ {
@@ -72,6 +72,12 @@ func authHandler() http.HandlerFunc {
 		}
 
 		signed := util.NewJWT(id, typ)
-		formatter.JSON(w, http.StatusOK, signed)
+		formatter.JSON(w, http.StatusOK, JSON{
+			Status:  "OK",
+			Message: "验证成功",
+			Data: util.JWTMessage{
+				Token: signed,
+			},
+		})
 	}
 }
