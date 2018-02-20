@@ -16,51 +16,51 @@ func initAuthorizationRouter(router *mux.Router) {
 
 func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var flagusername bool
-		var flagpassword bool
-		var rightpassword string
+		var flagUsername bool
+		var flagPassword bool
+		var rightPassword string
 		var id int
 		req.ParseForm()
 		typ, _ := strconv.Atoi(req.FormValue("type"))
 
 		switch typ {
 		case 0:
-			administrator, flagusername := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
-			if flagusername == true {
-				rightpassword = util.MD5Hash(administrator.Password)
-				if rightpassword != req.FormValue("password") {
-					flagpassword = false
+			administrator, flagUsername := models.AdministratorDAO.FindByUsername(req.FormValue("username"))
+			if flagUsername == true {
+				rightPassword = util.MD5Hash(administrator.Password)
+				if rightPassword != req.FormValue("password") {
+					flagPassword = false
 				}
 				id = administrator.ID
 			}
 		case 1:
-			user, flagusername := models.UserDAO.FindByPhone(req.FormValue("username"))
-			if flagusername == true {
-				rightpassword = util.MD5Hash(user.Password)
-				if rightpassword != req.FormValue("password") {
-					flagpassword = false
+			user, flagUsername := models.UserDAO.FindByPhone(req.FormValue("username"))
+			if flagUsername == true {
+				rightPassword = util.MD5Hash(user.Password)
+				if rightPassword != req.FormValue("password") {
+					flagPassword = false
 				}
 				id = user.ID
 			}
 		case 2:
-			organization, flagusername := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
-			if flagusername == true {
-				rightpassword = util.MD5Hash(organization.Password)
-				if rightpassword != req.FormValue("password") {
-					flagpassword = false
+			organization, flagUsername := models.OrganizationDAO.FindByPhone(req.FormValue("username"))
+			if flagUsername == true {
+				rightPassword = util.MD5Hash(organization.Password)
+				if rightPassword != req.FormValue("password") {
+					flagPassword = false
 				}
 				id = organization.ID
 			}
 		}
 
-		if flagusername == false {
+		if flagUsername == false {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
 				Msg: "Username not found",
 			})
 			return
 		}
 
-		if flagpassword == false {
+		if flagPassword == false {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
 				Msg: "Password not right",
 			})
