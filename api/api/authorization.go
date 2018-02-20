@@ -59,25 +59,20 @@ func authHandler() http.HandlerFunc {
 		}
 
 		if flagUsername == false {
-			formatter.JSON(w, http.StatusBadRequest, util.Error{
-				Msg: "Username not found",
-			})
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "用户名不存在", nil))
 			return
 		}
 		if flagPassword == false {
-			formatter.JSON(w, http.StatusBadRequest, util.Error{
-				Msg: "Password not right",
-			})
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "密码错误", nil))
 			return
 		}
 
 		signed := util.NewJWT(id, typ)
-		formatter.JSON(w, http.StatusOK, JSON{
-			Status:  "OK",
-			Message: "验证成功",
-			Data: util.JWTMessage{
-				Token: signed,
-			},
-		})
+		formatter.JSON(w, http.StatusOK, NewJSON("OK", "验证成功", util.JWTMessage{
+			Token: signed,
+		}))
+
 	}
 }
