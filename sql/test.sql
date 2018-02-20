@@ -268,58 +268,58 @@ INSERT INTO administrator_login_logs(login_time, login_location,
     1
 );
 
-INSERT INTO user_organization_relationships(user_id, organization_id) VALUES(
+INSERT INTO users_organizations(user_id, organization_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO user_organization_relationships(user_id, organization_id) VALUES(
+INSERT INTO users_organizations(user_id, organization_id) VALUES(
 	2,
     2
 );
 
-INSERT INTO user_user_relationships(user_id, liked_user_id) VALUES(
+INSERT INTO users_users(user_id, liked_user_id) VALUES(
 	1,
     2
 );
 
-INSERT INTO user_photo_relationships(user_id, liked_photo_id) VALUES(
+INSERT INTO users_photos(user_id, liked_photo_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO user_photo_relationships(user_id, liked_photo_id) VALUES(
+INSERT INTO users_photos(user_id, liked_photo_id) VALUES(
 	2,
     2
 );
 
-INSERT INTO user_activity_relationships(user_id, activity_id) VALUES(
+INSERT INTO users_activities(user_id, activity_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO user_activity_relationships(user_id, activity_id) VALUES(
+INSERT INTO users_activities(user_id, activity_id) VALUES(
 	2,
     2
 );
 
 
-INSERT INTO organization_contact_relationships(organization_id, contact_id) VALUES(
+INSERT INTO organizations_contactors(organization_id, contact_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO organization_contact_relationships(organization_id, contact_id) VALUES(
+INSERT INTO organizations_contactors(organization_id, contact_id) VALUES(
 	2,
     2
 );
 
-INSERT INTO photo_live_supervisor_relationships(photo_live_id, supervisor_id) VALUES(
+INSERT INTO photo_lives_supervisors(photo_live_id, supervisor_id) VALUES(
 	1,
     1
 );
 
-INSERT INTO photo_live_supervisor_relationships(photo_live_id, supervisor_id) VALUES(
+INSERT INTO photo_lives_supervisors(photo_live_id, supervisor_id) VALUES(
 	2,
     2
 );

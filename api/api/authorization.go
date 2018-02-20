@@ -27,7 +27,8 @@ func authHandler() http.HandlerFunc {
 
 		switch typ {
 		case 0:
-			administrator, flagUsername :=
+			var administrator models.Administrator
+			administrator, flagUsername =
 				models.AdministratorDAO.FindByUsername(inputUsername)
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(administrator.Password)
@@ -37,7 +38,8 @@ func authHandler() http.HandlerFunc {
 				id = administrator.ID
 			}
 		case 1:
-			user, flagUsername :=
+			var user models.User
+			user, flagUsername =
 				models.UserDAO.FindByPhone(inputUsername)
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(user.Password)
@@ -47,7 +49,8 @@ func authHandler() http.HandlerFunc {
 				id = user.ID
 			}
 		case 2:
-			organization, flagUsername :=
+			var organization models.Organization
+			organization, flagUsername =
 				models.OrganizationDAO.FindByPhone(inputUsername)
 			if flagUsername == true {
 				rightPassword = util.MD5Hash(organization.Password)
@@ -70,9 +73,9 @@ func authHandler() http.HandlerFunc {
 		}
 
 		signed := util.NewJWT(id, typ)
-		formatter.JSON(w, http.StatusOK, NewJSON("OK", "验证成功", util.JWTMessage{
-			Token: signed,
-		}))
-
+		formatter.JSON(w, http.StatusOK, NewJSON("OK", "验证成功",
+			util.JWTMessage{
+				Token: signed,
+			}))
 	}
 }

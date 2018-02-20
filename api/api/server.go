@@ -11,6 +11,7 @@ const (
 	cor string = "*"
 )
 
+// NewServer creates a new Negroni Server for RESTful api
 func NewServer() *negroni.Negroni {
 	n := negroni.Classic()
 	router := mux.NewRouter()
@@ -22,6 +23,7 @@ func NewServer() *negroni.Negroni {
 	return n
 }
 
+// InitRouter init router for RESTful API
 func InitRouter(router *mux.Router) {
 	initAuthorizationRouter(router)
 	initCollectionUsersRouter(router)

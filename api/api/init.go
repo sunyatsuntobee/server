@@ -6,6 +6,7 @@ import (
 	"github.com/unrolled/render"
 )
 
+// JSON is a standard form of response data
 type JSON struct {
 	Status  string      `json:"status"`
 	Message string      `json:"msg"`
@@ -34,6 +35,7 @@ func init() {
 	})
 }
 
+// NewJSON creates a new JSON object
 func NewJSON(status, msg string, data interface{}) *JSON {
 	return &JSON{
 		Status:  status,
