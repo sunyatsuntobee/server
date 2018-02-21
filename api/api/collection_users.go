@@ -57,7 +57,7 @@ func usersCreatHandler() http.HandlerFunc {
 			postCamera,
 			postDescription,
 			postOccupation,
-			postCollege
+			postCollege,
 		)
 
 		models.UserDAO.InsertOne(&user)
