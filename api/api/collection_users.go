@@ -38,6 +38,7 @@ func usersCreatHandler() http.HandlerFunc {
 		postOccupation := req.FormValue("occupation")
 		postCollege := req.FormValue("college")
 		postVipBool, _ := strconv.ParseBool(postVipString)
+
 		_, flagPhone =
 			models.UserDAO.FindByPhone(postPhone)
 		if flagPhone == true {
@@ -46,27 +47,22 @@ func usersCreatHandler() http.HandlerFunc {
 			return
 		}
 
-		user := models.NewUser(postUsername, postPhone, postPassword, postLocation,
-			postCreateTime, postVipBool, postAvatarUrl, postCamera,
-			postDescription, postOccupation, postCollege)
+		user := models.NewUser(postUsername,
+			postPhone,
+			postPassword,
+			postLocation,
+			postCreateTime,
+			postVipBool,
+			postAvatarUrl,
+			postCamera,
+			postDescription,
+			postOccupation,
+			postCollege
+		)
 
-		models.UserDAO.InsertOne(user)
+		models.UserDAO.InsertOne(&user)
 
-		formatter.JSON(w, http.StatusCreated, NewJSON("Created", "注册成功",
-			models.User{
-				ID:          user.ID,
-				Username:    user.Username,
-				Phone:       user.Phone,
-				Password:    user.Password,
-				Location:    user.Location,
-				CreateTime:  user.CreateTime,
-				VIP:         user.VIP,
-				AvatarURL:   user.AvatarURL,
-				Camera:      user.Camera,
-				Description: user.Description,
-				Occupation:  user.Occupation,
-				College:     user.College,
-			}))
+		formatter.JSON(w, http.StatusCreated, NewJSON("Created", "注册成功", user))
 	}
 }
 
