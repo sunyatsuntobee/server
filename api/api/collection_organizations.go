@@ -21,9 +21,9 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/contacts",
 		organizationsContactsPostHandler()).Methods(http.MethodPost)
 	router.HandleFunc(url,
-		organizationCreatHandler()).Methods(http.MethodPost)
+		organizationsCreatHandler()).Methods(http.MethodPost)
 }
-func organizationCreatHandler() http.HandlerFunc {
+func organizationsCreatHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		var flagPhone bool = false
 		req.ParseForm()
