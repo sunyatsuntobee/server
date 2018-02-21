@@ -20,8 +20,41 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 		organizationsContactsDeleteHandler()).Methods(http.MethodDelete)
 	router.HandleFunc(url+"/{ID}/contacts",
 		organizationsContactsPostHandler()).Methods(http.MethodPost)
+	router.HandleFunc(url,
+		organizationCreatHandler()).Methods(http.MethodPost)
 }
+func organizationCreatHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		var flagPhone bool = false
+		req.ParseForm()
+		postName := req.FormValue("name")
+		postPassword := util.MD5Hash(req.FormValue("password"))
+		postPhone := req.FormValue("phone")
+		postLogoUrl := req.FormValue("logo_url")
+		postDescription := req.FormValue("description")
+		postCollege := req.FormValue("college")
 
+		_, flagPhone =
+			models.OrganizationDAO.FindByPhone(postPhone)
+		if flagPhone == true {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "此号码已被使用", nil))
+			return
+		}
+
+		organization := models.NewOrganization(postName,
+			postPhone,
+			postPassword,
+			postCollege,
+			postLogoUrl,
+			postDescription,
+		)
+
+		models.OrganizationDAO.InsertOne(organization)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "注册成功", organization))
+	}
+}
 func organizationsContactsDeleteHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {

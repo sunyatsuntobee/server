@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/models"
+	"github.com/sunyatsuntobee/server/util"
 )
 
 func initCollectionUsersRouter(router *mux.Router) {
@@ -27,7 +28,7 @@ func usersCreatHandler() http.HandlerFunc {
 		var flagPhone bool = false
 		req.ParseForm()
 		postUsername := req.FormValue("username")
-		postPassword := req.FormValue("password")
+		postPassword := util.MD5Hash(req.FormValue("password"))
 		postPhone := req.FormValue("phone")
 		postLocation := req.FormValue("location")
 		postCreateTime := time.Now()
