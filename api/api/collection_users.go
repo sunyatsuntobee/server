@@ -32,7 +32,7 @@ func usersCreatHandler() http.HandlerFunc {
 		postLocation := req.FormValue("location")
 		postCreateTime := time.Now()
 		postVipString := req.FormValue("vip")
-		postAvatarUrl := req.FormValue("avatarUrl")
+		postAvatarUrl := req.FormValue("avatar_url")
 		postCamera := req.FormValue("camera")
 		postDescription := req.FormValue("description")
 		postOccupation := req.FormValue("occupation")
@@ -60,7 +60,7 @@ func usersCreatHandler() http.HandlerFunc {
 			postCollege,
 		)
 
-		models.UserDAO.InsertOne(&user)
+		models.UserDAO.InsertOne(user)
 
 		formatter.JSON(w, http.StatusCreated, NewJSON("Created", "注册成功", user))
 	}
