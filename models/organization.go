@@ -84,6 +84,12 @@ func (*OrganizationDataAccessObject) FindByPhone(phone string) (Organization, bo
 	return o, has
 }
 
+// InsertOne inserts an organization
+func (*OrganizationDataAccessObject) InsertOne(organization *Organization) {
+	_, err := orm.Table(Organization.TableName()).InsertOne(organization)
+	logger.LogIfError(err)
+}
+
 // UpdateOne updates an organization
 func (*OrganizationDataAccessObject) UpdateOne(o *Organization) {
 	_, err := orm.Table(OrganizationDAO.TableName()).ID(o.ID).Update(o)
