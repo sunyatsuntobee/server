@@ -61,7 +61,7 @@ func usersCreatHandler() http.HandlerFunc {
 			postCollege,
 		)
 
-		models.UserDAO.InsertOne(&user)
+		models.UserDAO.InsertOne(user)
 
 		formatter.JSON(w, http.StatusCreated, NewJSON("Created", "注册成功", user))
 	}

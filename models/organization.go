@@ -79,14 +79,14 @@ func (*OrganizationDataAccessObject) FindByID(id int) (Organization, bool) {
 // FindByPhone finds an organization according to Phone
 func (*OrganizationDataAccessObject) FindByPhone(phone string) (Organization, bool) {
 	var o Organization
-	has, err := orm.Table(OrganizationDAO.TableName()).Where("phone=", phone).Get(&o)
+	has, err := orm.Table(OrganizationDAO.TableName()).Where("phone=?", phone).Get(&o)
 	logger.LogIfError(err)
 	return o, has
 }
 
 // InsertOne inserts an organization
 func (*OrganizationDataAccessObject) InsertOne(organization *Organization) {
-	_, err := orm.Table(Organization.TableName()).InsertOne(organization)
+	_, err := orm.Table(OrganizationDAO.TableName()).InsertOne(organization)
 	logger.LogIfError(err)
 }
 

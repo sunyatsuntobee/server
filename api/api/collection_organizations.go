@@ -22,6 +22,17 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 		organizationsContactsPostHandler()).Methods(http.MethodPost)
 	router.HandleFunc(url,
 		organizationsCreatHandler()).Methods(http.MethodPost)
+	router.HandleFunc(url,
+		organizationsGetHandler()).Methods(http.MethodGet)
+}
+func organizationsGetHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		if req.FormValue("id") == "" {
+			organizations := models.OrganizationDAO.FindAll()
+			formatter.JSON(w, http.StatusOK, organizations)
+		}
+	}
 }
 func organizationsCreatHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
