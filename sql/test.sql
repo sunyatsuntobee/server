@@ -10,7 +10,7 @@ INSERT INTO administrators(name, password, level) VALUES(
     0
 );
 
-INSERT INTO organizations(name, phone, password, collage, description) VALUES(
+INSERT INTO organizations(name, phone, password, college, description) VALUES(
 	'自嗨社',
     '15814092425',
     '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -18,7 +18,7 @@ INSERT INTO organizations(name, phone, password, collage, description) VALUES(
     '简介'
 );
 
-INSERT INTO organizations(name, phone, password, collage, description) VALUES(
+INSERT INTO organizations(name, phone, password, college, description) VALUES(
 	'麻将社',
     '110',
     '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -87,7 +87,7 @@ INSERT INTO activity_stages(stage_num, start_time, end_time, location, content,
 );
 
 INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
-	description, occupation, collage) VALUES(
+	description, occupation, college) VALUES(
 	'test_user1',
     '15814092425',
     '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -101,7 +101,7 @@ INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
 );
 
 INSERT INTO users(username, phone, password, location, vip, avatar_url, camera,
-	description, occupation, collage) VALUES(
+	description, occupation, college) VALUES(
 	'test_user2',
     '120',
     '5f4dcc3b5aa765d61d8327deb882cf99',

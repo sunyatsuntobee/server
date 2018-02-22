@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users` (
   `camera` VARCHAR(50) NULL,
   `description` VARCHAR(200) NULL,
   `occupation` VARCHAR(50) NULL,
-  `collage` VARCHAR(50) NULL,
+  `college` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organizations` (
   `name` VARCHAR(20) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
-  `collage` VARCHAR(20) NOT NULL,
+  `college` VARCHAR(20) NOT NULL,
   `logo_url` VARCHAR(50) NULL,
   `description` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
