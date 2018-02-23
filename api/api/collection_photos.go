@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/logger"
@@ -15,11 +14,40 @@ import (
 
 func initCollectionPhotosRouter(router *mux.Router) {
 	url := "/api/photos"
-	router.HandleFunc(url, photosPostHandler()).Methods(http.MethodPost)
-	router.HandleFunc(url+"/{ID}/photo", photosUploadHandler()).
-		Methods(http.MethodPatch)
-	router.HandleFunc(url, photosGetHandler()).Methods(http.MethodGet)
-	router.HandleFunc(url, photosPutHandler()).Methods(http.MethodPut)
+
+	// POST /photos
+	router.HandleFunc(url,
+		photosPostHandler()).Methods(http.MethodPost)
+
+	// PATCH /photos/{ID}/photo
+	router.HandleFunc(url+"/{ID}/photo",
+		photosUploadHandler()).Methods(http.MethodPatch)
+
+	// GET /photos{?category}
+	router.HandleFunc(url,
+		photosGetHandler()).Methods(http.MethodGet)
+
+	// PUT /photos/{ID}
+	router.HandleFunc(url+"/{ID}",
+		photosPutHandler()).Methods(http.MethodPut)
+}
+
+func photosGetHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		if req.FormValue("category") == "" {
+			data := models.PhotoDAO.FindAll()
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取照片列表成功", data))
+		} else {
+			data := models.PhotoDAO.FindByCategory(
+				req.FormValue("category"))
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取照片列表成功", data))
+		}
+	}
+
 }
 
 func photosUploadHandler() http.HandlerFunc {
@@ -67,39 +95,25 @@ func photosPostHandler() http.HandlerFunc {
 
 }
 
-func photosGetHandler() http.HandlerFunc {
-
-	return func(w http.ResponseWriter, req *http.Request) {
-		req.ParseForm()
-		if req.FormValue("category") == "" {
-			data := models.PhotoDAO.FindFullAll()
-			formatter.JSON(w, http.StatusOK, data)
-		} else {
-			data := models.PhotoDAO.FindFullByCategory(
-				req.FormValue("category"))
-			formatter.JSON(w, http.StatusOK, data)
-		}
-	}
-
-}
-
 func photosPutHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		req.ParseForm()
-		id, _ := strconv.Atoi(req.FormValue("id"))
+		var photo models.Photo
+		decoder := json.NewDecoder(req.Body)
+		err := decoder.Decode(&photo)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		old, _ := models.PhotoDAO.FindByID(id)
-		old.URL = req.FormValue("url")
-		old.TookTime, _ = time.Parse(time.RFC3339, req.FormValue("took_time"))
-		old.TookLocation = req.FormValue("took_location")
-		old.ReleaseTime, _ = time.Parse(time.RFC3339,
-			req.FormValue("release_time"))
-		old.Category = req.FormValue("category")
-		old.Likes, _ = strconv.Atoi(req.FormValue("likes"))
-		old.RejectReason = req.FormValue("reject_reason")
-		old.PhotographerID, _ = strconv.Atoi(req.FormValue("photographer_id"))
-		models.PhotoDAO.UpdateOne(&old)
-		formatter.JSON(w, http.StatusCreated, nil)
+		photo.ID = id
+		photo.URL = old.URL
+		models.PhotoDAO.UpdateOne(&photo)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("created", "修改照片信息成功", photo))
 	}
 
 }

@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -17,14 +16,21 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc("/api/users", usersGetHandler()).
 		Methods(http.MethodGet)
 
-	// PUT /users/{ID}
-	router.HandleFunc("/api/users/{ID}", usersPutHandler()).
-		Methods(http.MethodPut)
-
-	// POST /Create a  new user/
+	// POST /users
 	router.HandleFunc("/api/users", usersCreateHandler()).
 		Methods(http.MethodPost)
 }
+
+func usersGetHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		userList := models.UserDAO.FindAll()
+		formatter.JSON(w, http.StatusOK,
+			NewJSON("OK", "获取用户列表成功", userList))
+	}
+
+}
+
 func usersCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		defer req.Body.Close()
@@ -53,34 +59,4 @@ func usersCreateHandler() http.HandlerFunc {
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "注册成功", user))
 	}
-}
-
-func usersPutHandler() http.HandlerFunc {
-
-	return func(w http.ResponseWriter, req *http.Request) {
-		req.ParseForm()
-		id, _ := strconv.Atoi(req.FormValue("id"))
-		user, _ := models.UserDAO.FindByID(id)
-		user.Username = req.FormValue("username")
-		user.Location = req.FormValue("location")
-		user.Camera = req.FormValue("camera")
-		user.Description = req.FormValue("description")
-		user.Occupation = req.FormValue("occupation")
-		user.College = req.FormValue("college")
-		models.UserDAO.UpdateOne(&user)
-		formatter.JSON(w, http.StatusCreated, nil)
-	}
-
-}
-
-func usersGetHandler() http.HandlerFunc {
-
-	return func(w http.ResponseWriter, req *http.Request) {
-		req.ParseForm()
-		if req.FormValue("id") == "" {
-			users := models.UserDAO.FindAll()
-			formatter.JSON(w, http.StatusOK, users)
-		}
-	}
-
 }
