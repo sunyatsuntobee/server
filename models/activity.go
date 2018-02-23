@@ -102,3 +102,9 @@ func (*ActivityDataAccessObject) FindByOID(oid int) []Activity {
 	logger.LogIfError(err)
 	return activities
 }
+
+// InsertOne inserts an activity
+func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
+	_, err := orm.Table(ActivityDAO.TableName()).InsertOne(activity)
+	logger.LogIfError(err)
+}
