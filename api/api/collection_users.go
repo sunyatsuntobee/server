@@ -1,11 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/logger"
 	"github.com/sunyatsuntobee/server/models"
 	"github.com/sunyatsuntobee/server/util"
 )
@@ -20,50 +22,36 @@ func initCollectionUsersRouter(router *mux.Router) {
 		Methods(http.MethodPut)
 
 	// POST /Create a  new user/
-	router.HandleFunc("/api/users", usersCreatHandler()).
+	router.HandleFunc("/api/users", usersCreateHandler()).
 		Methods(http.MethodPost)
 }
-func usersCreatHandler() http.HandlerFunc {
+func usersCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var flagPhone bool = false
-		req.ParseForm()
-		postUsername := req.FormValue("username")
-		postPassword := util.MD5Hash(req.FormValue("password"))
-		postPhone := req.FormValue("phone")
-		postLocation := req.FormValue("location")
-		postCreateTime := time.Now()
-		postVipString := req.FormValue("vip")
-		postAvatarUrl := req.FormValue("avatar_url")
-		postCamera := req.FormValue("camera")
-		postDescription := req.FormValue("description")
-		postOccupation := req.FormValue("occupation")
-		postCollege := req.FormValue("college")
-		postVipBool, _ := strconv.ParseBool(postVipString)
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var user models.User
+		err := decoder.Decode(&user)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		user.Password = util.MD5Hash(user.Password)
+		user.CreateTime = time.Now()
+		user.VIP = false
 
-		_, flagPhone =
-			models.UserDAO.FindByPhone(postPhone)
+		_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
 		if flagPhone == true {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "此号码已被使用", nil))
 			return
 		}
 
-		user := models.NewUser(postUsername,
-			postPhone,
-			postPassword,
-			postLocation,
-			postCreateTime,
-			postVipBool,
-			postAvatarUrl,
-			postCamera,
-			postDescription,
-			postOccupation,
-			postCollege,
-		)
+		models.UserDAO.InsertOne(&user)
 
-		models.UserDAO.InsertOne(user)
-
-		formatter.JSON(w, http.StatusCreated, NewJSON("Created", "注册成功", user))
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "注册成功", user))
 	}
 }
 

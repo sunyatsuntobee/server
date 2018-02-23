@@ -13,6 +13,10 @@ import (
 	"github.com/urfave/negroni"
 )
 
+const (
+	resDir string = "~/tobee/"
+)
+
 var (
 	formatter     *render.Render
 	jwtMiddleware *jwtmiddleware.JWTMiddleware
@@ -53,6 +57,10 @@ func initRouter(router *mux.Router) {
 	// Static files
 	router.PathPrefix("/static").Handler(http.StripPrefix("/static/",
 		http.FileServer(http.Dir("./static/"))))
+
+	// Resources files
+	router.PathPrefix("/res").Handler(http.StripPrefix("/res/",
+		http.FileServer(http.Dir(resDir))))
 
 	// Develop
 	router.HandleFunc("/dev", func(w http.ResponseWriter, req *http.Request) {

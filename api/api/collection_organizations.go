@@ -1,10 +1,12 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/logger"
 	"github.com/sunyatsuntobee/server/models"
 	"github.com/sunyatsuntobee/server/util"
 )
@@ -21,7 +23,7 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/contacts",
 		organizationsContactsPostHandler()).Methods(http.MethodPost)
 	router.HandleFunc(url,
-		organizationsCreatHandler()).Methods(http.MethodPost)
+		organizationsCreateHandler()).Methods(http.MethodPost)
 	router.HandleFunc(url,
 		organizationsGetHandler()).Methods(http.MethodGet)
 }
@@ -34,34 +36,28 @@ func organizationsGetHandler() http.HandlerFunc {
 		}
 	}
 }
-func organizationsCreatHandler() http.HandlerFunc {
+func organizationsCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var flagPhone bool = false
-		req.ParseForm()
-		postName := req.FormValue("name")
-		postPassword := util.MD5Hash(req.FormValue("password"))
-		postPhone := req.FormValue("phone")
-		postLogoUrl := req.FormValue("logo_url")
-		postDescription := req.FormValue("description")
-		postCollege := req.FormValue("college")
-
-		_, flagPhone =
-			models.OrganizationDAO.FindByPhone(postPhone)
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var organization models.Organization
+		err := decoder.Decode(&organization)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		organization.LogoURL = ""
+		organization.Password = util.MD5Hash(organization.Password)
+		_, flagPhone := models.OrganizationDAO.FindByPhone(organization.Phone)
 		if flagPhone == true {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "此号码已被使用", nil))
 			return
 		}
 
-		organization := models.NewOrganization(postName,
-			postPhone,
-			postPassword,
-			postCollege,
-			postLogoUrl,
-			postDescription,
-		)
-
-		models.OrganizationDAO.InsertOne(organization)
+		models.OrganizationDAO.InsertOne(&organization)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "注册成功", organization))
 	}

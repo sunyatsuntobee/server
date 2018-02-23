@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"image/png"
 	"io"
+	"mime/multipart"
 	"os"
 	"strings"
 	"time"
@@ -44,6 +45,15 @@ func NewJWT(id int, typ int) string {
 	signed, err := token.SignedString([]byte("abcd"))
 	logger.LogIfError(err)
 	return signed
+}
+
+func SaveMultipartFile(path string, file multipart.File) {
+	var buf bytes.Buffer
+	io.Copy(&buf, file)
+	target, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	defer target.Close()
+	target.Write(buf.Bytes())
+	logger.LogIfError(err)
 }
 
 func SaveBase64AsPNG(code string, path string) {
