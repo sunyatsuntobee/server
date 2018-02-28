@@ -45,7 +45,7 @@ func usersCreateHandler() http.HandlerFunc {
 		}
 		user.Password = util.MD5Hash(user.Password)
 		user.CreateTime = time.Now()
-		user.VIP = false
+		user.VIP = 0
 
 		_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
 		if flagPhone == true {

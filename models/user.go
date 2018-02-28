@@ -9,35 +9,45 @@ import (
 // User Model
 type User struct {
 	ID          int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Username    string    `xorm:"username VARCHAR(20) NOTNULL" json:"username"`
 	Phone       string    `xorm:"phone VARCHAR(20) NOTNULL" json:"phone"`
 	Password    string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	Location    string    `xorm:"location VARCHAR(50) NOTNULL" json:"location"`
-	CreateTime  time.Time `xorm:"create_time TIMESTAMP NOTNULL CREATED" json:"create_time"`
-	VIP         bool      `xorm:"vip INT NOTNULL" json:"vip"`
+	Username    string    `xorm:"username VARCHAR(20) NOTNULL" json:"username"`
+	Nickname    string    `xorm:"nickname VARCHAR(20) NOTNULL" json:"nickname"`
+	Email       string    `xorm:"email VARCHAR(50) NOTNULL" json:"email"`
 	AvatarURL   string    `xorm:"avatar_url VARCHAR(45)" json:"avatar_url"`
-	Camera      string    `xorm:"camera VARCHAR(45)" json:"camera"`
-	Description string    `xorm:"description VARCHAR(45)" json:"description"`
-	Occupation  string    `xorm:"occupation VARCHAR(45)" json:"occupation"`
-	College     string    `xorm:"college VARCHAR(45)" json:"college"`
+	CreateTime  time.Time `xorm:"create_time DATATIME NOTNULL" json:"create_time"`
+	CityID      int       `xorm:"location_id int NOTNULL INDEX(fk_users_city_id_idx)" json:"location"`
+	VIP         int       `xorm:"vip INT NOTNULL" json:"vip"`
+	Camera      string    `xorm:"camera VARCHAR(50)" json:"camera"`
+	Description string    `xorm:"description VARCHAR(200)" json:"description"`
+	College     string    `xorm:"college VARCHAR(50)" json:"college"`
+	EnrollTime  int       `xorm:"enroll_time INT" json:"enroll_time"`
+	Institute   string    `xorm:"institute VARCHAR(50)" json:"institute"`
+	Astrology   string    `xorm:"astrology VARCHAR(10)" json:"astrology"`
+	QQ          string    `xorm:"qq VARCHAR(10)" json:"qq"`
 }
 
 // NewUser creates a new user
-func NewUser(username string, phone string, password string, location string,
-	createTime time.Time, vip bool, avatarURL string, camera string,
-	description string, occupation string, college string) *User {
+func NewUser(phone, password, username, nickname, email, avatarURL string,
+	cityID, vip int, camera, description, college string,
+	enrollTime int, institute, astrology, qq string) *User {
 	return &User{
-		Username:    username,
 		Phone:       phone,
 		Password:    password,
-		Location:    location,
-		CreateTime:  createTime,
-		VIP:         vip,
+		Username:    username,
+		Nickname:    nickname,
+		Email:       email,
 		AvatarURL:   avatarURL,
+		CreateTime:  time.Now(),
+		CityID:      cityID,
+		VIP:         vip,
 		Camera:      camera,
 		Description: description,
-		Occupation:  occupation,
 		College:     college,
+		EnrollTime:  enrollTime,
+		Institute:   institute,
+		Astrology:   astrology,
+		QQ:          qq,
 	}
 }
 

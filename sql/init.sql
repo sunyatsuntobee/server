@@ -15,23 +15,63 @@ CREATE SCHEMA IF NOT EXISTS `tobee` DEFAULT CHARACTER SET utf8 ;
 USE `tobee` ;
 
 -- -----------------------------------------------------
+-- Table `tobee`.`provinces`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`provinces` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`cities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`cities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  `province_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_cities_province_id_idx` (`province_id` ASC),
+  CONSTRAINT `fk_cities_province_id`
+    FOREIGN KEY (`province_id`)
+    REFERENCES `tobee`.`provinces` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `tobee`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(20) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
-  `location` VARCHAR(50) NOT NULL,
-  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `vip` INT NOT NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `nickname` VARCHAR(20) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `avatar_url` VARCHAR(50) NULL,
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `city_id` INT NOT NULL,
+  `vip` INT NOT NULL,
   `camera` VARCHAR(50) NULL,
   `description` VARCHAR(200) NULL,
-  `occupation` VARCHAR(50) NULL,
   `college` VARCHAR(50) NULL,
+  `enroll_time` INT NULL,
+  `institute` VARCHAR(50) NULL,
+  `astrology` VARCHAR(10) NULL,
+  `qq` VARCHAR(10) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_users_city_id_idx` (`city_id` ASC),
+  CONSTRAINT `fk_users_city_id`
+    FOREIGN KEY (`city_id`)
+    REFERENCES `tobee`.`cities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
@@ -46,31 +86,13 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photos` (
   `category` VARCHAR(20) NOT NULL,
   `likes` INT NOT NULL,
   `reject_reason` VARCHAR(200) NULL,
-  `photographer_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `photographer_id_idx` (`photographer_id` ASC),
-  CONSTRAINT `photographer_id_1`
-    FOREIGN KEY (`photographer_id`)
+  INDEX `photographer_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_photos_user_id`
+    FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `tobee`.`photo_tags`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`photo_tags` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `tag` VARCHAR(20) NOT NULL,
-  `photo_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `photo_id_idx` (`photo_id` ASC),
-  CONSTRAINT `photo_id_2`
-    FOREIGN KEY (`photo_id`)
-    REFERENCES `tobee`.`photos` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -94,32 +116,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`photo_comments`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`photo_comments` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(20) NOT NULL,
-  `content` VARCHAR(200) NOT NULL,
-  `user_id` INT NOT NULL,
-  `photo_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `user_id_idx` (`user_id` ASC),
-  INDEX `photo_id_idx` (`photo_id` ASC),
-  CONSTRAINT `user_id_1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `tobee`.`users` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `photo_id_1`
-    FOREIGN KEY (`photo_id`)
-    REFERENCES `tobee`.`photos` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `tobee`.`organization_departments`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`organization_departments` (
@@ -129,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organization_departments` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `organization_id_idx` (`organization_id` ASC),
-  CONSTRAINT `organization_id_3`
+  CONSTRAINT `fk_organization_departments_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
     ON DELETE CASCADE
@@ -151,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activities` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `organization_id_idx` (`organization_id` ASC),
-  CONSTRAINT `organization_id_1`
+  CONSTRAINT `fk_activities_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
     ON DELETE CASCADE
@@ -173,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activity_stages` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `activity_id_idx` (`activity_id` ASC),
-  CONSTRAINT `activity_id_1`
+  CONSTRAINT `fk_activity_stages_activity_id`
     FOREIGN KEY (`activity_id`)
     REFERENCES `tobee`.`activities` (`id`)
     ON DELETE CASCADE
@@ -216,46 +212,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`user_login_logs`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`user_login_logs` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(50) NOT NULL,
-  `login_device` VARCHAR(20) NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `user_id_idx` (`user_id` ASC),
-  CONSTRAINT `user_id_3`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `tobee`.`users` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `tobee`.`organization_login_logs`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`organization_login_logs` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(20) NOT NULL,
-  `login_device` VARCHAR(20) NOT NULL,
-  `organization_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `organization_id_idx` (`organization_id` ASC),
-  CONSTRAINT `organization_id_4`
-    FOREIGN KEY (`organization_id`)
-    REFERENCES `tobee`.`organizations` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `tobee`.`administrators`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`administrators` (
@@ -269,42 +225,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`administrator_login_logs`
+-- Table `tobee`.`users_focus_organizations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`administrator_login_logs` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `login_time` DATETIME NOT NULL,
-  `login_location` VARCHAR(20) NOT NULL,
-  `login_device` VARCHAR(20) NOT NULL,
-  `administrator_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `administrator_id_idx` (`administrator_id` ASC),
-  CONSTRAINT `administrator_id_1`
-    FOREIGN KEY (`administrator_id`)
-    REFERENCES `tobee`.`administrators` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `tobee`.`users_organizations`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_organizations` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_organizations` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `organization_id` INT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `organization_id_idx` (`organization_id` ASC),
   INDEX `user_id_idx` (`user_id` ASC),
-  CONSTRAINT `user_id_4`
+  CONSTRAINT `fk_users_focus_organizations_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `organization_id_5`
+  CONSTRAINT `fk_users_focus_organizations_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
     ON DELETE CASCADE
@@ -313,23 +250,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`users_users`
+-- Table `tobee`.`users_focus_users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_users` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `liked_user_id` INT NOT NULL,
+  `focused_user_id` INT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `liked_user_id_idx` (`liked_user_id` ASC),
+  INDEX `liked_user_id_idx` (`focused_user_id` ASC),
   INDEX `user_id_idx` (`user_id` ASC),
-  CONSTRAINT `user_id_6`
+  CONSTRAINT `fk_users_focus_users_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `liked_user_id_1`
-    FOREIGN KEY (`liked_user_id`)
+  CONSTRAINT `fk_users_focus_users_focused_user_id`
+    FOREIGN KEY (`focused_user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -337,46 +275,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`users_photos`
+-- Table `tobee`.`users_focus_activities`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_photos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `liked_photo_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `user_id_idx` (`user_id` ASC),
-  INDEX `liked_photo_id_idx` (`liked_photo_id` ASC),
-  CONSTRAINT `user_id_5`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `tobee`.`users` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `liked_photo_id_1`
-    FOREIGN KEY (`liked_photo_id`)
-    REFERENCES `tobee`.`photos` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `tobee`.`users_activities`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_activities` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_activities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `activity_id` INT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `user_id_idx` (`user_id` ASC),
   INDEX `activity_id_idx` (`activity_id` ASC),
-  CONSTRAINT `user_id_2`
+  CONSTRAINT `fk_users_focus_activities_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `activity_id_2`
+  CONSTRAINT `fk_users_focus_activities_activity_id`
     FOREIGN KEY (`activity_id`)
     REFERENCES `tobee`.`activities` (`id`)
     ON DELETE CASCADE
@@ -385,23 +300,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`organizations_contactors`
+-- Table `tobee`.`users_participate_organizations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`organizations_contactors` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_participate_organizations` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `organization_id` INT NOT NULL,
-  `contact_id` INT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `organization_id_idx` (`organization_id` ASC),
-  INDEX `contact_id_idx` (`contact_id` ASC),
-  CONSTRAINT `organization_id_2`
+  INDEX `contact_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_users_participate_organizations_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `contact_id_1`
-    FOREIGN KEY (`contact_id`)
+  CONSTRAINT `fk_users_participate_organizations_user_id`
+    FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -432,7 +348,170 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photo_lives_supervisors` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `tobee`.`users_sign_activities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`users_sign_activities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `activity_id` INT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_users_sign_activities_user_id_idx` (`user_id` ASC),
+  INDEX `fk_users_sign_activities_activity_id_idx` (`activity_id` ASC),
+  CONSTRAINT `fk_users_sign_activities_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tobee`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_users_sign_activities_activity_id`
+    FOREIGN KEY (`activity_id`)
+    REFERENCES `tobee`.`activities` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`moments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`moments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `organization_id` INT NULL,
+  `timestamp` DATETIME NOT NULL,
+  `content` VARCHAR(400) NOT NULL,
+  `photo_1_id` INT NOT NULL,
+  `photo_2_id` INT NULL,
+  `photo_3_id` INT NULL,
+  `photo_4_id` INT NULL,
+  `photo_5_id` INT NULL,
+  `photo_6_id` INT NULL,
+  `photo_7_id` INT NULL,
+  `photo_8_id` INT NULL,
+  `photo_9_id` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_moments_user_id_idx` (`user_id` ASC),
+  INDEX `fk_moments_organization_id_idx` (`organization_id` ASC),
+  INDEX `fk_moments_photo_1_id_idx` (`photo_1_id` ASC),
+  INDEX `fk_moments_photo_2_id_idx` (`photo_2_id` ASC),
+  INDEX `fk_moments_photo_3_id_idx` (`photo_3_id` ASC),
+  INDEX `fk_moments_photo_4_id_idx` (`photo_4_id` ASC),
+  INDEX `fk_moments_photo_5_id_idx` (`photo_5_id` ASC),
+  INDEX `fk_moments_photo_6_id_idx` (`photo_6_id` ASC),
+  INDEX `fk_moments_photo_7_id_idx` (`photo_7_id` ASC),
+  INDEX `fk_moments_photo_8_id_idx` (`photo_8_id` ASC),
+  INDEX `fk_moments_photo_9_id_idx` (`photo_9_id` ASC),
+  CONSTRAINT `fk_moments_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tobee`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_organization_id`
+    FOREIGN KEY (`organization_id`)
+    REFERENCES `tobee`.`organizations` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_1_id`
+    FOREIGN KEY (`photo_1_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_2_id`
+    FOREIGN KEY (`photo_2_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_3_id`
+    FOREIGN KEY (`photo_3_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_4_id`
+    FOREIGN KEY (`photo_4_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_5_id`
+    FOREIGN KEY (`photo_5_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_6_id`
+    FOREIGN KEY (`photo_6_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_7_id`
+    FOREIGN KEY (`photo_7_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_8_id`
+    FOREIGN KEY (`photo_8_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moments_photo_9_id`
+    FOREIGN KEY (`photo_9_id`)
+    REFERENCES `tobee`.`photos` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`moment_comments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`moment_comments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `moment_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `content` VARCHAR(200) NOT NULL,
+  `timestamp` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_moment_comments_moment_id_idx` (`moment_id` ASC),
+  INDEX `fk_moment_comments_user_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_moment_comments_moment_id`
+    FOREIGN KEY (`moment_id`)
+    REFERENCES `tobee`.`moments` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_moment_comments_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tobee`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`users_like_moments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`users_like_moments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `moment_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_users_like_moments_user_id_idx` (`user_id` ASC),
+  INDEX `fk_users_like_moments_moment_id_idx` (`moment_id` ASC),
+  CONSTRAINT `fk_users_like_moments_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tobee`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_users_like_moments_moment_id`
+    FOREIGN KEY (`moment_id`)
+    REFERENCES `tobee`.`moments` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-activitiesactivities

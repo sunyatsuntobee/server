@@ -5,12 +5,12 @@ import "github.com/sunyatsuntobee/server/logger"
 // Organization Model
 type Organization struct {
 	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name        string `xorm:"name VARCHAR(45) NOTNULL" json:"name"`
-	Phone       string `xorm:"phone VARCHAR(45) NOTNULL UNIQUE" json:"phone"`
-	Password    string `xorm:"password VARCHAR(45) NOTNULL" json:"password"`
-	College     string `xorm:"college VARCHAR(45) NOTNULL" json:"college"`
-	LogoURL     string `xorm:"logo_url VARCHAR(45)" json:"logo_url"`
-	Description string `xorm:"description VARCHAR(45)" json:"description"`
+	Name        string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
+	Phone       string `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
+	Password    string `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
+	College     string `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
+	LogoURL     string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
+	Description string `xorm:"description VARCHAR(200)" json:"description"`
 }
 
 // NewOrganization creates a new organization
@@ -56,8 +56,6 @@ func (*OrganizationDataAccessObject) FindFullByID(id int) []OrganizationFull {
 			"organization_contact_relationships.contact_id=users.id").
 		Join("LEFT OUTER", OrganizationDepartmentDAO.TableName(),
 			"organizations.id=organization_departments.organization_id").
-		Join("LEFT OUTER", OrganizationLoginLogDAO.TableName(),
-			"organizations.id=organization_login_logs.organization_id").
 		Join("LEFT OUTER", ActivityDAO.TableName(),
 			"organizations.id=activities.organization_id").
 		Join("LEFT OUTER", ActivityStageDAO.TableName(),

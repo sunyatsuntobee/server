@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	resDir string = "~/tobee/"
+	resDir string = "/Users/hinanawitenshi/tobee"
 )
 
 var (

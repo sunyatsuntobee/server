@@ -8,29 +8,29 @@ import (
 
 // Photo Model
 type Photo struct {
-	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	URL            string    `xorm:"url VARCHAR(59) NOTNULL" json:"url"`
-	TookTime       time.Time `xorm:"took_time DATETIME NOTNULL" json:"took_time"`
-	TookLocation   string    `xorm:"took_location VARCHAR(50) NOTNULL" json:"took_location"`
-	ReleaseTime    time.Time `xorm:"release_time DATETIME" json:"release_time"`
-	Category       string    `xorm:"category VARCHAR(20) NOTNULL" json:"category"`
-	Likes          int       `xorm:"likes INT NOTNULL" json:"likes"`
-	RejectReason   string    `xorm:"reject_reason VARCHAR(200)" json:"reject_reason"`
-	PhotographerID int       `xorm:"photographer_id INT NOTNULL INDEX(photographer_id_idx)" json:"photographer_id"`
+	ID           int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	URL          string    `xorm:"url VARCHAR(50) NOTNULL" json:"url"`
+	TookTime     time.Time `xorm:"took_time DATETIME NOTNULL" json:"took_time"`
+	TookLocation string    `xorm:"took_location VARCHAR(50) NOTNULL" json:"took_location"`
+	ReleaseTime  time.Time `xorm:"release_time DATETIME" json:"release_time"`
+	Category     string    `xorm:"category VARCHAR(20) NOTNULL" json:"category"`
+	Likes        int       `xorm:"likes INT NOTNULL" json:"likes"`
+	RejectReason string    `xorm:"reject_reason VARCHAR(200)" json:"reject_reason"`
+	UserID       int       `xorm:"user_id INT NOTNULL INDEX(photographer_id_idx)" json:"photographer_id"`
 }
 
 // NewPhoto creates a new photo
 func NewPhoto(tookTime time.Time, tookLocation string,
-	photographerID int) *Photo {
+	userID int) *Photo {
 	return &Photo{
-		URL:            "",
-		TookTime:       tookTime,
-		TookLocation:   tookLocation,
-		ReleaseTime:    time.Time{},
-		Category:       "未审核",
-		Likes:          0,
-		RejectReason:   "",
-		PhotographerID: photographerID,
+		URL:          "",
+		TookTime:     tookTime,
+		TookLocation: tookLocation,
+		ReleaseTime:  time.Time{},
+		Category:     "未审核",
+		Likes:        0,
+		RejectReason: "",
+		UserID:       userID,
 	}
 }
 
