@@ -23,7 +23,7 @@ func initCollectionPhotosRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/photo",
 		photosUploadHandler()).Methods(http.MethodPatch)
 
-	// GET /photos{?category}
+	// GET /photos{?category,oid}
 	router.HandleFunc(url,
 		photosGetHandler()).Methods(http.MethodGet)
 
@@ -36,15 +36,16 @@ func photosGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		if req.FormValue("category") == "" {
-			data := models.PhotoDAO.FindAll()
-			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "获取照片列表成功", data))
+		category := req.FormValue("category")
+		oidStr := req.FormValue("oid")
+		if category == "" && oidStr == "" {
+			// Both null
+		} else if category == "" {
+			// Category is null, oid specified
+		} else if oidStr == "" {
+			// OID is null, category specified
 		} else {
-			data := models.PhotoDAO.FindByCategory(
-				req.FormValue("category"))
-			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "获取照片列表成功", data))
+			// Both specified
 		}
 	}
 

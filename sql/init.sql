@@ -59,11 +59,13 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users` (
   `vip` INT NOT NULL,
   `camera` VARCHAR(50) NULL,
   `description` VARCHAR(200) NULL,
-  `college` VARCHAR(50) NULL,
+  `college` VARCHAR(50) NOT NULL,
+  `college_district` VARCHAR(20) NOT NULL,
   `enroll_time` INT NULL,
   `institute` VARCHAR(50) NULL,
   `astrology` VARCHAR(10) NULL,
   `qq` VARCHAR(10) NULL,
+  `background_url` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_users_city_id_idx` (`city_id` ASC),
@@ -72,6 +74,24 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users` (
     REFERENCES `tobee`.`cities` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`organizations`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`organizations` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `college` VARCHAR(20) NOT NULL,
+  `college_district` VARCHAR(20) NOT NULL,
+  `logo_url` VARCHAR(50) NULL,
+  `description` VARCHAR(200) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -87,31 +107,21 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photos` (
   `likes` INT NOT NULL,
   `reject_reason` VARCHAR(200) NULL,
   `user_id` INT NOT NULL,
+  `organization_id` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `photographer_id_idx` (`user_id` ASC),
+  INDEX `fk_photos_organization_id_idx` (`organization_id` ASC),
   CONSTRAINT `fk_photos_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_photos_organization_id`
+    FOREIGN KEY (`organization_id`)
+    REFERENCES `tobee`.`organizations` (`id`)
+    ON DELETE SET NULL
     ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `tobee`.`organizations`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`organizations` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
-  `phone` VARCHAR(20) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
-  `college` VARCHAR(20) NOT NULL,
-  `logo_url` VARCHAR(50) NULL,
-  `description` VARCHAR(200) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC))
 ENGINE = InnoDB;
 
 
@@ -120,7 +130,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`organization_departments` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -509,6 +519,24 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_like_moments` (
     REFERENCES `tobee`.`moments` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tobee`.`organization_honors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobee`.`organization_honors` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `honor` VARCHAR(50) NOT NULL,
+  `organization_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_organization_honors_organization_id_idx` (`organization_id` ASC),
+  CONSTRAINT `fk_organization_honors_organization_id`
+    FOREIGN KEY (`organization_id`)
+    REFERENCES `tobee`.`organizations` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

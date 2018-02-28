@@ -4,25 +4,27 @@ import "github.com/sunyatsuntobee/server/logger"
 
 // Organization Model
 type Organization struct {
-	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name        string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
-	Phone       string `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
-	Password    string `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	College     string `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
-	LogoURL     string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
-	Description string `xorm:"description VARCHAR(200)" json:"description"`
+	ID              int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	Name            string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
+	Phone           string `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
+	Password        string `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
+	College         string `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
+	CollegeDistrict string `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
+	LogoURL         string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
+	Description     string `xorm:"description VARCHAR(200)" json:"description"`
 }
 
 // NewOrganization creates a new organization
-func NewOrganization(name string, phone string, password string,
-	college string, logoURL string, description string) *Organization {
+func NewOrganization(name, phone, password, college, collegeDistrict,
+	logoURL, description string) *Organization {
 	return &Organization{
-		Name:        name,
-		Phone:       phone,
-		Password:    password,
-		College:     college,
-		LogoURL:     logoURL,
-		Description: description,
+		Name:            name,
+		Phone:           phone,
+		Password:        password,
+		College:         college,
+		CollegeDistrict: collegeDistrict,
+		LogoURL:         logoURL,
+		Description:     description,
 	}
 }
 

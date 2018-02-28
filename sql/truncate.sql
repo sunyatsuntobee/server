@@ -6,6 +6,7 @@ TRUNCATE TABLE cities;
 TRUNCATE TABLE moment_comments;
 TRUNCATE TABLE moments;
 TRUNCATE TABLE organization_departments;
+TRUNCATE TABLE organization_honors;
 TRUNCATE TABLE organizations;
 TRUNCATE TABLE photo_lives;
 TRUNCATE TABLE photo_lives_supervisors;

@@ -11,7 +11,6 @@ import (
 )
 
 func initCollectionActivitiesRouter(router *mux.Router) {
-
 	url := "/api/activities"
 
 	// GET /activities{?oid}
@@ -19,7 +18,7 @@ func initCollectionActivitiesRouter(router *mux.Router) {
 		activitiesGetHandler()).Methods(http.MethodGet)
 
 	// POST /activities/{ID}/stages
-	router.HandleFunc(url+"/{ID}/stages",
+	router.HandleFunc(url+"/{ID}/activity_stages",
 		activityStagesPostHandler()).Methods(http.MethodPost)
 
 	// POST /activities

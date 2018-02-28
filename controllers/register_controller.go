@@ -28,7 +28,6 @@ func registerPostHandler() http.HandlerFunc {
 		user := models.User{
 			Phone:    req.FormValue("phone"),
 			Password: req.FormValue("password"),
-			Location: req.FormValue("location"),
 		}
 		models.UserDAO.InsertOne(&user)
 		formatter.JSON(w, http.StatusCreated, nil)

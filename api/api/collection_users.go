@@ -12,13 +12,19 @@ import (
 )
 
 func initCollectionUsersRouter(router *mux.Router) {
+	url := "/api/users"
+
 	// GET /users
-	router.HandleFunc("/api/users", usersGetHandler()).
-		Methods(http.MethodGet)
+	router.HandleFunc(url,
+		usersGetHandler()).Methods(http.MethodGet)
 
 	// POST /users
-	router.HandleFunc("/api/users", usersCreateHandler()).
-		Methods(http.MethodPost)
+	router.HandleFunc(url,
+		usersCreateHandler()).Methods(http.MethodPost)
+
+	// PATCH /users/{ID}/avatar
+
+	// PATCH /users/{ID}/background
 }
 
 func usersGetHandler() http.HandlerFunc {
@@ -46,6 +52,8 @@ func usersCreateHandler() http.HandlerFunc {
 		user.Password = util.MD5Hash(user.Password)
 		user.CreateTime = time.Now()
 		user.VIP = 0
+		user.AvatarURL = ""
+		user.BackgroundURL = ""
 
 		_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
 		if flagPhone == true {

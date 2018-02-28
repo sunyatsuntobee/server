@@ -10,7 +10,7 @@ type UsersFocusUsers struct {
 	Timestamp     time.Time `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
 }
 
-// NewUsersUsers creates a new user-user relationship
+// NewUsersFocusUsers creates a new user-user relationship
 func NewUsersFocusUsers(userID int, focusedUserID int) *UsersFocusUsers {
 	return &UsersFocusUsers{
 		UserID:        userID,

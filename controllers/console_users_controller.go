@@ -9,6 +9,7 @@ import (
 )
 
 func initConsoleUsersRouter(router *mux.Router) {
+	// GET /users
 	router.HandleFunc("/users", consoleUsersGetHandler()).
 		Methods(http.MethodGet)
 }

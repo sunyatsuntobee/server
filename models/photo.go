@@ -8,15 +8,16 @@ import (
 
 // Photo Model
 type Photo struct {
-	ID           int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	URL          string    `xorm:"url VARCHAR(50) NOTNULL" json:"url"`
-	TookTime     time.Time `xorm:"took_time DATETIME NOTNULL" json:"took_time"`
-	TookLocation string    `xorm:"took_location VARCHAR(50) NOTNULL" json:"took_location"`
-	ReleaseTime  time.Time `xorm:"release_time DATETIME" json:"release_time"`
-	Category     string    `xorm:"category VARCHAR(20) NOTNULL" json:"category"`
-	Likes        int       `xorm:"likes INT NOTNULL" json:"likes"`
-	RejectReason string    `xorm:"reject_reason VARCHAR(200)" json:"reject_reason"`
-	UserID       int       `xorm:"user_id INT NOTNULL INDEX(photographer_id_idx)" json:"photographer_id"`
+	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	URL            string    `xorm:"url VARCHAR(50) NOTNULL" json:"url"`
+	TookTime       time.Time `xorm:"took_time DATETIME NOTNULL" json:"took_time"`
+	TookLocation   string    `xorm:"took_location VARCHAR(50) NOTNULL" json:"took_location"`
+	ReleaseTime    time.Time `xorm:"release_time DATETIME" json:"release_time"`
+	Category       string    `xorm:"category VARCHAR(20) NOTNULL" json:"category"`
+	Likes          int       `xorm:"likes INT NOTNULL" json:"likes"`
+	RejectReason   string    `xorm:"reject_reason VARCHAR(200)" json:"reject_reason"`
+	UserID         int       `xorm:"user_id INT NOTNULL INDEX(photographer_id_idx)" json:"user_id"`
+	OrganizationID int       `xorm:"organization_id INT INDEX(fk_photos_organization_id_idx)" json:"organization_id"`
 }
 
 // NewPhoto creates a new photo
@@ -43,6 +44,15 @@ var PhotoDAO *PhotoDataAccessObject
 // TableName returns table name
 func (*PhotoDataAccessObject) TableName() string {
 	return "photos"
+}
+
+// FindByOID finds photos by organization ID
+func (*PhotoDataAccessObject) FindByOID(oid int) []Photo {
+	photos := make([]Photo, 0)
+	err := orm.Table(PhotoDAO.TableName()).Where("organization_id=?", oid).
+		Find(&photos)
+	logger.LogIfError(err)
+	return photos
 }
 
 // FindAll finds all photos

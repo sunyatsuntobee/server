@@ -17,8 +17,8 @@ func initAuthorizationRouter(router *mux.Router) {
 
 func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var flagUsername bool = true
-		var flagPassword bool = true
+		flagUsername := true
+		flagPassword := true
 		var id int
 		req.ParseForm()
 		inputUsername := req.FormValue("username")

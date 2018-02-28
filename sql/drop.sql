@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS cities;
 DROP TABLE IF EXISTS moment_comments;
 DROP TABLE IF EXISTS moments;
 DROP TABLE IF EXISTS organization_departments;
+DROP TABLE IF EXISTS organization_honors;
 DROP TABLE IF EXISTS organizations;
 DROP TABLE IF EXISTS photo_lives;
 DROP TABLE IF EXISTS photo_lives_supervisors;

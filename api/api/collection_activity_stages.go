@@ -10,12 +10,14 @@ import (
 )
 
 func initCollectionActivityStagesRouter(router *mux.Router) {
+	url := "/api/activitiy_stages"
+
 	// GET /activity_stages
-	router.HandleFunc("/api/activity_stages", activityStagesGetHandler()).
+	router.HandleFunc(url, activityStagesGetHandler()).
 		Methods(http.MethodGet)
 
 	// GET /activity_stages/yy-mm-dd
-	router.HandleFunc("/api/activity_stages/{date}",
+	router.HandleFunc(url+"/{date}",
 		activityStagesDateGetHandler()).Methods(http.MethodGet)
 }
 
