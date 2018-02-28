@@ -22,9 +22,32 @@ func initCollectionActivitiesRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/stages",
 		activityStagesPostHandler()).Methods(http.MethodPost)
 
+	// POST /activities
+	router.HandleFunc(url,
+		activitiesCreateHandler()).Methods(http.MethodPost)
+
 	// PUT /activities/{ID}
 	router.HandleFunc(url+"/{ID}", activitiesPutHandler()).
 		Methods(http.MethodPut)
+}
+
+func activitiesCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var activity models.Activity
+		err := decoder.Decode(&activity)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+
+		models.ActivityDAO.InsertOne(&activity)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "创建新的活动成功", activity))
+	}
 }
 
 func activityStagesPostHandler() http.HandlerFunc {
