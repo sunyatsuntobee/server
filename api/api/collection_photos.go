@@ -110,7 +110,8 @@ func photosPostHandler() http.HandlerFunc {
 		photo := models.NewPhoto(
 			data.TookTime,
 			data.TookLocation,
-			data.UserID)
+			data.UserID,
+			data.OrganizationID)
 		logger.LogIfError(err)
 		models.PhotoDAO.InsertOne(photo)
 		formatter.JSON(w, http.StatusCreated,
