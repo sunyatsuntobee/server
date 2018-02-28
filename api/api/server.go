@@ -25,6 +25,10 @@ func NewServer() *negroni.Negroni {
 
 // InitRouter init router for RESTful API
 func InitRouter(router *mux.Router) {
+	// Resources files
+	router.PathPrefix("/res").Handler(http.StripPrefix("/res/",
+		http.FileServer(http.Dir(resDir))))
+
 	initAuthorizationRouter(router)
 	initCollectionUsersRouter(router)
 	initCollectionActivitiesRouter(router)
