@@ -38,14 +38,37 @@ func photosGetHandler() http.HandlerFunc {
 		req.ParseForm()
 		category := req.FormValue("category")
 		oidStr := req.FormValue("oid")
+		oidInt, _ := strconv.Atoi(oidStr)
 		if category == "" && oidStr == "" {
 			// Both null
+			photoList := models.PhotoDAO.FindAll()
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取全部照片列表成功", photoList))
+
 		} else if category == "" {
 			// Category is null, oid specified
+			photoList := models.PhotoDAO.FindByOID(oidInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取对应组织id的照片成功", photoList))
+
 		} else if oidStr == "" {
 			// OID is null, category specified
+			photoList := models.PhotoDAO.FindByCategory(category)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取对应类别的照片列表成功", photoList))
 		} else {
 			// Both specified
+			photoListCa := models.PhotoDAO.FindByCategory(category)
+			photos := make([]models.Photo, 0)
+			j := 0
+			for i := 0; i < len(photoListCa); i++ {
+				if photoListCa[i].OrganizationID == oidInt {
+					photos[j] = photoListCa[i]
+					j++
+				}
+			}
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取对应类别和社团ID的照片列表成功", photos))
 		}
 	}
 
@@ -116,5 +139,4 @@ func photosPutHandler() http.HandlerFunc {
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("created", "修改照片信息成功", photo))
 	}
-
 }
