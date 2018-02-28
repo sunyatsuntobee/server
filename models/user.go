@@ -15,8 +15,8 @@ type User struct {
 	Nickname        string    `xorm:"nickname VARCHAR(20) NOTNULL" json:"nickname"`
 	Email           string    `xorm:"email VARCHAR(50) NOTNULL" json:"email"`
 	AvatarURL       string    `xorm:"avatar_url VARCHAR(45)" json:"avatar_url"`
-	CreateTime      time.Time `xorm:"create_time DATATIME NOTNULL" json:"create_time"`
-	CityID          int       `xorm:"location_id int NOTNULL INDEX(fk_users_city_id_idx)" json:"location"`
+	CreateTime      time.Time `xorm:"create_time DATETIME NOTNULL" json:"create_time"`
+	CityID          int       `xorm:"city_id int NOTNULL INDEX(fk_users_city_id_idx)" json:"city_id"`
 	VIP             int       `xorm:"vip INT NOTNULL" json:"vip"`
 	Camera          string    `xorm:"camera VARCHAR(50)" json:"camera"`
 	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
