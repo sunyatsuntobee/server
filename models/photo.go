@@ -22,16 +22,17 @@ type Photo struct {
 
 // NewPhoto creates a new photo
 func NewPhoto(tookTime time.Time, tookLocation string,
-	userID int) *Photo {
+	userID, organizationID int) *Photo {
 	return &Photo{
-		URL:          "",
-		TookTime:     tookTime,
-		TookLocation: tookLocation,
-		ReleaseTime:  time.Time{},
-		Category:     "未审核",
-		Likes:        0,
-		RejectReason: "",
-		UserID:       userID,
+		URL:            "",
+		TookTime:       tookTime,
+		TookLocation:   tookLocation,
+		ReleaseTime:    time.Time{},
+		Category:       "未审核",
+		Likes:          0,
+		RejectReason:   "",
+		UserID:         userID,
+		OrganizationID: organizationID,
 	}
 }
 
