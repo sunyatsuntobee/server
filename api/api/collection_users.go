@@ -24,7 +24,7 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}",
 		usersGetByIDHandler()).Methods(http.MethodGet)
 
-	// GET /users_follow_users{?user_id,followed_user_id}
+	// GET /users_follow_users{?user_ID,followed_user_ID}
 	router.HandleFunc("/api/users_follow_users",
 		usersGetFollowHandler()).Methods(http.MethodGet)
 
@@ -36,7 +36,7 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc("/api/users_follow_organizations/{ID}",
 		usersFollowUsersDeleteHandler()).Methods(http.MethodDelete)
 
-	// GET /users_follow_organizations{?user_id,organization_id}
+	// GET /users_follow_organizations{?user_ID,organization_ID}
 	router.HandleFunc("/api/users_follow_organizations",
 		organizationsGetFollowHandler()).Methods(http.MethodGet)
 
@@ -63,16 +63,16 @@ func initCollectionUsersRouter(router *mux.Router) {
 func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		usersFollowUsersIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		models.UsersFollowUsersDAO.DeleteByID(usersFollowUsersIdInt)
+		usersFollowUsersIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		models.UsersFollowUsersDAO.DeleteByID(usersFollowUsersIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
 func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		usersFollowOrganizationsIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		models.UsersFollowUsersDAO.DeleteByID(usersFollowOrganizationsIdInt)
+		usersFollowOrganizationsIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		models.UsersFollowUsersDAO.DeleteByID(usersFollowOrganizationsIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
@@ -116,23 +116,23 @@ func usersFollowCreateHandler() http.HandlerFunc {
 func usersGetFollowHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		userId := req.FormValue("user_id")
-		followedUserId := req.FormValue("followed_user_id")
-		userIdInt, _ := strconv.Atoi(userId)
-		followedUserIdInt, _ := strconv.Atoi(followedUserId)
-		if userId != "" && followedUserId != "" {
+		userID := req.FormValue("user_ID")
+		followedUserID := req.FormValue("followed_user_ID")
+		userIDInt, _ := strconv.Atoi(userID)
+		followedUserIDInt, _ := strconv.Atoi(followedUserID)
+		if userID != "" && followedUserID != "" {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "输入参数错误", nil))
 		}
-		if userId != "" && followedUserId == "" {
+		if userID != "" && followedUserID == "" {
 			FollowedUserList :=
-				models.UsersFollowUsersDAO.FindFullByUserID(userIdInt)
+				models.UsersFollowUsersDAO.FindFullByUserID(userIDInt)
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取该用户关注的用户列表成功", FollowedUserList))
 		}
-		if userId == "" && followedUserId != "" {
+		if userID == "" && followedUserID != "" {
 			FollowedUserList :=
-				models.UsersFollowUsersDAO.FindFullByFollowedUserID(followedUserIdInt)
+				models.UsersFollowUsersDAO.FindFullByFollowedUserID(followedUserIDInt)
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取关注该用户的用户列表成功", FollowedUserList))
 		}
@@ -141,25 +141,25 @@ func usersGetFollowHandler() http.HandlerFunc {
 func organizationsGetFollowHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		userId := req.FormValue("user_id")
-		followedOrganizationId := req.FormValue("organization_id")
-		userIdInt, _ := strconv.Atoi(userId)
-		followedOrganizationIdInt, _ :=
-			strconv.Atoi(followedOrganizationId)
-		if userId != "" && followedOrganizationId != "" {
+		userID := req.FormValue("user_ID")
+		followedOrganizationID := req.FormValue("organization_ID")
+		userIDInt, _ := strconv.Atoi(userID)
+		followedOrganizationIDInt, _ :=
+			strconv.Atoi(followedOrganizationID)
+		if userID != "" && followedOrganizationID != "" {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "输入参数错误", nil))
 		}
-		if userId != "" && followedOrganizationId == "" {
+		if userID != "" && followedOrganizationID == "" {
 			OrganizaitionList :=
-				models.UsersFollowOrganizationsDAO.FindFullByUserID(userIdInt)
+				models.UsersFollowOrganizationsDAO.FindFullByUserID(userIDInt)
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取该用户关注的社团列表成功", OrganizaitionList))
 		}
-		if userId == "" && followedOrganizationId != "" {
+		if userID == "" && followedOrganizationID != "" {
 			UserList :=
 				models.UsersFollowOrganizationsDAO.FindFullByOrganizationID(
-					followedOrganizationIdInt)
+					followedOrganizationIDInt)
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取关注该社团的用户列表成功", UserList))
 		}
@@ -168,15 +168,15 @@ func organizationsGetFollowHandler() http.HandlerFunc {
 func usersGetByIDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		user, hasUser := models.UserDAO.FindByID(idInt)
+		IDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, hasUser := models.UserDAO.FindByID(IDInt)
 		if hasUser == false {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "用户对象不存在", nil))
 			return
 		} else {
 			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "获取对应id的用户成功", user))
+				NewJSON("OK", "获取对应ID的用户成功", user))
 		}
 	}
 }
@@ -184,8 +184,8 @@ func usersGetByIDHandler() http.HandlerFunc {
 func usersUploadAvatarHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		user, has := models.UserDAO.FindByID(id)
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, has := models.UserDAO.FindByID(ID)
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "用户对象不存在", nil))
@@ -207,8 +207,8 @@ func usersUploadAvatarHandler() http.HandlerFunc {
 func usersUploadBackgroundHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		user, has := models.UserDAO.FindByID(id)
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, has := models.UserDAO.FindByID(ID)
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "用户对象不存在", nil))

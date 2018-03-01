@@ -23,7 +23,7 @@ func initCollectionPhotosRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/photo",
 		photosUploadHandler()).Methods(http.MethodPatch)
 
-	// GET /photos{?category,oid}
+	// GET /photos{?category,oID}
 	router.HandleFunc(url,
 		photosGetHandler()).Methods(http.MethodGet)
 
@@ -37,21 +37,21 @@ func photosGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		category := req.FormValue("category")
-		oidStr := req.FormValue("oid")
-		oidInt, _ := strconv.Atoi(oidStr)
-		if category == "" && oidStr == "" {
+		oIDStr := req.FormValue("oID")
+		oIDInt, _ := strconv.Atoi(oIDStr)
+		if category == "" && oIDStr == "" {
 			// Both null
 			photoList := models.PhotoDAO.FindAll()
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取全部照片列表成功", photoList))
 
 		} else if category == "" {
-			// Category is null, oid specified
-			photoList := models.PhotoDAO.FindByOID(oidInt)
+			// Category is null, oID specified
+			photoList := models.PhotoDAO.FindByOID(oIDInt)
 			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "获取对应组织id的照片成功", photoList))
+				NewJSON("OK", "获取对应组织ID的照片成功", photoList))
 
-		} else if oidStr == "" {
+		} else if oIDStr == "" {
 			// OID is null, category specified
 			photoList := models.PhotoDAO.FindByCategory(category)
 			formatter.JSON(w, http.StatusOK,
@@ -62,7 +62,7 @@ func photosGetHandler() http.HandlerFunc {
 			photos := make([]models.Photo, 0)
 			j := 0
 			for i := 0; i < len(photoListCa); i++ {
-				if photoListCa[i].OrganizationID == oidInt {
+				if photoListCa[i].OrganizationID == oIDInt {
 					photos[j] = photoListCa[i]
 					j++
 				}
@@ -78,8 +78,8 @@ func photosUploadHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		photo, has := models.PhotoDAO.FindByID(id)
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		photo, has := models.PhotoDAO.FindByID(ID)
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "照片对象不存在", nil))
@@ -132,9 +132,9 @@ func photosPutHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
-		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		old, _ := models.PhotoDAO.FindByID(id)
-		photo.ID = id
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		old, _ := models.PhotoDAO.FindByID(ID)
+		photo.ID = ID
 		photo.URL = old.URL
 		models.PhotoDAO.UpdateOne(&photo)
 		formatter.JSON(w, http.StatusCreated,

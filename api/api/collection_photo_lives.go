@@ -44,7 +44,7 @@ func photoLivesPostHandler() http.HandlerFunc {
 func photoLivesPutHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		var photoLive models.PhotoLive
 		decoder := json.NewDecoder(req.Body)
 		err := decoder.Decode(&photoLive)
@@ -54,7 +54,7 @@ func photoLivesPutHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
-		photoLive.ID = id
+		photoLive.ID = ID
 		models.PhotoLiveDAO.UpdateOne(&photoLive)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("created", "修改照片直播成功", photoLive))

@@ -14,10 +14,10 @@ import (
 func initCollectionMomentsRouter(router *mux.Router) {
 	url := "/api/moments"
 
-	// GET /moments{?user_id}
+	// GET /moments{?user_ID}
 	router.HandleFunc(url,
-		mommentsGetHandler()).Methods(http.MethodGet)
-	// GET /users_like_moments{?moment_id}
+		momentsGetHandler()).Methods(http.MethodGet)
+	// GET /users_like_moments{?moment_ID}
 	router.HandleFunc("/api/users_like_moments",
 		usersLikeMommentsGetHandler()).Methods(http.MethodGet)
 	// POST /moments
@@ -29,7 +29,7 @@ func initCollectionMomentsRouter(router *mux.Router) {
 	// DELETE /users_like_moments/{ID}
 	router.HandleFunc("/api/users_like_moments",
 		usersLikeMomentsDeleteHandler()).Methods(http.MethodDelete)
-	// GET /moment_comments{?moment_id}
+	// GET /moment_comments{?moment_ID}
 	router.HandleFunc("/api/moment_comments",
 		momentCommentsGetHandler()).Methods(http.MethodGet)
 	// POST /moment_comments
@@ -42,9 +42,9 @@ func initCollectionMomentsRouter(router *mux.Router) {
 func usersLikeMomentsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		likeIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		likeIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
 
-		models.MomentCommentDAO.DeleteByID(likeIdInt)
+		models.MomentCommentDAO.DeleteByID(likeIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
@@ -52,21 +52,21 @@ func usersLikeMomentsDeleteHandler() http.HandlerFunc {
 func momentCommentsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		commentIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		commentIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
 
-		models.MomentCommentDAO.DeleteByID(commentIdInt)
+		models.MomentCommentDAO.DeleteByID(commentIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
 func momentCommentsGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		momentCommentId := req.FormValue("momment_id")
-		momentCommentIdInt, _ := strconv.Atoi(momentCommentId)
+		momentCommentID := req.FormValue("momment_ID")
+		momentCommentIDInt, _ := strconv.Atoi(momentCommentID)
 
 		commentList :=
 			models.MomentCommentDAO.FindFullByMomentID(
-				momentCommentIdInt)
+				momentCommentIDInt)
 		formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取评论成功", commentList))
 	}
@@ -74,24 +74,24 @@ func momentCommentsGetHandler() http.HandlerFunc {
 func usersLikeMommentsGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		likeMommentId := req.FormValue("momment_id")
-		likeMommentIdInt, _ := strconv.Atoi(likeMommentId)
+		likeMommentID := req.FormValue("momment_ID")
+		likeMommentIDInt, _ := strconv.Atoi(likeMommentID)
 
 		resultList :=
 			models.UsersLikeMomentsDAO.FindFullByMomentID(
-				likeMommentIdInt)
+				likeMommentIDInt)
 		formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取点赞列表成功", resultList))
 	}
 }
 
-func mommentsGetHandler() http.HandlerFunc {
+func momentsGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		userId := req.FormValue("user_id")
-		userIdInt, _ := strconv.Atoi(userId)
-		mommentsList := models.MomentDao.FindByUserID()
+		userID := req.FormValue("user_ID")
+		userIDInt, _ := strconv.Atoi(userID)
+		mommentsList := models.MomentDAO.FindByUserID(userIDInt)
 		formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "成功获取用户动态", mommentsList))
 	}
@@ -129,7 +129,7 @@ func usersLikeMomentsCreateHandler() http.HandlerFunc {
 			return
 		}
 
-		models.userLikeMomentsDao.InsertOne(&userLikeMoments)
+		models.UsersLikeMomentsDAO.InsertOne(&userLikeMoments)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "用户点赞成功", userLikeMoments))
 	}
