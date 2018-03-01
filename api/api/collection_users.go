@@ -20,6 +20,20 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc(url,
 		usersGetHandler()).Methods(http.MethodGet)
 
+	// GET /users/{ID}
+
+	// GET /users_follow_users{?user_id,followed_user_id}
+
+	// POST /users_follow_users
+
+	// DELETE /users_follow_users/{ID}
+
+	// GET /users_follow_organizations{?user_id,organization_id}
+
+	// POST /users_follow_organizations
+
+	// DELETE /users_follow_organizations/{ID}
+
 	// POST /users
 	router.HandleFunc(url,
 		usersCreateHandler()).Methods(http.MethodPost)

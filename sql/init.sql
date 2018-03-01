@@ -235,9 +235,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`users_focus_organizations`
+-- Table `tobee`.`users_follow_organizations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_organizations` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_organizations` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `organization_id` INT NOT NULL,
@@ -260,16 +260,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`users_focus_users`
+-- Table `tobee`.`users_follow_users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_users` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `focused_user_id` INT NOT NULL,
+  `followed_user_id` INT NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `liked_user_id_idx` (`focused_user_id` ASC),
+  INDEX `liked_user_id_idx` (`followed_user_id` ASC),
   INDEX `user_id_idx` (`user_id` ASC),
   CONSTRAINT `fk_users_focus_users_user_id`
     FOREIGN KEY (`user_id`)
@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_users` (
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_users_focus_users_focused_user_id`
-    FOREIGN KEY (`focused_user_id`)
+    FOREIGN KEY (`followed_user_id`)
     REFERENCES `tobee`.`users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -285,9 +285,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tobee`.`users_focus_activities`
+-- Table `tobee`.`users_follow_activities`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tobee`.`users_focus_activities` (
+CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_activities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `activity_id` INT NOT NULL,

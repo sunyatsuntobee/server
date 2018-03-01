@@ -36,6 +36,7 @@ func InitRouter(router *mux.Router) {
 	initCollectionPhotoLivesRouter(router)
 	initCollectionPhotosRouter(router)
 	initCollectionOrganizationsRouter(router)
+	initCollectionMomentsRouter(router)
 }
 
 func optionsHandler() http.HandlerFunc {

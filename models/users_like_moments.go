@@ -6,3 +6,10 @@ type UsersLikeMoments struct {
 	UserID   int `xorm:"user_id INT NOTNULL INDEX(fk_users_like_moments_user_id_idx)" json:"user_id"`
 	MomentID int `xorm:"moment_id INT NOTNULL INDEX(fk_users_like_moments_moment_id_idx)" json:"moment_id"`
 }
+
+// UsersLikeMomentsFull Model
+type UsersLikeMomentsFull struct {
+	ID       int `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	User     `xorm:"extends" json:"user"`
+	MomentID int `xorm:"moment_id INT NOTNULL INDEX(fk_users_like_moments_moment_id_idx)" json:"moment_id"`
+}
