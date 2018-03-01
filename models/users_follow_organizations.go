@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"github.com/sunyatsuntobee/server/logger"
+	"time"
+)
 
 // UsersFollowOrganizations Model
 type UsersFollowOrganizations struct {
@@ -10,6 +13,18 @@ type UsersFollowOrganizations struct {
 	Timestamp      time.Time `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
 }
 
+// UsersFollowOrganizationsFull Model
+type UsersFollowOrganizationsFull struct {
+	ID                   int          `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	User                 User         `xorm:"extends" json:"user"`
+	FollowedOrganization Organization `xorm:"extends" json:"followed_organization"`
+	Timestamp            time.Time    `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
+}
+
+type UsersFollowOrganizationsDataAccessObject struct{}
+
+var UsersFollowOrganizationsDAO *UsersFollowOrganizationsDataAccessObject
+
 // NewUsersFollowOrganizations creates a new user-organization relationship
 func NewUsersFollowOrganizations(userID int,
 	organizationID int) *UsersFollowOrganizations {
@@ -18,4 +33,59 @@ func NewUsersFollowOrganizations(userID int,
 		OrganizationID: organizationID,
 		Timestamp:      time.Now(),
 	}
+}
+
+// TableName returns table name
+func (*UsersFollowOrganizationsDataAccessObject) TableName() string {
+	return "users_follow_organizations"
+}
+
+// FindFullByUserID finds all full models by a user ID
+func (*UsersFollowOrganizationsDataAccessObject) FindFullByUserID(
+	id int) []UsersFollowOrganizationsFull {
+	l := make([]UsersFollowOrganizationsFull, 0)
+	err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
+		Join("INNER", UserDAO.TableName(),
+			UsersFollowOrganizationsDAO.TableName()+".user_id="+
+				UserDAO.TableName()+".id").
+		Join("INNER", OrganizationDAO.TableName(),
+			UsersFollowOrganizationsDAO.TableName()+".organization_id="+
+				OrganizationDAO.TableName()+".id").
+		Where("user_id=?", id).
+		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+// FindFullByFollowedOrganizationID finds a user_follow_organization relationship by organization id
+func (*UsersFollowOrganizationsDataAccessObject) FindFullByFollowedOrganizationID(
+	followed_id int) []UsersFollowOrganizationsFull {
+	l := make([]UsersFollowOrganizationsFull, 0)
+	err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
+		Join("INNER", UserDAO.TableName(),
+			UsersFollowOrganizationsDAO.TableName()+".user_id="+
+				UserDAO.TableName()+".id").
+		Join("INNER", OrganizationDAO.TableName(),
+			UsersFollowOrganizationsDAO.TableName()+".organization_id="+
+				OrganizationDAO.TableName()+".id").
+		Where("followed_organization_id=?", followed_id).
+		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+// InsertOne insert a user-organization relationship
+func (*UsersFollowOrganizationsDataAccessObject) InsertOne(
+	users_follow_organizations *UsersFollowOrganizations) {
+	_, err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
+		InsertOne(users_follow_organizations)
+	logger.LogIfError(err)
+}
+
+//DeleteByID delete a user-organization relationship by its ID
+func (*UsersFollowOrganizationsDataAccessObject) DeleteByID(id int) {
+	var users_follow_organizations UsersFollowOrganizations
+	_, err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
+		ID(id).Delete(&users_follow_organizations)
+	logger.LogIfError(err)
 }

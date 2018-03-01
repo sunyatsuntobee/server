@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/sunyatsuntobee/server/logger"
+)
 
 // Moment Model
 type Moment struct {
@@ -18,4 +22,32 @@ type Moment struct {
 	Photo7ID       int       `xorm:"photo_7_id INT INDEX(fk_moments_photo_7_id_idx)" json:"photo_7_id"`
 	Photo8ID       int       `xorm:"photo_8_id INT INDEX(fk_moments_photo_8_id_idx)" json:"photo_8_id"`
 	Photo9ID       int       `xorm:"photo_9_id INT INDEX(fk_moments_photo_9_id_idx)" json:"photo_9_id"`
+}
+
+// MomentDataAccessObject provides database access for
+// Model Moment
+type MomentDataAccessObject struct{}
+
+// MomentDAO instance of MomentDataAccessObject
+var MomentDAO *MomentDataAccessObject
+
+// TableName returns table name
+func (*MomentDataAccessObject) TableName() string {
+	return "moment"
+}
+
+// FindByUserID finds a moment by user id
+func (*MomentDataAccessObject) FindByUserID(user_id int) Moment {
+	var moment Moment
+	err := orm.Table(MomentDAO.TableName()).
+		Where("moment.user_id=?", user_id).
+		Find(&moment)
+	logger.LogIfError(err)
+	return moment
+}
+
+// InsertOne inserts a moment
+func (*MomentDataAccessObject) InsertOne(moment *Moment) {
+	_, err := orm.Table(MomentDAO.TableName()).InsertOne(moment)
+	logger.LogIfError(err)
 }
