@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/sunyatsuntobee/server/logger"
 	"time"
+
+	"github.com/sunyatsuntobee/server/logger"
 )
 
 // UsersFollowOrganizations Model
@@ -21,8 +22,12 @@ type UsersFollowOrganizationsFull struct {
 	Timestamp            time.Time    `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
 }
 
+// UsersFollowOrganizationsDataAccessObject provides database access for
+// Model UsersFollowOrganizations
 type UsersFollowOrganizationsDataAccessObject struct{}
 
+// UsersFollowOrganizationsDAO instance of
+// UsersFollowOrganizationsDataAccessObject
 var UsersFollowOrganizationsDAO *UsersFollowOrganizationsDataAccessObject
 
 // NewUsersFollowOrganizations creates a new user-organization relationship

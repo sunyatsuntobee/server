@@ -15,6 +15,15 @@ type MomentComment struct {
 	Timestamp time.Time `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
 }
 
+// MomentCommentFull joins with the user table
+type MomentCommentFull struct {
+	ID        int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	MomentID  int       `xorm:"moment_id INT NOTNULL INDEX(fk_moment_comments_moment_id_idx)" json:"moment_id"`
+	User      User      `xorm:"extends" json:"user"`
+	Content   string    `xorm:"content VARCHAR(200) NOTNULL" json:"content"`
+	Timestamp time.Time `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
+}
+
 // MomentCommentDataAccessObject provides database access for
 // Model MomentComment
 type MomentCommentDataAccessObject struct{}
@@ -27,9 +36,14 @@ func (*MomentCommentDataAccessObject) TableName() string {
 	return "moments_comments"
 }
 
-func FindByMomentID(momentID int) MomentComment {
+// FindFullByMomentID finds full comments by moment id
+func (*MomentCommentDataAccessObject) FindFullByMomentID(
+	momentID int) MomentComment {
 	var momentComment MomentComment
 	err := orm.Table(MomentCommentDAO.TableName()).
+		Join("INNER", UserDAO.TableName(),
+			MomentCommentDAO.TableName()+".user_id="+
+				UserDAO.TableName()+".id").
 		Where("moment_id=?", momentID).
 		Find(&momentComment)
 	logger.LogIfError(err)

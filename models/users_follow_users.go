@@ -60,7 +60,7 @@ func (*UsersFollowUsersDataAccessObject) FindFullByUserID(
 	return l
 }
 
-// FindByUserID finds a user by its ID
+// FindFullByFollowedUserID finds a user by its ID
 func (*UsersFollowUsersDataAccessObject) FindFullByFollowedUserID(
 	followedID int) []UsersFollowUsersFull {
 	l := make([]UsersFollowUsersFull, 0)

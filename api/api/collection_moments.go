@@ -65,7 +65,7 @@ func momentCommentsGetHandler() http.HandlerFunc {
 		momentCommentIdInt, _ := strconv.Atoi(momentCommentId)
 
 		commentList :=
-			models.MomentCommentDAO.FindFullByMommentsID(
+			models.MomentCommentDAO.FindFullByMomentID(
 				momentCommentIdInt)
 		formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取评论成功", commentList))
@@ -78,12 +78,13 @@ func usersLikeMommentsGetHandler() http.HandlerFunc {
 		likeMommentIdInt, _ := strconv.Atoi(likeMommentId)
 
 		resultList :=
-			models.UsersLikeMomentsDAO.FindFullByMommentsID(
+			models.UsersLikeMomentsDAO.FindFullByMomentID(
 				likeMommentIdInt)
 		formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取点赞列表成功", resultList))
 	}
 }
+
 func mommentsGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
