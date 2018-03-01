@@ -57,8 +57,8 @@ func (*UsersFollowOrganizationsDataAccessObject) FindFullByUserID(
 	return l
 }
 
-// FindFullByFollowedOrganizationID finds a user_follow_organization relationship by organization id
-func (*UsersFollowOrganizationsDataAccessObject) FindFullByFollowedOrganizationID(
+// FindFullByOrganizationID finds a user_follow_organization relationship by organization id
+func (*UsersFollowOrganizationsDataAccessObject) FindFullByOrganizationID(
 	followed_id int) []UsersFollowOrganizationsFull {
 	l := make([]UsersFollowOrganizationsFull, 0)
 	err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
@@ -68,7 +68,7 @@ func (*UsersFollowOrganizationsDataAccessObject) FindFullByFollowedOrganizationI
 		Join("INNER", OrganizationDAO.TableName(),
 			UsersFollowOrganizationsDAO.TableName()+".organization_id="+
 				OrganizationDAO.TableName()+".id").
-		Where("followed_organization_id=?", followed_id).
+		Where("organization_id=?", followed_id).
 		Find(&l)
 	logger.LogIfError(err)
 	return l
@@ -76,16 +76,16 @@ func (*UsersFollowOrganizationsDataAccessObject) FindFullByFollowedOrganizationI
 
 // InsertOne insert a user-organization relationship
 func (*UsersFollowOrganizationsDataAccessObject) InsertOne(
-	users_follow_organizations *UsersFollowOrganizations) {
+	usersFollowOrganizations *UsersFollowOrganizations) {
 	_, err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
-		InsertOne(users_follow_organizations)
+		InsertOne(usersFollowOrganizations)
 	logger.LogIfError(err)
 }
 
 //DeleteByID delete a user-organization relationship by its ID
 func (*UsersFollowOrganizationsDataAccessObject) DeleteByID(id int) {
-	var users_follow_organizations UsersFollowOrganizations
+	var usersFollowOrganizations UsersFollowOrganizations
 	_, err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
-		ID(id).Delete(&users_follow_organizations)
+		ID(id).Delete(&usersFollowOrganizations)
 	logger.LogIfError(err)
 }

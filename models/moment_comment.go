@@ -28,24 +28,24 @@ func (*MomentCommentDataAccessObject) TableName() string {
 }
 
 func FindByMomentID(moment_id int) MomentComment {
-	var moment_comment MomentComment
+	var momentComment MomentComment
 	err := orm.Table(MomentCommentDAO.TableName()).
 		Where("moment_commet.moment_id=?", moment_id).
-		Find(&moment_comment)
+		Find(&momentComment)
 	logger.LogIfError(err)
-	return moment_comment
+	return momentComment
 }
 
-// InsertOne inserts a moment_comment
-func (*MomentCommentDataAccessObject) InsertOne(moment_comment *MomentComment) {
-	_, err := orm.Table(MomentCommentDAO.TableName()).InsertOne(moment_comment)
+// InsertOne inserts a momentComment
+func (*MomentCommentDataAccessObject) InsertOne(momentComment *MomentComment) {
+	_, err := orm.Table(MomentCommentDAO.TableName()).InsertOne(momentComment)
 	logger.LogIfError(err)
 }
 
-//DeleteByID delete a moment_comment by its ID
+//DeleteByID delete a momentComment by its ID
 func (*MomentCommentDataAccessObject) DeleteByID(id int) {
-	var moment_comment MomentComment
+	var momentComment MomentComment
 	_, err := orm.Table(MomentCommentDAO.TableName()).
-		ID(id).Delete(&moment_comment)
+		ID(id).Delete(&momentComment)
 	logger.LogIfError(err)
 }

@@ -47,9 +47,9 @@ func (*UsersLikeMomentsDataAccessObject) FindFullByMomentID(
 
 // InsertOne insert a user_like_moment relationship
 func (*UsersLikeMomentsDataAccessObject) InsertOne(
-	users_like_moments *UsersLikeMoments) {
+	usersLikeMoments *UsersLikeMoments) {
 	_, err := orm.Table(UsersLikeMomentsDAO.TableName()).
-		InsertOne(users_like_moments)
+		InsertOne(usersLikeMoments)
 	logger.LogIfError(err)
 }
 
