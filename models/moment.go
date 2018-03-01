@@ -40,7 +40,7 @@ func (*MomentDataAccessObject) TableName() string {
 func (*MomentDataAccessObject) FindByUserID(userID int) Moment {
 	var moment Moment
 	err := orm.Table(MomentDAO.TableName()).
-		Where("moments.user_id=?", userID).
+		Where("user_id=?", userID).
 		Find(&moment)
 	logger.LogIfError(err)
 	return moment

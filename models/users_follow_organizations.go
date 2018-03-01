@@ -59,7 +59,7 @@ func (*UsersFollowOrganizationsDataAccessObject) FindFullByUserID(
 
 // FindFullByOrganizationID finds a user_follow_organization relationship by organization id
 func (*UsersFollowOrganizationsDataAccessObject) FindFullByOrganizationID(
-	followed_id int) []UsersFollowOrganizationsFull {
+	followedID int) []UsersFollowOrganizationsFull {
 	l := make([]UsersFollowOrganizationsFull, 0)
 	err := orm.Table(UsersFollowOrganizationsDAO.TableName()).
 		Join("INNER", UserDAO.TableName(),
@@ -68,7 +68,7 @@ func (*UsersFollowOrganizationsDataAccessObject) FindFullByOrganizationID(
 		Join("INNER", OrganizationDAO.TableName(),
 			UsersFollowOrganizationsDAO.TableName()+".organization_id="+
 				OrganizationDAO.TableName()+".id").
-		Where("organization_id=?", followed_id).
+		Where("organization_id=?", followedID).
 		Find(&l)
 	logger.LogIfError(err)
 	return l
