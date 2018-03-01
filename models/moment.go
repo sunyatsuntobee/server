@@ -33,14 +33,14 @@ var MomentDAO *MomentDataAccessObject
 
 // TableName returns table name
 func (*MomentDataAccessObject) TableName() string {
-	return "moment"
+	return "moments"
 }
 
 // FindByUserID finds a moment by user id
-func (*MomentDataAccessObject) FindByUserID(user_id int) Moment {
+func (*MomentDataAccessObject) FindByUserID(userID int) Moment {
 	var moment Moment
 	err := orm.Table(MomentDAO.TableName()).
-		Where("moment.user_id=?", user_id).
+		Where("moments.user_id=?", userID).
 		Find(&moment)
 	logger.LogIfError(err)
 	return moment

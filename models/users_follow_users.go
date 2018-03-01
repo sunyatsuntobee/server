@@ -51,9 +51,9 @@ func (*UsersFollowUsersDataAccessObject) FindFullByUserID(
 		Join("INNER", UserDAO.TableName(),
 			UsersFollowUsersDAO.TableName()+".user_id="+
 				UserDAO.TableName()+".id").
-		Join("INNER", OrganizationDAO.TableName(),
-			UsersFollowUsersDAO.TableName()+".organization_id="+
-				OrganizationDAO.TableName()+".id").
+		Join("INNER", UserDAO.TableName(),
+			UsersFollowUsersDAO.TableName()+".followed_user_id="+
+				UserDAO.TableName()+".id").
 		Where("user_id=?", id).
 		Find(&l)
 	logger.LogIfError(err)
@@ -62,16 +62,16 @@ func (*UsersFollowUsersDataAccessObject) FindFullByUserID(
 
 // FindByUserID finds a user by its ID
 func (*UsersFollowUsersDataAccessObject) FindFullByFollowedUserID(
-	followedId int) []UsersFollowUsersFull {
+	followedID int) []UsersFollowUsersFull {
 	l := make([]UsersFollowUsersFull, 0)
 	err := orm.Table(UsersFollowUsersDAO.TableName()).
 		Join("INNER", UserDAO.TableName(),
+			UsersFollowUsersDAO.TableName()+".user_id="+
+				UserDAO.TableName()+".id").
+		Join("INNER", UserDAO.TableName(),
 			UsersFollowUsersDAO.TableName()+".followed_user_id="+
 				UserDAO.TableName()+".id").
-		Join("INNER", OrganizationDAO.TableName(),
-			UsersFollowUsersDAO.TableName()+".organization_id="+
-				OrganizationDAO.TableName()+".id").
-		Where("followed_user_id=?", followedId).
+		Where("followed_user_id=?", followedID).
 		Find(&l)
 	logger.LogIfError(err)
 	return l

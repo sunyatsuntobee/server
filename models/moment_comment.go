@@ -24,13 +24,13 @@ var MomentCommentDAO *MomentCommentDataAccessObject
 
 // TableName returns table name
 func (*MomentCommentDataAccessObject) TableName() string {
-	return "moment_comment"
+	return "moments_comments"
 }
 
-func FindByMomentID(moment_id int) MomentComment {
+func FindByMomentID(momentId int) MomentComment {
 	var momentComment MomentComment
 	err := orm.Table(MomentCommentDAO.TableName()).
-		Where("moment_commet.moment_id=?", moment_id).
+		Where("moments_commets.moment_id=?", momentId).
 		Find(&momentComment)
 	logger.LogIfError(err)
 	return momentComment

@@ -11,9 +11,9 @@ type UsersLikeMoments struct {
 
 // UsersLikeMomentsFull Model
 type UsersLikeMomentsFull struct {
-	ID       int `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	User     `xorm:"extends" json:"user"`
-	MomentID int `xorm:"moment_id INT NOTNULL INDEX(fk_users_like_moments_moment_id_idx)" json:"moment_id"`
+	ID          int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	User        User   `xorm:"extends" json:"user"`
+	LikedMoment Moment `xorm:"extends" json:"liked_moment"`
 }
 
 // UsersLikeMomentsDataAccessObject provides database access for
@@ -28,7 +28,7 @@ func (*UsersLikeMomentsDataAccessObject) TableName() string {
 	return "users_like_moments"
 }
 
-// FindFullByMomentID finds all full models by a moment ID
+// FindFullByMomentID finds all full models by a momentID
 func (*UsersLikeMomentsDataAccessObject) FindFullByMomentID(
 	id int) []UsersLikeMomentsFull {
 	l := make([]UsersLikeMomentsFull, 0)
@@ -55,8 +55,8 @@ func (*UsersLikeMomentsDataAccessObject) InsertOne(
 
 //DeleteByID delete a user_like_moment relationship by its ID
 func (*UsersLikeMomentsDataAccessObject) DeleteByID(id int) {
-	var users_like_moments UsersLikeMoments
+	var usersLikeMoments UsersLikeMoments
 	_, err := orm.Table(UsersLikeMomentsDAO.TableName()).
-		ID(id).Delete(&users_like_moments)
+		ID(id).Delete(&usersLikeMoments)
 	logger.LogIfError(err)
 }
