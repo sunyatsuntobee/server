@@ -21,18 +21,32 @@ func initCollectionUsersRouter(router *mux.Router) {
 		usersGetHandler()).Methods(http.MethodGet)
 
 	// GET /users/{ID}
+	router.HandleFunc(url+"/{ID}",
+		usersGetByIDHandler()).Methods(http.MethodGet)
 
 	// GET /users_follow_users{?user_id,followed_user_id}
+	router.HandleFunc("/api/users_follow_users",
+		usersGetFollowHandler()).Methods(http.MethodGet)
 
 	// POST /users_follow_users
+	router.HandleFunc("/api/users_follow_users",
+		usersFollowCreateHandler()).Methods(http.MethodPost)
 
 	// DELETE /users_follow_users/{ID}
+	router.HandleFunc("/api/users_follow_organizations/{ID}",
+		usersFollowUsersDeleteHandler()).Methods(http.MethodDelete)
 
 	// GET /users_follow_organizations{?user_id,organization_id}
+	router.HandleFunc("/api/users_follow_organizations",
+		organizationsGetFollowHandler()).Methods(http.MethodGet)
 
 	// POST /users_follow_organizations
+	router.HandleFunc("/api/users_follow_users",
+		usersFollowOrganizationsCreateHandler()).Methods(http.MethodPost)
 
 	// DELETE /users_follow_organizations/{ID}
+	router.HandleFunc("/api/users_follow_organizations/{ID}",
+		usersFollowOrganizationsDeleteHandler()).Methods(http.MethodDelete)
 
 	// POST /users
 	router.HandleFunc(url,
@@ -46,6 +60,143 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/background",
 		usersUploadBackgroundHandler()).Methods(http.MethodPatch)
 }
+func usersFollowUsersDeleteHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, hasUser := models.UserDAO.FindByID(idInt)
+		if hasUser == false {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "用户对象不存在", nil))
+			return
+		} else {
+			models.UsersFollowUsersDAO.DeleteByID(idInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "删除该用户的关注用户列表成功", nil))
+		}
+	}
+}
+func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, hasUser := models.UserDAO.FindByID(idInt)
+		if hasUser == false {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "用户对象不存在", nil))
+			return
+		} else {
+			models.UsersFollowOrganizationsDAO.DeleteByID(idInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "删除该用户的关注社团列表成功", nil))
+		}
+	}
+}
+func usersFollowOrganizationsCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var usersFollowOrganizations models.UsersFollowOrganizations
+		err := decoder.Decode(&usersFollowOrganizations)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		usersFollowOrganizations.Timestamp = time.Now()
+		models.UsersFollowOrganizationsDAO.InsertOne(&usersFollowOrganizations)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "关注社团成功", usersFollowOrganizations))
+	}
+}
+
+func usersFollowCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var usersFollowUsers models.UsersFollowUsers
+		err := decoder.Decode(&usersFollowUsers)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		usersFollowUsers.Timestamp = time.Now()
+		models.UsersFollowUsersDAO.InsertOne(&usersFollowUsers)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "关注用户成功", usersFollowUsers))
+	}
+}
+func usersGetFollowHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		userId := req.FormValue("user_id")
+		followedUserId := req.FormValue("followed_user_id")
+		userIdInt, _ := strconv.Atoi(userId)
+		followedUserIdInt, _ := strconv.Atoi(followedUserId)
+		if userId != "" && followedUserId != "" {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "输入参数错误", nil))
+		}
+		if userId != "" && followedUserId == "" {
+			FollowedUserList :=
+				models.UsersFollowUsersDAO.FindFullByUserID(userIdInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取该用户关注的用户列表成功", FollowedUserList))
+		}
+		if userId == "" && followedUserId != "" {
+			FollowedUserList :=
+				models.UsersFollowUsersDAO.FindFullByFollowedUserID(followedUserIdInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取关注该用户的用户列表成功", FollowedUserList))
+		}
+	}
+}
+func organizationsGetFollowHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		userId := req.FormValue("user_id")
+		followedOrganizationId := req.FormValue("organization_id")
+		userIdInt, _ := strconv.Atoi(userId)
+		followedOrganizationIdInt, _ :=
+			strconv.Atoi(followedOrganizationId)
+		if userId != "" && followedOrganizationId != "" {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "输入参数错误", nil))
+		}
+		if userId != "" && followedOrganizationId == "" {
+			OrganizaitionList :=
+				models.UsersFollowOrganizationsDAO.FindFullByUserID(userIdInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取该用户关注的社团列表成功", OrganizaitionList))
+		}
+		if userId == "" && followedOrganizationId != "" {
+			UserList :=
+				models.UsersFollowOrganizationsDAO.FindFullByOrganizationID(
+					followedOrganizationIdInt)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取关注该社团的用户列表成功", UserList))
+		}
+	}
+}
+func usersGetByIDHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		user, hasUser := models.UserDAO.FindByID(idInt)
+		if hasUser == false {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "用户对象不存在", nil))
+			return
+		} else {
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取对应id的用户成功", user))
+		}
+	}
+}
+
 func usersUploadAvatarHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
