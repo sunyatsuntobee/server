@@ -7,6 +7,8 @@ import (
 
 func main() {
 	server := controllers.NewServer()
-	server.Run(":8080")
+	port := ":8080"
+	// port := ":80"
+	server.Run(port)
 	logger.I.Println("Web Server is running")
 }
