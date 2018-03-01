@@ -63,33 +63,17 @@ func initCollectionUsersRouter(router *mux.Router) {
 func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		user, hasUser := models.UserDAO.FindByID(idInt)
-		if hasUser == false {
-			formatter.JSON(w, http.StatusBadRequest,
-				NewJSON("bad request", "用户对象不存在", nil))
-			return
-		} else {
-			models.UsersFollowUsersDAO.DeleteByID(idInt)
-			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "删除该用户的关注用户列表成功", nil))
-		}
+		usersFollowUsersIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		models.UsersFollowUsersDAO.DeleteByID(usersFollowUsersIdInt)
+		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
 func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		idInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		user, hasUser := models.UserDAO.FindByID(idInt)
-		if hasUser == false {
-			formatter.JSON(w, http.StatusBadRequest,
-				NewJSON("bad request", "用户对象不存在", nil))
-			return
-		} else {
-			models.UsersFollowOrganizationsDAO.DeleteByID(idInt)
-			formatter.JSON(w, http.StatusOK,
-				NewJSON("OK", "删除该用户的关注社团列表成功", nil))
-		}
+		usersFollowOrganizationsIdInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		models.UsersFollowUsersDAO.DeleteByID(usersFollowOrganizationsIdInt)
+		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
 func usersFollowOrganizationsCreateHandler() http.HandlerFunc {
