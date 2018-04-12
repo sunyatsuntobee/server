@@ -5,19 +5,506 @@ HOST: http://polls.apiblueprint.org/
 
 RESTful API for ToBEE Application.
 
-## Collection Users [/users]
+## Authorization [/auth]
 
-### List all users [GET /users]
+### Get a JWT [GET /auth{?username,password,type}]
+
++ Parameters
+
+    - username : `username` (string) - Username
+    - password : `password` (string) - Password
+    - type : 0 (int) - User type (0-Admin, 1-User, 2-Organization)
 
 + Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"验证成功",
+            "data": {
+                "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+            }
+        }
+
+## Collection Users [/users]
+
+### Create a new user [POST /users]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "phone":"15814092425",
+            "password":"password",
+            "username":"username",
+            "nickname":"nickname",
+            "email":"example@email.com",
+            "avatar_url":null,
+            "create_time":"2018-02-21T03:05:00Z08:00",
+            "city_id":1,
+            "vip":0,
+            "camera":"camera",
+            "description":"个性签名",
+            "college":"中山大学",
+            "college_district":"东校区",
+            "enroll_time":2015,
+            "institute":"数据科学与计算机学院",
+            "astrology":"魔羯座",
+            "qq":"000000000",
+            "background_url":null
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"Created",
+            "msg":"注册成功",
+            "data":{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":null,
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
+            }
+        }
+
+### List users [GET /users]
+
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取用户列表成功",
+            "data":[{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":null,
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
+            },
+            {
+                "id":2,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":null,
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
+            }]
+        }
+        
+### Get a user by ID [GET /users/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a user
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取用户成功",
+            "data":{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":null,
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
+            }
+        }
+        
+### List followed users [GET /users_follow_users{?user_id,followed_user_id}]
+
++ Parameters
+
+    - user_id : 1 (int) - ID of a user
+    - followed_user_id : 1 (int) - ID of a followed user
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取用户列表成功",
+            "data":[{
+                "id":1,
+                "user":{
+                    "id":1,
+                    ...
+                },
+                "followed_user":{
+                    "id":2,
+                    ...
+                },
+                "timestamp":"2018-03-01T11:05:00+08:00"
+            },{
+                "id":2,
+                "user":{
+                    "id":1,
+                    ...
+                },
+                "followed_user":{
+                    "id":3,
+                    ...
+                },
+                "timestamp":"2018-03-01T11:05:00+08:00"
+            }]
+        }
+        
+### Follow a user [POST /users_follow_users]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "user_id":1,
+            "followed_user_id":2,
+            "timestamp":null
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"关注用户成功",
+            "data":{
+                "id":1,
+                "user_id":1,
+                "followed_user_id":2,
+                "timestamp":"2018-03-02T11:22:00+08:00"
+            }
+        }
+
+### Unfollow a user [DELETE /users_follow_users/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a Model users_follow_users
+
++ Response 204
+        
+### List followed organizations [GET /users_follow_organizations{?user_id,organization_id}]
+
++ Parameters
+
+    - user_id : 1 (int) - ID of a user
+    - organization_id : 1 (int) - ID of an organization
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取关注社团成功",
+            "data":[{
+                "id":1,
+                "user":{
+                    "id":1,
+                    ...
+                },
+                "organization":{
+                    "id":2,
+                    ...
+                },
+                "timestamp":"2018-03-01T11:21:00+08:00"
+            },{
+                "id":2,
+                "user":{
+                    "id":1,
+                    ...
+                },
+                "organization_id":{
+                    "id":3,
+                    ...
+                },
+                "timestamp":"2018-03-01T11:21:00+08:00"
+            }]
+        }
+
+### Follow an organization [POST /users_follow_organizations]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "user_id":1,
+            "organization_id":2,
+            "timestamp":null
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"关注社团成功",
+            "data":{
+                "id":null,
+                "user_id":1,
+                "organization_id":2,
+                "timestamp":"2018-03-01T11:23:00+08:00"
+            }
+        }
+        
+### Unfollow an organization [DELETE /users_follow_organizations/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a relationship
+    
++ Response 204
+        
+### Upload an avatar [PATCH /users/{ID}/avatar]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a user
+    
++ Request (multipart/form-data)
+
++ Response 201 (application/json)
+
+        {
+            "status":"Created",
+            "msg":"上传头像成功",
+            "data":{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":"/res/avatars/1.png",
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
+            }
+        }
+
+### Upload a background [PATCH /users/{ID}/background]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a user
+    
++ Request (multipart/form-data)
+
++ Response 201 (application/json)
+
+        {
+            "status":"Created",
+            "msg":"上传背景成功",
+            "data":{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":"/res/avatars/1.png",
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":"/res/backgrounds/1.png"
+            }
+        }
 
 ## Collection Organizations [/organizations]
 
-### List all organizations [GET /organizations]
+### List organizations [GET /organizations]
 
 + Response 200 (application/json)
 
+        {
+            "status":"OK",
+            "msg":"获取社团列表成功",
+            "data":[{
+                "id":1,
+                "name":"name",
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "logo_url":null,
+                "description":"description"
+            },{
+                "id":2,
+                "name":"name",
+                "phone":"15814092426",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "logo_url":null,
+                "description":"description"
+            }]
+        }
+
+### Create a new organization [POST /organizations]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "name":"name",
+            "phone":"15814092425",
+            "password":"password",
+            "college":"中山大学",
+            "college_district":"东校区",
+            "logo_url":null,
+            "description":"description"
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"社团注册成功",
+            "data": {
+                "id":1,
+                "name":"name",
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "logo_url":null,
+                "description":"description"
+            }
+        }
+        
+### Update an organization [PUT /organizations/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) `ID of an organization`
+    
++ Request (application/json)
+
+        {
+            "id":1,
+            "name":"name",
+            "phone":"15814092425",
+            "password":"password",
+            "college":"中山大学",
+            "college_district":"东校区",
+            "logo_url":null,
+            "description":"description"
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"修改用户信息成功",
+            "data":{
+                "id":1,
+                "name":"name",
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "logo_url":null,
+                "description":"description"
+            }
+        }
+
 ## Collection Activities [/activities]
+
+### Create a new activity [POST /activities]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "name":"name",
+            "description":"description",
+            "category":"category",
+            "poster_url":null,
+            "logo_url":null,
+            "organization_id":1
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"创建活动成功",
+            "data":{
+                "id":1,
+                "name":"name",
+                "description":"description",
+                "category":"category",
+                "poster_url":null,
+                "logo_url":null,
+                "organization_id":1
+            }
+        }
 
 ### List activities [GET /activities{?oid}]
 
@@ -27,24 +514,600 @@ RESTful API for ToBEE Application.
 
 + Response 200 (application/json)
 
-## Collection ActivityStages [/activitystages]
-
-### List activity stages [GET /activitystages{?aid}]
+        {
+            "status":"OK",
+            "msg":"获取活动列表成功",
+            "data":[
+                {
+                    "id":1,
+                    "name":"name",
+                    "description":"description",
+                    "category":"category",
+                    "poster_url":null,
+                    "logo_url":null,
+                    "organization_id":1
+                },{
+                    "id":2,
+                    "name":"name",
+                    "description":"description",
+                    "category":"category",
+                    "poster_url":null,
+                    "logo_url":null,
+                    "organization_id":1
+                }
+            ]
+        }
+        
+### Update an activity [PUT /activities/{ID}]
 
 + Parameters
 
-    - aid : 1 (int) - ID of an activity
+    - ID : 1 (int) - ID of an activity
+    
++ Request (application/json)
+
+        {
+            "id":1,
+            "name":"name",
+            "description":"description",
+            "category":"category",
+            "poster_url":null,
+            "logo_url":null,
+            "organization_id":1
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"修改活动信息成功",
+            "data":{
+                "id":1,
+                "name":"name",
+                "description":"description",
+                "category":"category",
+                "poster_url":null,
+                "logo_url":null,
+                "organization_id":1
+            }
+        }
+
+### Add a new stage [POST /activities/{ID}/activity_stages]
+
++ Parameters
+
+    - ID : 1 (int) - ID of an activity
+    
++ Request (application/json)
+
+        {
+            "id":null,
+            "stage_num":1,
+            "start_time":"2018-02-23T15:38:00+08:00",
+            "end_time":"2018-02-23T15:39:00+08:00",
+            "location":"广东省中山市中山大学东校区公共教学楼",
+            "content":"content",
+            "activity_id":1
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"活动阶段创建成功",
+            "data":{
+                "id":1,
+                "stage_num":1,
+                "start_time":"2018-02-23T15:38:00+08:00",
+                "end_time":"2018-02-23T15:39:00+08:00",
+                "location":"广东省中山市中山大学东校区公共教学楼",
+                "content":"content",
+                "activity_id":1
+            }
+        }
+        
+## Collection Activity Stages [/activity_stages]
+
+### List activity_stages [GET /activities_stages{?one_day_in_that_month}]
+
++ Parameters
+
+    - one_day_in_that_month : `15-01-01` (string) - Date
+
++ Response 200 (application/json)
+
+        {
+            "status": "OK",
+            "msg": "成功获取活动列表",
+            "data": [
+                [],
+                [
+                    {
+                        "id": 123, // id or url or something else
+                        "name": "1758",
+                        "start_time": "2018-02-19T10:57:43.710Z",
+                        "end_time": "2018-02-19T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12345
+                    },
+                    {
+                        "id": 124,
+                        "name": "东校区荒野行动",
+                        "start_time": "2018-02-19T10:57:43.710Z",
+                        "end_time": "2018-02-19T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12346
+                    }
+                ],
+                [],
+                [
+                    {
+                        "id": 125,
+                        "name": "定向越野",
+                        "start_time": "2018-02-21T10:57:43.710Z",
+                        "end_time": "2018-02-21T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12347
+                    },
+                    {
+                        "id": 126,
+                        "name": "张剑见面会",
+                        "start_time": "2018-02-21T10:57:43.710Z",
+                        "end_time": "2018-02-21T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12348
+                    }
+                ]
+            ]
+        }
+        
+### List activity_stages of a day [GET /activity_stages/{date}]
+
++ Parameters
+
+    - date : `15-01-01` (string) - Date
     
 + Response 200 (application/json)
 
-## Collection PhotoLives [/photolives]
+        {
+            "status":"OK",
+            "msg":"成功获取活动列表",
+            "data":[{
+                "id": 123, // id or url or something else
+                "name": "1758",
+                "start_time": "2018-02-19T10:57:43.710Z",
+                "end_time": "2018-02-19T10:57:43.710Z",
+                "location": "三饭小广场",
+                "content": "blabla",
+                "activity_id": 12345
+            },
+            {
+                "id": 124,
+                "name": "东校区荒野行动",
+                "start_time": "2018-02-19T10:57:43.710Z",
+                "end_time": "2018-02-19T10:57:43.710Z",
+                "location": "三饭小广场",
+                "content": "blabla",
+                "activity_id": 12346
+            }]
+        }
+        
+## Collection Moments [/moments]
 
-### List photo lives [GET /photolives]
+### List moments [GET /moments{?user_id}]
+
++ Parameters
+
+    - user_id : 1 (int) - ID of a user
 
 + Response 200 (application/json)
 
-### Create a new photo live [POST /photolives]
+        {
+            "status":"OK",
+            "msg":"成功获取用户动态",
+            "data":[{
+                "id":1,
+                "user_id":1,
+                "organization_id":null,
+                "timestamp":"2018-03-01T10:48:00+08:00",
+                "content":"content"
+                "photo_1_id":1,
+                "photo_2_id":null,
+                "photo_3_id":null,
+                "photo_4_id":null,
+                "photo_5_id":null,
+                "photo_6_id":null,
+                "photo_7_id":null,
+                "photo_8_id":null,
+                "photo_9_id":null
+            },{
+                "id":2,
+                "user_id":1,
+                "organization_id":null,
+                "timestamp":"2018-03-01T10:48:00+08:00",
+                "content":"content"
+                "photo_1_id":1,
+                "photo_2_id":null,
+                "photo_3_id":null,
+                "photo_4_id":null,
+                "photo_5_id":null,
+                "photo_6_id":null,
+                "photo_7_id":null,
+                "photo_8_id":null,
+                "photo_9_id":null
+            }]
+        }
+        
+### 
+
+### List likes [GET /users_like_moments{?moment_id}]
+
++ Parameters
+
+    - moment_id : 1 (int) - ID of a moment
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取点赞列表成功",
+            "data": [{
+                "id":1,
+                "user":{
+                    "id": 2,
+                    ...
+                },
+                "moment_id":1
+            },{
+                "id":1,
+                "user":{
+                    "id": 3,
+                    ...
+                },
+                "moment_id":1
+            }]
+        }
+
+### Create a moment [POST /moments]
 
 + Request (application/json)
 
-+ Response 201
+        {
+            "id":null,
+            "user_id":1,
+            "organization_id":null,
+            "timestamp":null,
+            "content":"content"
+            "photo_1_id":1,
+            "photo_2_id":null,
+            "photo_3_id":null,
+            "photo_4_id":null,
+            "photo_5_id":null,
+            "photo_6_id":null,
+            "photo_7_id":null,
+            "photo_8_id":null,
+            "photo_9_id":null
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"成功创建用户动态",
+            "data":[{
+                "id":3,
+                "user_id":1,
+                "organization_id":null,
+                "timestamp":"2018-03-01T10:48:00+08:00",
+                "content":"content"
+                "photo_1_id":1,
+                "photo_2_id":null,
+                "photo_3_id":null,
+                "photo_4_id":null,
+                "photo_5_id":null,
+                "photo_6_id":null,
+                "photo_7_id":null,
+                "photo_8_id":null,
+                "photo_9_id":null
+            }
+        }
+        
+### Like a moment [POST /users_like_moments]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "user_id":1,
+            "moment_id":1
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"用户点赞成功",
+            "data":{
+                "id":1,
+                "user_id":1,
+                "moment_id":1
+            }
+        }
+        
+### Dislike a moment [DELETE /users_like_moments/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a Model users_like_moments
+    
++ Response 204
+
+### List comments [GET /moment_comments{?moment_id}]
+
++ Parameters
+
+    - moment_id : 1 (int) - ID of a moment
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取评论成功",
+            "data":[{
+                "id":1,
+                "moment_id":1,
+                "user":{
+                    "id":1,
+                    ...
+                },
+                "content":"是兄弟就来砍我"
+            },{
+                "id":1,
+                "moment_id":1,
+                "user":{
+                    "id":2,
+                    ...
+                },
+                "content":"是兄弟就来砍我"
+            }]
+        }
+
+### Comment a moment [POST /moment_comments]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "moment_id":1,
+            "user_id":1,
+            "content":"是兄弟就来砍我"
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"评论成功",
+            "data":{
+                "id":1,
+                "moment_id":1,
+                "user_id":1,
+                "content":"是兄弟就来砍我"
+            }
+        }
+        
+### Remove a comment [DELETE /moment_comments/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a comment
+    
++ Response 204
+
+## Collection Photos [/photos]
+
+### List photos [GET /photos{?category,oid}]
+
++ Parameters
+
+    - category : "未审核" (string) - Category of a photo
+    - oid : 1 (int) - ID of an organization
+    
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取照片列表成功",
+            "data":[{
+                "id":1,
+                "url":"/res/photos/1.jpg",
+                "took_time":"2018-02-23T15:23:00+08:00",
+                "took_location":"广东省中山市大山中学",
+                "release_time":null,
+                "category":"未审核",
+                "likes":0,
+                "reject_reason":"",
+                "user_id":1,
+                "organization_id":null
+            },{
+                "id":2,
+                "url":"/res/photos/2.jpg",
+                "took_time":"2018-02-23T15:23:00+08:00",
+                "took_location":"广东省中山市大山中学",
+                "release_time":null,
+                "category":"未审核",
+                "likes":0,
+                "reject_reason":"",
+                "user_id":1,
+                "organization_id":null
+            }]
+        }
+
+### Create a new photo [POST /photos]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "url":null,
+            "took_time":"2018-02-23T10:24:00+08:00",
+            "took_location":"中山大学东校区公共教学楼E栋",
+            "release_time":null,
+            "category":"人文景观",
+            "likes":0,
+            "reject_reason":null,
+            "user_id":1,
+            "organization_id":null
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"照片创建成功",
+            "data": {
+                "id":1,
+                "url":null,
+                "took_time":"2018-02-23T10:24:00+08:00",
+                "took_location":"中山大学东校区公共教学楼E栋",
+                "release_time":null,
+                "category":"人文景观",
+                "likes":0,
+                "reject_reason":null,
+                "user_id":1,
+                "organization_id":null
+            }
+        }
+        
+### Upload a photo [PATCH /photos/{ID}/photo]
+
++ Parameters
+
+    - ID : 1 (int) - ID of the photo
+    
++ Request (multipart/form-data)
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"照片上传成功",
+            "data": {
+                "id":1,
+                "url":"/res/1.png",
+                "took_time":"2018-02-23T10:24:00+08:00",
+                "took_location":"中山大学东校区公共教学楼E栋",
+                "release_time":null,
+                "category":"人文景观",
+                "likes":0,
+                "reject_reason":null,
+                "user_id":1,
+                "organization_id":null
+            }
+        }
+        
+### Update a photo [PUT /photos/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a photo
+    
++ Request (application/json)
+
+        {
+            "id":1,
+            "url":"/res/photos/1.jpg",
+            "took_time":"2018-02-23T10:24:00+08:00",
+            "took_location":"中山大学东校区公共教学楼E栋",
+            "release_time":null,
+            "category":"人文景观",
+            "likes":0,
+            "reject_reason":null,
+            "user_id":1,
+            "organization_id":null
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"修改照片成功",
+            "data": {
+                "id":1,
+                "url":"/res/photos/1.jpg",
+                "took_time":"2018-02-23T10:24:00+08:00",
+                "took_location":"中山大学东校区公共教学楼E栋",
+                "release_time":null,
+                "category":"人文景观",
+                "likes":0,
+                "reject_reason":null,
+                "user_id":1,
+                "organization_id":null
+            }
+        }
+        
+## Collection Photo Lives [/photo_lives]
+
+### Create a new photo live [POST /photo_lives]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "expect_members":100,
+            "ad_progress":"ad_progress",
+            "activity_stage_id":1,
+            "manager_id":1,
+            "photographer_manager_id":1
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"创建照片直播成功",
+            "data":{
+                "id":1,
+                "expect_members":100,
+                "ad_progress":"ad_progress",
+                "activity_stage_id":1,
+                "manager_id":1,
+                "photographer_manager_id":1
+            }
+        }
+        
+### Update a photo live [PUT /photo_lives/{ID}]
+
++ Parameters
+
+    - ID : 1 (int) - ID of a photo live
+
++ Request (application/json)
+
+        {
+            "id":1,
+            "expect_members":100,
+            "ad_progress":"ad_progress",
+            "activity_stage_id":1,
+            "manager_id":1,
+            "photographer_manager_id":1
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"修改照片直播成功",
+            "data":{
+                "id":1,
+                "expect_members":100,
+                "ad_progress":"ad_progress",
+                "activity_stage_id":1,
+                "manager_id":1,
+                "photographer_manager_id":1
+            }
+        }
