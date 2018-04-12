@@ -4,13 +4,19 @@ import "github.com/sunyatsuntobee/server/logger"
 
 // Activity Model
 type Activity struct {
-	ID             int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name           string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
-	Description    string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
-	Category       string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
-	PosterURL      string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
-	LogoURL        string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
-	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
+	ID                 int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	ShortName          string `xorm:"short_name VARCHAR(20)" json:"short_name"`
+	Name               string `xorm:"name VARCHAR(50) NOTNULL" json:"name"`
+	Description        string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
+	Category           string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
+	PosterURL          string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
+	LogoURL            string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
+	WechatURL          string `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
+	SportsMedals       int    `xorm:"sports_medals INT" json:"sports_medals"`
+	PublicServiceHours int    `xorm:"public_service_hours INT" json:"public_service_hours"`
+	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
+	OtherPrize         string `xorm:"other_prize VARCHAR(100)" json:"other_prize"`
+	OrganizationID     int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 }
 
 // ActivityDataAccessObject provides database access for Model Activity
@@ -20,15 +26,23 @@ type ActivityDataAccessObject struct{}
 var ActivityDAO *ActivityDataAccessObject
 
 // NewActivity creates a new activity
-func NewActivity(name string, description string, category string,
-	posterURL string, logoURL string, organizationID int) *Activity {
+func NewActivity(shortName, name string, description string, category string,
+	posterURL string, logoURL string, wechatURL string,
+	sportsMedals int, publicServiceHours int, prize string,
+	otherPrize string, organizationID int) *Activity {
 	return &Activity{
-		Name:           name,
-		Description:    description,
-		Category:       category,
-		PosterURL:      posterURL,
-		LogoURL:        logoURL,
-		OrganizationID: organizationID,
+		ShortName:          shortName,
+		Name:               name,
+		Description:        description,
+		Category:           category,
+		PosterURL:          posterURL,
+		LogoURL:            logoURL,
+		WechatURL:          wechatURL,
+		SportsMedals:       sportsMedals,
+		PublicServiceHours: publicServiceHours,
+		Prize:              prize,
+		OtherPrize:         otherPrize,
+		OrganizationID:     organizationID,
 	}
 }
 
