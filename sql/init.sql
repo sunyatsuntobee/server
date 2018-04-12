@@ -148,11 +148,17 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tobee`.`activities` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
+  `short_name` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   `description` VARCHAR(200) NOT NULL,
   `category` VARCHAR(10) NOT NULL,
   `poster_url` VARCHAR(50) NULL,
   `logo_url` VARCHAR(50) NULL,
+  `wechat_url` VARCHAR(50) NULL,
+  `sports_medals` INT NULL,
+  `public_service_hours` INT NULL,
+  `prize` VARCHAR(100) NULL,
+  `other_prize` VARCHAR(100) NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
