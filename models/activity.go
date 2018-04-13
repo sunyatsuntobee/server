@@ -12,8 +12,8 @@ type Activity struct {
 	PosterURL          string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
 	LogoURL            string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	WechatURL          string `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
-	SportsMedals       int    `xorm:"sports_medals INT" json:"sports_medals"`
-	PublicServiceHours int    `xorm:"public_service_hours INT" json:"public_service_hours"`
+	SportsMedals       string `xorm:"sports_medals VARCHAR(50)" json:"sports_medals"`
+	PublicServiceHours string `xorm:"public_service_hours VARCHAR(50)" json:"public_service_hours"`
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
 	OtherPrize         string `xorm:"other_prize VARCHAR(100)" json:"other_prize"`
 	OrganizationID     int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
@@ -28,7 +28,7 @@ var ActivityDAO *ActivityDataAccessObject
 // NewActivity creates a new activity
 func NewActivity(shortName, name string, description string, category string,
 	posterURL string, logoURL string, wechatURL string,
-	sportsMedals int, publicServiceHours int, prize string,
+	sportsMedals string, publicServiceHours string, prize string,
 	otherPrize string, organizationID int) *Activity {
 	return &Activity{
 		ShortName:          shortName,
