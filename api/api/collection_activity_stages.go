@@ -10,7 +10,7 @@ import (
 )
 
 func initCollectionActivityStagesRouter(router *mux.Router) {
-	url := "/api/activitiy_stages"
+	url := "/api/activity_stages"
 
 	// GET /activity_stages
 	router.HandleFunc(url, activityStagesGetHandler()).

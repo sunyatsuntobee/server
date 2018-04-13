@@ -20,7 +20,7 @@ var (
 
 const (
 	dateLayout string = "06-01-02"
-	resDir     string = "/home/r0bert/tobee"
+	resDir     string = "/root/tobee"
 )
 
 func init() {

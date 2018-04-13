@@ -173,7 +173,6 @@ func usersGetByIDHandler() http.HandlerFunc {
 		if hasUser == false {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "用户对象不存在", nil))
-			return
 		} else {
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取对应ID的用户成功", user))
