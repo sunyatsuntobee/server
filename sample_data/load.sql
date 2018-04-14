@@ -5,9 +5,10 @@ lines terminated by '\r\n'
 ignore 1 lines;
 
 load data local infile 'activities.csv' into table activities 
-fields terminated by ','  optionally 
-enclosed by '"' escaped by '"' 
-lines terminated by '\r\n' 
+fields terminated by ',' optionally 
+ignore 1 lines;
+-- enclosed by '"' escaped by '"' 
+-- lines terminated by '\r\n' 
 ignore 1 lines;
 
 load data local infile 'stages.csv' into table activity_stages 

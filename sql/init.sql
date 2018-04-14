@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activities` (
   `category` VARCHAR(10) NOT NULL,
   `poster_url` VARCHAR(50) NULL,
   `logo_url` VARCHAR(50) NULL,
-  `wechat_url` VARCHAR(50) NULL,
+  `wechat_url` VARCHAR(200) NULL,
   `sports_medals` VARCHAR(50) NULL,
   `public_service_hours` VARCHAR(50) NULL,
   `prize` VARCHAR(100) NULL,
