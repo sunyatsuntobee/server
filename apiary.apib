@@ -52,7 +52,7 @@ RESTful API for ToBEE Application.
             "qq":"000000000",
             "background_url":null
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -131,13 +131,13 @@ RESTful API for ToBEE Application.
                 "background_url":null
             }]
         }
-        
+
 ### Get a user by ID [GET /users/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a user
-    
+
 + Response 200 (application/json)
 
         {
@@ -165,14 +165,14 @@ RESTful API for ToBEE Application.
                 "background_url":null
             }
         }
-        
+
 ### List followed users [GET /users_follow_users{?user_id,followed_user_id}]
 
 + Parameters
 
     - user_id : 1 (int) - ID of a user
     - followed_user_id : 1 (int) - ID of a followed user
-    
+
 + Response 200 (application/json)
 
         {
@@ -202,7 +202,7 @@ RESTful API for ToBEE Application.
                 "timestamp":"2018-03-01T11:05:00+08:00"
             }]
         }
-        
+
 ### Follow a user [POST /users_follow_users]
 
 + Request (application/json)
@@ -213,7 +213,7 @@ RESTful API for ToBEE Application.
             "followed_user_id":2,
             "timestamp":null
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -234,14 +234,14 @@ RESTful API for ToBEE Application.
     - ID : 1 (int, required) - ID of a Model users_follow_users
 
 + Response 204
-        
+
 ### List followed organizations [GET /users_follow_organizations{?user_id,organization_id}]
 
 + Parameters
 
     - user_id : 1 (int) - ID of a user
     - organization_id : 1 (int) - ID of an organization
-    
+
 + Response 200 (application/json)
 
         {
@@ -295,21 +295,50 @@ RESTful API for ToBEE Application.
                 "timestamp":"2018-03-01T11:23:00+08:00"
             }
         }
-        
+
+### Join an organization [POST /users_apply_organizations]
+
+加入一个社团，此时正确结果是权限设置为普通成员权限，正在申请为真。
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "user_id":1,
+            "organization_id":2,
+            "applying": 1,
+            "timestamp":null
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"加入社团成功",
+            "data":{
+                "id":null,
+                "user_id":1,
+                "organization_id":2,
+                "privilege": 1,
+                "applying": 1,
+                "timestamp":"2018-03-01T11:23:00+08:00"
+            }
+        }
+
 ### Unfollow an organization [DELETE /users_follow_organizations/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a relationship
-    
+
 + Response 204
-        
+
 ### Upload an avatar [PATCH /users/{ID}/avatar]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a user
-    
+
 + Request (multipart/form-data)
 
 + Response 201 (application/json)
@@ -345,7 +374,7 @@ RESTful API for ToBEE Application.
 + Parameters
 
     - ID : 1 (int, required) - ID of a user
-    
+
 + Request (multipart/form-data)
 
 + Response 201 (application/json)
@@ -420,7 +449,7 @@ RESTful API for ToBEE Application.
             "logo_url":null,
             "description":"description"
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -437,13 +466,13 @@ RESTful API for ToBEE Application.
                 "description":"description"
             }
         }
-        
+
 ### Update an organization [PUT /organizations/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) `ID of an organization`
-    
+
 + Request (application/json)
 
         {
@@ -456,7 +485,7 @@ RESTful API for ToBEE Application.
             "logo_url":null,
             "description":"description"
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -471,6 +500,36 @@ RESTful API for ToBEE Application.
                 "college_district":"东校区",
                 "logo_url":null,
                 "description":"description"
+            }
+        }
+
+### Manage an organization applicants and members [POST /handle_applicants_and_members]
+
+管理社团的申请者和成员：
+设置被管理者的权限，并将appling设为0。返回被管理者的社团参与信息。
+
++ Request (application/json)
+
+        {
+            "user_id":1,
+            "organization_id":2,
+            "managed_id":null,
+            "managed_privilege": 1,
+            "timestamp":null
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"管理社团成员成功",
+            "data":{
+                "id":1,
+                "user_id":1,
+                "organization_id":2,
+                "privilege": 1,
+                "applying": 0,
+                "timestamp":"2018-03-01T11:23:00+08:00"
             }
         }
 
@@ -494,7 +553,7 @@ RESTful API for ToBEE Application.
             "other_prize":"",
             "organization_id":1
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -557,13 +616,13 @@ RESTful API for ToBEE Application.
                 }
             ]
         }
-        
+
 ### Update an activity [PUT /activities/{ID}]
 
 + Parameters
 
     - ID : 1 (int) - ID of an activity
-    
+
 + Request (application/json)
 
         {
@@ -580,7 +639,7 @@ RESTful API for ToBEE Application.
             "other_prize":"",
             "organization_id":1
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -607,7 +666,7 @@ RESTful API for ToBEE Application.
 + Parameters
 
     - ID : 1 (int) - ID of an activity
-    
+
 + Request (application/json)
 
         {
@@ -635,7 +694,7 @@ RESTful API for ToBEE Application.
                 "activity_id":1
             }
         }
-        
+
 ## Collection Activity Stages [/activity_stages]
 
 ### List activity_stages [GET /activity_stages{?one_day_in_that_month}]
@@ -694,13 +753,13 @@ RESTful API for ToBEE Application.
                 ]
             ]
         }
-        
+
 ### List activity_stages of a day [GET /activity_stages/{date}]
 
 + Parameters
 
     - date : `15-01-01` (string) - Date
-    
+
 + Response 200 (application/json)
 
         {
@@ -725,7 +784,7 @@ RESTful API for ToBEE Application.
                 "activity_id": 12346
             }]
         }
-        
+
 ## Collection Moments [/moments]
 
 ### List moments [GET /moments{?user_id}]
@@ -771,15 +830,15 @@ RESTful API for ToBEE Application.
                 "photo_9_id":null
             }]
         }
-        
-### 
+
+###
 
 ### List likes [GET /users_like_moments{?moment_id}]
 
 + Parameters
 
     - moment_id : 1 (int) - ID of a moment
-    
+
 + Response 200 (application/json)
 
         {
@@ -845,7 +904,7 @@ RESTful API for ToBEE Application.
                 "photo_9_id":null
             }
         }
-        
+
 ### Like a moment [POST /users_like_moments]
 
 + Request (application/json)
@@ -855,7 +914,7 @@ RESTful API for ToBEE Application.
             "user_id":1,
             "moment_id":1
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -867,13 +926,13 @@ RESTful API for ToBEE Application.
                 "moment_id":1
             }
         }
-        
+
 ### Dislike a moment [DELETE /users_like_moments/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a Model users_like_moments
-    
+
 + Response 204
 
 ### List comments [GET /moment_comments{?moment_id}]
@@ -881,7 +940,7 @@ RESTful API for ToBEE Application.
 + Parameters
 
     - moment_id : 1 (int) - ID of a moment
-    
+
 + Response 200 (application/json)
 
         {
@@ -916,7 +975,7 @@ RESTful API for ToBEE Application.
             "user_id":1,
             "content":"是兄弟就来砍我"
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -929,13 +988,13 @@ RESTful API for ToBEE Application.
                 "content":"是兄弟就来砍我"
             }
         }
-        
+
 ### Remove a comment [DELETE /moment_comments/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a comment
-    
+
 + Response 204
 
 ## Collection Photos [/photos]
@@ -946,7 +1005,7 @@ RESTful API for ToBEE Application.
 
     - category : "未审核" (string) - Category of a photo
     - oid : 1 (int) - ID of an organization
-    
+
 + Response 200 (application/json)
 
         {
@@ -993,7 +1052,7 @@ RESTful API for ToBEE Application.
             "user_id":1,
             "organization_id":null
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -1012,13 +1071,13 @@ RESTful API for ToBEE Application.
                 "organization_id":null
             }
         }
-        
+
 ### Upload a photo [PATCH /photos/{ID}/photo]
 
 + Parameters
 
     - ID : 1 (int) - ID of the photo
-    
+
 + Request (multipart/form-data)
 
 + Response 201 (application/json)
@@ -1039,13 +1098,13 @@ RESTful API for ToBEE Application.
                 "organization_id":null
             }
         }
-        
+
 ### Update a photo [PUT /photos/{ID}]
 
 + Parameters
 
     - ID : 1 (int, required) - ID of a photo
-    
+
 + Request (application/json)
 
         {
@@ -1060,7 +1119,7 @@ RESTful API for ToBEE Application.
             "user_id":1,
             "organization_id":null
         }
-        
+
 + Response 201 (application/json)
 
         {
@@ -1079,7 +1138,7 @@ RESTful API for ToBEE Application.
                 "organization_id":null
             }
         }
-        
+
 ## Collection Photo Lives [/photo_lives]
 
 ### Create a new photo live [POST /photo_lives]
@@ -1109,7 +1168,7 @@ RESTful API for ToBEE Application.
                 "photographer_manager_id":1
             }
         }
-        
+
 ### Update a photo live [PUT /photo_lives/{ID}]
 
 + Parameters
@@ -1126,7 +1185,7 @@ RESTful API for ToBEE Application.
             "manager_id":1,
             "photographer_manager_id":1
         }
-        
+
 + Response 201 (application/json)
 
         {
