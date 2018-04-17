@@ -296,6 +296,48 @@ RESTful API for ToBEE Application.
             }
         }
 
+### Unfollow an organization [DELETE /users_follow_organizations/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a relationship
+
++ Response 204
+
+### Follow an activity [POST /users_follow_activities]
+
++ Request (application/json)
+
+        {
+            "id":null,
+            "user_id":1,
+            "acitivity_id":2,
+            "timestamp":null
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status":"created",
+            "msg":"关注活动成功",
+            "data":{
+                "id":null,
+                "user_id":1,
+                "acitivity_id":2,
+                "timestamp":"2018-03-01T11:23:00+08:00"
+            }
+        }
+
+### Unfollow an activity [DELETE /users_follow_activities/{ID}]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of an activity
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
 ### Join an organization [POST /users_apply_organizations]
 
 加入一个社团，此时正确结果是权限设置为普通成员权限，正在申请为真。
@@ -322,50 +364,6 @@ RESTful API for ToBEE Application.
                 "privilege": 1,
                 "applying": 1,
                 "timestamp":"2018-03-01T11:23:00+08:00"
-            }
-        }
-
-### Unfollow an organization [DELETE /users_follow_organizations/{ID}]
-
-+ Parameters
-
-    - ID : 1 (int, required) - ID of a relationship
-
-+ Response 204
-
-### Upload an avatar [PATCH /users/{ID}/avatar]
-
-+ Parameters
-
-    - ID : 1 (int, required) - ID of a user
-
-+ Request (multipart/form-data)
-
-+ Response 201 (application/json)
-
-        {
-            "status":"Created",
-            "msg":"上传头像成功",
-            "data":{
-                "id":1,
-                "phone":"15814092425",
-                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
-                "username":"username",
-                "nickname":"nickname",
-                "email":"example@email.com",
-                "avatar_url":"/res/avatars/1.png",
-                "create_time":"2018-02-21T03:05:00Z08:00",
-                "city_id":1,
-                "vip":0,
-                "camera":"camera",
-                "description":"个性签名",
-                "college":"中山大学",
-                "college_district":"东校区",
-                "enroll_time":2015,
-                "institute":"数据科学与计算机学院",
-                "astrology":"魔羯座",
-                "qq":"000000000",
-                "background_url":null
             }
         }
 
@@ -402,6 +400,42 @@ RESTful API for ToBEE Application.
                 "astrology":"魔羯座",
                 "qq":"000000000",
                 "background_url":"/res/backgrounds/1.png"
+            }
+        }
+
+### Upload an avatar [PATCH /users/{ID}/avatar]
+
++ Parameters
+
+    - ID : 1 (int, required) - ID of a user
+
++ Request (multipart/form-data)
+
++ Response 201 (application/json)
+
+        {
+            "status":"Created",
+            "msg":"上传头像成功",
+            "data":{
+                "id":1,
+                "phone":"15814092425",
+                "password":"5f4dcc3b5aa765d61d8327deb882cf99",
+                "username":"username",
+                "nickname":"nickname",
+                "email":"example@email.com",
+                "avatar_url":"/res/avatars/1.png",
+                "create_time":"2018-02-21T03:05:00Z08:00",
+                "city_id":1,
+                "vip":0,
+                "camera":"camera",
+                "description":"个性签名",
+                "college":"中山大学",
+                "college_district":"东校区",
+                "enroll_time":2015,
+                "institute":"数据科学与计算机学院",
+                "astrology":"魔羯座",
+                "qq":"000000000",
+                "background_url":null
             }
         }
 
@@ -615,6 +649,55 @@ RESTful API for ToBEE Application.
                     "organization_id":1
                 }
             ]
+        }
+
+### Get activity [GET /activities{?actid}]
+
+使用活动id获取活动信息，同时获取所有的活动阶段。
+
++ Parameters
+
+    - actid : 1 (int) - ID of an activity
+
++ Response 200 (application/json)
+
+        {
+            "status":"OK",
+            "msg":"获取活动信息成功",
+            "data": {
+                "id":12345,
+                "name":"name",
+                "description":"description",
+                "category":"category",
+                "poster_url":null,
+                "logo_url":null,
+                "wechat_url":"",
+                "sports_medals":"",
+                "public_service_hours":"",
+                "prize":"",
+                "other_prize":"",
+                "organization_id":1,
+                "activity_stages": [
+                    {
+                        "id": 123, // id or url or something else
+                        "name": "1758",
+                        "start_time": "2018-02-19T10:57:43.710Z",
+                        "end_time": "2018-02-19T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12345
+                    },
+                    {
+                        "id": 124,
+                        "name": "东校区荒野行动",
+                        "start_time": "2018-02-19T10:57:43.710Z",
+                        "end_time": "2018-02-19T10:57:43.710Z",
+                        "location": "三饭小广场",
+                        "content": "blabla",
+                        "activity_id": 12346
+                    }
+                ]
+            }
         }
 
 ### Update an activity [PUT /activities/{ID}]
