@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/logger"
@@ -25,6 +26,10 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	// GET /organizations
 	router.HandleFunc(url,
 		organizationsGetHandler()).Methods(http.MethodGet)
+
+	// POST /handle_applicants_and_members
+	router.HandleFunc("/api/handle_applicants_and_members",
+		organizationsApplyandMembersManageHandler()).Methods(http.MethodPost)
 }
 
 func organizationsGetHandler() http.HandlerFunc {
@@ -92,4 +97,24 @@ func organizationsPutHandler() http.HandlerFunc {
 			NewJSON("created", "修改社团信息成功", old))
 	}
 
+}
+
+func organizationsApplyandMembersManageHandler() http.HandlerFunc {
+	return func (w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		decoder := json.NewDecoder(r.Body)
+		var usersParticipateOrganizations models.UsersParticipateOrganizations
+		err := decoder.Decode(&usersParticipateOrganizations)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", err))
+			return
+		}
+		usersParticipateOrganizations.Timestamp = time.Now()
+		usersParticipateOrganizations.Applying = false;
+		models.UsersParticipateOrganizationsDAO.InsertOne(&usersParticipateOrganizations)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "管理社团成员成功", usersParticipateOrganizations))
+	}
 }
