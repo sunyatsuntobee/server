@@ -9,8 +9,10 @@ import (
 // UsersParticipateOrganizations Model
 type UsersParticipateOrganizations struct {
 	ID             int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	UserID         int       `xorm:"user_id INT NOTNULL INDEX(contact_id_idx)" json:"contact_id"`
+	UserID         int       `xorm:"user_id INT NOTNULL INDEX(contact_id_idx)" json:"user_id"`
 	OrganizationID int       `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
+	Privilege	   int 		 `xorm:"privilege INT NOTNULL" json:"privilege"`
+	Applying	   bool		 `xorm:"applying BOOL" json:"applying"`
 	Timestamp      time.Time `xorm:"timestamp DATETIME NOTNULL" json:"timestamp"`
 }
 
@@ -24,7 +26,7 @@ var UsersParticipateOrganizationsDAO *UsersParticipateOrganizationsDataAccessObj
 
 // TableName returns table name
 func (*UsersParticipateOrganizationsDataAccessObject) TableName() string {
-	return "organizations_contactors"
+	return "users_participate_organizations"
 }
 
 // NewUsersParticipateOrganizations creates a new relationship
