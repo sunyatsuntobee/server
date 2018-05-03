@@ -41,7 +41,7 @@ func initCollectionUsersRouter(router *mux.Router) {
 		organizationsGetFollowHandler()).Methods(http.MethodGet)
 
 	// POST /users_follow_organizations
-	router.HandleFunc("/api/users_follow_users",
+	router.HandleFunc("/api/users_follow_organizations",
 		usersFollowOrganizationsCreateHandler()).Methods(http.MethodPost)
 
 	// DELETE /users_follow_organizations/{ID}
@@ -59,6 +59,18 @@ func initCollectionUsersRouter(router *mux.Router) {
 	// PATCH /users/{ID}/background
 	router.HandleFunc(url+"/{ID}/background",
 		usersUploadBackgroundHandler()).Methods(http.MethodPatch)
+
+	// POST /users_apply_organizations
+	router.HandleFunc("/api/users_apply_organizations",
+		usersApplyOrganizationsCreateHandler()).Methods(http.MethodPost)
+	
+	// POST /users_follow_activities
+	router.HandleFunc("/api/users_follow_activities",
+		usersFollowActivitiesCreateHandler()).Methods(http.MethodPost)
+
+	// DELETE /users_follow_activities/ID
+	router.HandleFunc("/api/users_follow_activities/{ID}",
+		usersFollowActivitiesDeleteHandler()).Methods(http.MethodDelete)
 }
 func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
@@ -92,6 +104,54 @@ func usersFollowOrganizationsCreateHandler() http.HandlerFunc {
 		models.UsersFollowOrganizationsDAO.InsertOne(&usersFollowOrganizations)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "关注社团成功", usersFollowOrganizations))
+	}
+}
+
+func usersApplyOrganizationsCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var usersParticipateOrganizations models.UsersParticipateOrganizations
+		err := decoder.Decode(&usersParticipateOrganizations)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", err))
+			return
+		}
+		usersParticipateOrganizations.Timestamp = time.Now()
+		usersParticipateOrganizations.Privilege = 1;
+		usersParticipateOrganizations.Applying = true;
+		models.UsersParticipateOrganizationsDAO.InsertOne(&usersParticipateOrganizations)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "加入社团成功", usersParticipateOrganizations))
+	}
+}
+
+func usersFollowActivitiesCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var usersFollowActivities models.UsersFollowActivities
+		err := decoder.Decode(&usersFollowActivities)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		usersFollowActivities.Timestamp = time.Now()
+		models.UsersFollowActivitiesDAO.InsertOne(&usersFollowActivities)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "关注活动成功", usersFollowActivities))
+	}
+}
+func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		usersFollowActivitiesIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		models.UsersFollowActivitiesDAO.DeleteByID(usersFollowActivitiesIDInt)
+		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
 
