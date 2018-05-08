@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片审核 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <div class="row w-100 mx-auto">
+        <div class="col-sm-9 border p-4">
+          <h2 class="h2">
+            {{.Photo.TookLocation}}
+          </h2>
+          <h3 class="h3">{{.User.Username}}</h3>
+          <small class="text-muted">
+            拍摄于 {{.Photo.TookTime.Format "2006-01-02 15:04"}}
+          </small>
+          <hr>
+          <img class="mx-auto display-block">
+        </div>
+        <div class="col-sm-3 my-auto">
+          <button type="button" name="pass" class="btn btn-success col mb-3"
+            data-toggle="collapse" data-target="#categories"
+            aria-expanded="false" aria-controls="categories">
+            通过
+          </button>
+          <div class="collapse" id="categories">
+            <select name="category" class="col mb-2">
+              <option value="公关活动">公关活动</option>
+              <option value="地理自然">地理自然</option>
+              <option value="肖像写真">肖像写真</option>
+              <option value="新闻">新闻</option>
+              <option value="军事">军事</option>
+              <option value="动物">动物</option>
+              <option value="广告">广告</option>
+              <option value="微距">微距</option>
+              <option value="工业">工业</option>
+              <option value="建筑">建筑</option>
+              <option value="天文">天文</option>
+              <option value="其他">其他</option>
+            </select>
+            <button type="button" name="passSubmit"
+              class="btn btn-success btn-sm col mb-3">
+              确定
+            </button>
+          </div>
+          <button type="button" name="deny" class="btn btn-danger col mb-3"
+            data-toggle="collapse" data-target="#reason"
+            aria-expanded="false" aria-controls="reason">
+            不通过
+          </button>
+          <div id="reason" class="collapse">
+            <textarea name="reason" rows="8"
+              class="mx-auto col" placeholder="理由"></textarea>
+            <button type="button" name="denySubmit"
+              class="btn btn-danger btn-sm col mb-3">
+              确定
+            </button>
+          </div>
+          <button type="button" name="next" class="btn btn-primary col">
+            下一张
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="/static/js/console/photo_check.js" charset="utf-8"></script>
+    <script src="/static/js/moment/moment.min.js" charset="utf-8"></script>
+  </body>
+</html>
