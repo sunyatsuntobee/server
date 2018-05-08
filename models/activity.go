@@ -1,6 +1,8 @@
 package models
 
-import "github.com/sunyatsuntobee/server/logger"
+import (
+	"github.com/sunyatsuntobee/server/logger"
+)
 
 // Activity Model
 type Activity struct {
@@ -124,8 +126,8 @@ func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
 }
 
 // FindFullByID finds activities and stages according to an actID
-func (*ActivityDataAccessObject) FindFullByactID(id int) []ActivityFull {
-	l := make([]ActivityFull, 0)
+func (*ActivityDataAccessObject) FindFullByactID(id int) []ActivityAndStage {
+	l := make([]ActivityAndStage, 0)
 	err := orm.Table(ActivityDAO.TableName()).
 		Join("INNER", ActivityStageDAO.TableName(),
 			"activities.id=activity_stages.activity_id").

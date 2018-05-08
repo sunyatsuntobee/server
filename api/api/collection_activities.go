@@ -113,7 +113,9 @@ func activitiesGetHandler() http.HandlerFunc {
 
 			} else {
 				actid, _ := strconv.Atoi(req.FormValue("actid"))
-				data := models.ActivityDAO.FindFullByactID(actid)
+				data:= models.ActivityDAO.FindFullByactID(actid)
+				//data:= models.ActivityDAO.FindFullAll()
+				
 				formatter.JSON(w, http.StatusOK,
 					NewJSON("OK", "获取活动信息成功", data))
 			}

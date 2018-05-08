@@ -23,7 +23,7 @@ func NewUsersFollowActivities(userID int, activityID int) *UsersFollowActivities
 }
 
 func (*UsersFollowActivitiesDataAccessObject) TableName() string {
-	return "user_follow_activities"
+	return "users_follow_activities"
 }
 
 type UsersFollowActivitiesDataAccessObject struct{}
