@@ -43,7 +43,7 @@ type ActivityStageFull struct {
 type ActivityAndStage struct {	
 	Activity      `xorm:"extends" json:"activity"`
 	//stages []ActivityStage `xorm:"extends"`
-	ActivityStage `xorm:"extends" json:"activity_stages"`
+	Stages []ActivityStage `xorm:"extends" json:"activity_stages"`
 }
 
 // PhotoFull contains all information for an Entity Photo

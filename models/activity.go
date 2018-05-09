@@ -126,13 +126,15 @@ func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
 }
 
 // FindFullByID finds activities and stages according to an actID
-func (*ActivityDataAccessObject) FindFullByactID(id int) []ActivityAndStage {
-	l := make([]ActivityAndStage, 0)
-	err := orm.Table(ActivityDAO.TableName()).
-		Join("INNER", ActivityStageDAO.TableName(),
-			"activities.id=activity_stages.activity_id").
-		Where("activities.id=?", id).Asc("stage_num").
-		Find(&l)
+func (*ActivityDataAccessObject) FindFullByactID(id int) (ActivityAndStage, bool) {
+	var l ActivityAndStage
+
+	has, err := orm.Table(ActivityDAO.TableName()).ID(id).Get(&l.Activity)
+
+	l.Stages = make([]ActivityStage, 0)
+	err = orm.Table(ActivityStageDAO.TableName()).Where("activity_id=?", id).
+		Find(&l.Stages)
+
 	logger.LogIfError(err)
-	return l
+	return l, has
 }
