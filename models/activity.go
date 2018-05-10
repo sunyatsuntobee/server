@@ -11,16 +11,19 @@ type Activity struct {
 	Name               string `xorm:"name VARCHAR(50) NOTNULL" json:"name"`
 	Description        string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
 	Category           string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
+	Range			   string `xorm:"range VARCHAR(45)" json:"range"`
+	Type			   string `xorm:"type VARCHAR(45)" json:"type"`
 	PosterURL          string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
 	LogoURL            string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	WechatURL          string `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
+	LiveURL			   string `xorm:"live_url VARCHAR(50)" json:"live_url"`
+	SignUpURL		   string `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	SportsMedals       string `xorm:"sports_medals VARCHAR(50)" json:"sports_medals"`
 	PublicServiceHours string `xorm:"public_service_hours VARCHAR(50)" json:"public_service_hours"`
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
 	OtherPrize         string `xorm:"other_prize VARCHAR(100)" json:"other_prize"`
 	OrganizationID     int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 	AttentionNum       int    `xorm:"attention_num INT NOTNULL" json:"attention_num"`
-	LiveURL            string `xorm:"live_url VARCHAR(50)" json:"live_url"`
 }
 
 // ActivityDataAccessObject provides database access for Model Activity
@@ -138,7 +141,6 @@ func (*ActivityDataAccessObject) FindFullByactID(id int) (ActivityAndStage, bool
 	l.Stages = make([]ActivityStage, 0)
 	err = orm.Table(ActivityStageDAO.TableName()).Where("activity_id=?", id).
 		Find(&l.Stages)
-
 	logger.LogIfError(err)
 	return l, has
 }

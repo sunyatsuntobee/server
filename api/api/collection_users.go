@@ -141,6 +141,11 @@ func usersFollowActivitiesCreateHandler() http.HandlerFunc {
 			return
 		}
 		usersFollowActivities.Timestamp = time.Now()
+		//修改activity关注人数
+		activity, _ := models.ActivityDAO.FindByID(usersFollowActivities.ActivityID)
+		activity.AttentionNum++
+		models.ActivityDAO.UpdateOne(&activity)
+
 		models.UsersFollowActivitiesDAO.InsertOne(&usersFollowActivities)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "关注活动成功", usersFollowActivities))
@@ -150,6 +155,14 @@ func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		usersFollowActivitiesIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+
+		usersFollowActivities := models.UsersFollowActivitiesDAO.FindByID(usersFollowActivitiesIDInt)
+		
+		//修改activity关注人数
+		activity, _ := models.ActivityDAO.FindByID(usersFollowActivities.ActivityID)
+		activity.AttentionNum--
+		models.ActivityDAO.UpdateOne(&activity)
+		
 		models.UsersFollowActivitiesDAO.DeleteByID(usersFollowActivitiesIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
