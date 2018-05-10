@@ -19,6 +19,8 @@ type Activity struct {
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
 	OtherPrize         string `xorm:"other_prize VARCHAR(100)" json:"other_prize"`
 	OrganizationID     int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
+	AttentionNum       int    `xorm:"attention_num INT NOTNULL" json:"attention_num"`
+	LiveURL            string `xorm:"live_url VARCHAR(50)" json:"live_url"`
 }
 
 // ActivityDataAccessObject provides database access for Model Activity
@@ -31,7 +33,7 @@ var ActivityDAO *ActivityDataAccessObject
 func NewActivity(shortName, name string, description string, category string,
 	posterURL string, logoURL string, wechatURL string,
 	sportsMedals string, publicServiceHours string, prize string,
-	otherPrize string, organizationID int) *Activity {
+	otherPrize string, organizationID int, attentionNum int, liveURL string) *Activity {
 	return &Activity{
 		ShortName:          shortName,
 		Name:               name,
@@ -45,6 +47,8 @@ func NewActivity(shortName, name string, description string, category string,
 		Prize:              prize,
 		OtherPrize:         otherPrize,
 		OrganizationID:     organizationID,
+		AttentionNum:       attentionNum,
+		LiveURL:            liveURL,
 	}
 }
 

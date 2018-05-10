@@ -15,11 +15,12 @@ type ActivityStage struct {
 	Location   string    `xorm:"location VARCHAR(50) NOTNULL" json:"location"`
 	Content    string    `xorm:"content VARCHAR(400) NOTNULL" json:"content"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
+	EnrollURL  string    `xorm:"enroll_url VARCHAR(45) NOTNULL" json:"enroll_url"`
 }
 
 // NewActivityStage creates a new activity stage
 func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,
-	location string, content string, activityID int) *ActivityStage {
+	location string, content string, activityID int, enrollURL string) *ActivityStage {
 	return &ActivityStage{
 		StageNum:   stageNum,
 		StartTime:  startTime,
@@ -27,6 +28,7 @@ func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,
 		Location:   location,
 		Content:    content,
 		ActivityID: activityID,
+		EnrollURL:  enrollURL,
 	}
 }
 
