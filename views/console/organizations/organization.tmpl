@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>社团详情 - 图蜂后台管理系统</title>
+    <link rel="stylesheet" href="/static/css/croppie/croppie.css">
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      {{template "partials/console/edit_bar"}}
+      {{$first := index . 0}}
+      {{$organization := $first.Organization}}
+      <form>
+        <input type="hidden" name="id" value="{{$organization.ID}}">
+        <input type="hidden" name="phone" value="{{$organization.Phone}}">
+        <input type="hidden" name="password" value="{{$organization.Password}}">
+        <div class="form-row">
+          <div class="col-sm-7">
+            <div class="form-group">
+              <label for="inputOrganizationName">社团名称</label>
+              <input class="form-control form-control-lg need-enable"
+                type="text" id="inputOrganizationName"
+                value="{{$organization.Name}}" disabled>
+            </div>
+            <div class="form-group">
+              <label for="inputOrganizationCollege">所属学校</label>
+              <input class="form-control form-control-lg need-enable"
+                type="text" id="inputOrganizationCollege"
+                value="{{$organization.College}}" disabled>
+            </div>
+          </div>
+          <div class="ml-auto form-avatar">
+            {{if $organization.LogoURL}}
+            <img src="{{$organization.LogoURL}}" class="form-control icon mb-4
+              mx-auto">
+            {{else}}
+            <img src="/static/assets/tobee.png" class="form-control icon mb-4
+              mx-auto">
+            {{end}}
+            <div class="input-group display-none need-appear">
+              <div class="custom-file">
+                <label class="custom-file-label" for="inputLogo">
+                  选择LOGO
+                </label>
+                <input type="file" accept="image/*"
+                  class="custom-file-input" id="inputLogo">
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary upload" type="button">
+                  上传
+                </button>
+              </div>
+            </div>
+            <div class="logo-croppie display-none">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputOrganizationDescription">社团简介</label>
+          <textarea class="form-control need-enable"
+            id="inputOrganizationDescription"
+            rows="4" disabled>{{$organization.Description}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="">下辖部门</label>
+          <div class="department-group">
+            {{range UniqueAt "Department" .}}
+            <div class="row mx-auto w-100">
+              <input class="form-control mb-2 col-sm-12 need-enable
+                inputDepartment" type="text" placeholder="部门名称"
+                value="{{.Department.Name}}" disabled>
+              <button class="btn btn-danger col h-100 ml-2 del
+                need-appear display-none">
+                删除
+              </button>
+            </div>
+            {{end}}
+          </div>
+          <button class="btn btn-light col display-none need-appear
+            addDepartment"
+            type="button">添加</button>
+        </div>
+        <div class="form-group">
+          <label for="">社团联络人</label>
+          <div class="contactor-group">
+            {{range UniqueAt "Contactor" .}}
+            <div class="row w-100 mx-auto">
+              <select class="form-control mb-2 col-sm-12 inputSupervisor
+                need-enable" disabled>
+                <option value="{{.Contactor.ID}}">
+                  {{.Contactor.Username}} {{.Contactor.Phone}}
+                </option>
+              </select>
+              <button class="btn btn-danger col h-100 ml-2 del
+                need-appear display-none delContactor">
+                删除
+              </button>
+            </div>
+            {{end}}
+          </div>
+          <button class="btn btn-light col display-none need-appear
+            addContactor"
+            type="button">添加</button>
+        </div>
+        <label>品牌活动</label>
+        <a class="ml-auto"
+          href="/activities?oid={{$organization.ID}}">
+          详情
+        </a>
+        <div class="card-deck">
+          {{range $index, $ele := UniqueAt "Activity" .}}
+          {{if lt $index 3}}
+          <div class="card">
+            <h5 class="card-header">{{.Activity.Name}}</h5>
+            <p class="card-body">{{.Activity.Description}}</p>
+          </div>
+          {{end}}
+          {{end}}
+        </div>
+      </form>
+    </div>
+
+    <script src="/static/js/console/organization.js" charset="utf-8"></script>
+    <script src="/static/js/croppie/croppie.min.js" charset="utf-8"></script>
+  </body>
+</html>

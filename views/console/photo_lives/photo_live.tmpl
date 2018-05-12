@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片直播业务 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      {{template "partials/console/edit_bar"}}
+      {{$first := index . 0}}
+      <form>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">活动名称</label>
+            <a class="form-control"
+              href="/activities?oid={{$first.Organization.ID}}">
+              {{$first.Activity.Name}}
+            </a>
+            <input class="display-none" id="inputActivityStage"
+              value={{$first.ActivityStage.ID}}>
+            <input class="display-none" id="photoLiveID"
+              value={{$first.PhotoLive.ID}}>
+          </div>
+          <div class="form-group col">
+            <label for="">主办社团</label>
+            <a class="form-control"
+              href="/organizations?id={{$first.Organization.ID}}">
+              {{$first.Organization.Name}}
+            </a>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">活动地点</label>
+            <input type="text" class="form-control" id=""
+              placeholder="活动地点"
+              value="{{$first.ActivityStage.Location}}" disabled>
+          </div>
+          <div class="form-group col">
+            <label for="inputExpectMembers">预计人数</label>
+            <input type="number" class="form-control need-enable"
+              id="inputExpectMembers" placeholder="预计人数"
+              value={{$first.PhotoLive.ExpectMembers}} disabled>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">开始时间</label>
+            <input type="datetime" class="form-control" id=""
+              value='{{$first.ActivityStage.StartTime.Format "2006-01-02 15:04"}}'
+              disabled>
+          </div>
+          <div class="form-group col">
+            <label for="">结束时间</label>
+            <input type="datetime" class="form-control" id=""
+              value='{{$first.ActivityStage.EndTime.Format "2006-01-02 15:04"}}'
+              disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">广告谈判进度</label>
+          <textarea class="form-control need-enable"
+            id="inputAdProgress" rows="6" disabled>{{$first.PhotoLive.AdProgress}}</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="">对接负责人</label>
+            <select class="form-control need-enable"
+              id="inputManager" disabled>
+              <option value="{{$first.Manager.ID}}">
+                {{$first.Manager.Username}} {{$first.Manager.Phone}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="">摄影监理</label>
+            <select class="form-control need-enable"
+              id="inputPhotographerManager" disabled>
+              <option value="{{$first.PhotographerManager.ID}}">
+                {{$first.PhotographerManager.Username}} {{$first.PhotographerManager.Phone}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">社团联络人</label>
+          <div class="supervisor-group">
+            {{range .}}
+            <div class="row w-100 mx-auto">
+              <select class="form-control mb-2 col-sm-12 inputSupervisor
+                need-enable" disabled>
+                <option value={{.Supervisor.ID}}>
+                  {{.Supervisor.Username}} {{.Supervisor.Phone}}
+                </option>
+              </select>
+              <button class="btn btn-danger col h-100 ml-2 del
+                need-appear display-none">
+                删除
+              </button>
+            </div>
+            {{end}}
+            <div class="row w-100 mx-auto need-appear display-none">
+              <select class="form-control mb-2 col-sm-11 inputSupervisor">
+                <option value=0>无</option>
+              </select>
+              <button class="btn btn-danger col h-100 ml-2 del">
+                删除
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-light col display-none need-appear add"
+            type="button">添加</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/static/js/console/photo_live.js" charset="utf-8"></script>
+  </body>
+</html>

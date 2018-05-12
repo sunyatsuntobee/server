@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>照片直播业务 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      <div class="navbar navbar-expand-sm p-0">
+        <a class="nav-link px-0 py-4" href="/photolives">返回</a>
+        <a class="nav-link px-0 py-4 ml-auto submit text-danger"
+          href="#">确认</a>
+      </div>
+      <form>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="inputOrganization">社团</label>
+            <select class="form-control" id="inputOrganization">
+              <option value=0>请选择</option>
+              {{range .}}
+              <option value={{.ID}}>{{.Name}}</option>
+              {{end}}
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="inputActivity">请选择社团活动</label>
+            <select class="form-control" id="inputActivity">
+              <option value=0>请选择</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="inputActivityStage">请选择活动阶段</label>
+            <select class="form-control" id="inputActivityStage">
+              <option value=0>请选择</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="inputExpectMembers">预期人数</label>
+            <input type="number" class="form-control"
+              id="inputExpectMembers" placeholder="预期人数">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputAdProgress">广告谈判进度</label>
+          <textarea type="text" class="form-control" row="6"
+            id="inputAdProgress"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="inputManager">请选择对接负责人</label>
+            <select class="form-control" id="inputManager">
+              <option value=0>无</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="inputPhotographerManager">请选择摄影监理</label>
+            <select class="form-control" id="inputPhotographerManager">
+              <option value=0>无</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputSupervisor">社团联络人</label>
+          <div class="supervisor-group">
+            <div class="row w-100 mx-auto">
+              <select class="form-control mb-2 col-sm-11 inputSupervisor">
+                <option value=0>无</option>
+              </select>
+              <button class="btn btn-danger col h-100 ml-2 del">
+                删除
+              </button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-light col add">添加联络人</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/static/js/console/photo_live_add.js" charset="utf-8"></script>
+  </body>
+</html>

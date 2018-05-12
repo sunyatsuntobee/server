@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{template "partials/console/header"}}
+    <title>社团活动管理 - 图蜂后台管理系统</title>
+  </head>
+  <body>
+    <div class="container">
+      {{template "partials/console/nav"}}
+      {{$list := .}}
+      {{$first := index $list 0}}
+      <div class="card w-100 mt-3">
+        <div class="row w-100 mx-auto p-4">
+          {{if $first.Organization.LogoURL}}
+          <img src="{{$first.Organization.LogoURL}}" class="icon-h">
+          {{else}}
+          <img src="/static/assets/tobee.png" class="icon-h">
+          {{end}}
+          <div class="card-body">
+            <h5 class="card-title">{{$first.Organization.Name}}</h5>
+            <h5 class="card-subtitle mb-3">{{$first.Organization.Collage}}</h5>
+            <p class="card-text text-small">
+              {{$first.Organization.Description}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <table class="table table-sm table-hover border-none">
+        <thead>
+            <tr class="row mx-0 px-5">
+              <th class="col-6 text-center"></th>
+              <th class="col-2 text-center text-muted">类别</th>
+              <th class="col-2 text-center text-muted">海报</th>
+              <th class="col-2 text-center text-muted"></th>
+            </tr>
+        </thead>
+        <tbody id="accordion">
+          {{range $index, $ele := UniqueAt "Activity" $list}}
+          <tr class="row mx-0 table-radius px-5"
+            data-toggle="collapse" data-target="#{{$index}}"
+            aria-expanded="true" aria-controls="{{$index}}">
+            <td class="col-6 my-auto py-4">
+              {{if .Activity.LogoURL}}
+              <img class="head-sculpture" src="{{.Activity.LogoURL}}">
+              {{else}}
+              <img class="head-sculpture" src="/static/assets/tobee.png">
+              {{end}}
+              <span class="h5">{{.Activity.Name}}</span>
+              <p class="text-small mt-3 mb-0">{{.Activity.Description}}</p>
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{.Activity.Category}}
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              {{if .Activity.PosterURL}}
+              <a href="{{.Activity.PosterURL}}">海报链接</a>
+              {{else}}
+              <a href="#">暂无海报</a>
+              {{end}}
+            </td>
+            <td class="col-2 text-center text-muted my-auto">
+              <a href="/activity?id={{.Activity.ID}}">编辑</a>
+            </td>
+          </tr>
+          <tr class="row mx-0 table-radius px-5">
+            <td class="td-collapse">
+              <input type="hidden" value="{{.Activity.ID}}">
+              <div id="{{$index}}" class="collapse"
+                data-parent="#accordion">
+              </div>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    <script src="/static/js/moment/moment.min.js" charset="utf-8"></script>
+    <script src="/static/js/console/activities.js" charset="utf-8"></script>
+  </body>
+</html>
