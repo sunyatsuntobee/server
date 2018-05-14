@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+  "io/ioutil"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/models"
@@ -11,8 +12,34 @@ import (
 )
 
 func initAuthorizationRouter(router *mux.Router) {
+  // GET /openid{?code}
+  router.HandleFunc("/api/openid", openidHandler()).
+    Methods(http.MethodGet)
+
 	router.HandleFunc("/api/auth", authHandler()).
 		Methods(http.MethodGet)
+}
+
+func openidHandler() http.HandlerFunc {
+  return func(w http.ResponseWriter, req *http.Request) {
+    req.ParseForm()
+    code := req.FormValue("code")
+    if code == "" {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "获取失败", nil))
+      return
+    }
+    resp, err := http.Get("https://api.weixin.qq.com/sns/jscode2session?appid=wxe394906b703e6f6d&secret=4265e01cb21d28e15e54957dc06ceaa2&js_code=" + code + "&grant_type=authorization_code")
+    if err != nil {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("Weixin Server Error", "Weixin获取失败", nil))
+      return
+    }
+    defer resp.Body.Close()
+    body, err := ioutil.ReadAll(resp.Body)
+    formatter.JSON(w, http.StatusOK,
+      NewJSON("OK", "获取成功", string(body)))
+  }
 }
 
 func authHandler() http.HandlerFunc {
