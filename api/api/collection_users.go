@@ -71,6 +71,11 @@ func initCollectionUsersRouter(router *mux.Router) {
 	// DELETE /users_follow_activities/ID
 	router.HandleFunc("/api/users_follow_activities/{ID}",
 		usersFollowActivitiesDeleteHandler()).Methods(http.MethodDelete)
+	
+	// GET /users
+	router.HandleFunc(url+"/{ID}/organizations",
+		usersparticipatedOrganizationsHandler()).Methods(http.MethodGet)
+	
 }
 func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
@@ -338,5 +343,15 @@ func usersCreateHandler() http.HandlerFunc {
 
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "注册成功", user))
+	}
+}
+
+func usersparticipatedOrganizationsHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		data := models.UsersParticipateOrganizationsDAO.FindByUID(id)
+		formatter.JSON(w, http.StatusOK,
+			NewJSON("OK", "获取用户社团信息成功", data))
 	}
 }

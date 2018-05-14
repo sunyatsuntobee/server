@@ -49,7 +49,29 @@ func (*UsersParticipateOrganizationsDataAccessObject) DeleteByOID(oid int) {
 // InsertOne inserts a new relationship
 func (*UsersParticipateOrganizationsDataAccessObject) InsertOne(
 	r *UsersParticipateOrganizations) {
+		
 	_, err := orm.Table(UsersParticipateOrganizationsDAO.TableName()).
 		InsertOne(r)
 	logger.LogIfError(err)
 }
+// UpdateOne update a relationship
+func (*UsersParticipateOrganizationsDataAccessObject) UpdateOne(l *UsersParticipateOrganizations) {
+	_, err := orm.Table(UsersParticipateOrganizationsDAO.TableName()).ID(l.ID).
+		Update(l)
+	logger.LogIfError(err)
+}
+
+func (*UsersParticipateOrganizationsDataAccessObject) FindByUID(id int) []UsersParticipateOrganizations{
+	l := make([]UsersParticipateOrganizations, 0)
+	err := orm.Table(UsersParticipateOrganizationsDAO.TableName()).Where("user_id=?", id).Find(&l)
+	logger.LogIfError(err)
+	return l
+}
+
+func (*UsersParticipateOrganizationsDataAccessObject) FindByUOID(uid, oid int) UsersParticipateOrganizations{
+	var l UsersParticipateOrganizations
+	_, err := orm.Table(UsersParticipateOrganizationsDAO.TableName()).Where("user_id=?", uid).Where("organization_id=?", oid).Get(&l)
+	logger.LogIfError(err)
+	return l
+}
+

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/logger"
@@ -103,18 +102,20 @@ func organizationsApplyandMembersManageHandler() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		decoder := json.NewDecoder(r.Body)
-		var usersParticipateOrganizations models.UsersParticipateOrganizations
-		err := decoder.Decode(&usersParticipateOrganizations)
+		var t models.UsersParticipateOrganizations
+		err := decoder.Decode(&t)
 		if err != nil {
 			logger.E.Println(err)
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "数据格式错误", err))
 			return
 		}
-		usersParticipateOrganizations.Timestamp = time.Now()
-		usersParticipateOrganizations.Applying = false;
-		models.UsersParticipateOrganizationsDAO.InsertOne(&usersParticipateOrganizations)
+		
+		data := models.UsersParticipateOrganizationsDAO.FindByUOID(t.UserID, t.OrganizationID)
+		data.Privilege = t.Privilege
+		data.Applying = false;
+		models.UsersParticipateOrganizationsDAO.UpdateOne(&data)
 		formatter.JSON(w, http.StatusCreated,
-			NewJSON("Created", "管理社团成员成功", usersParticipateOrganizations))
+			NewJSON("Created", "管理社团成员成功", data))
 	}
 }
