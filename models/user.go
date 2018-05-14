@@ -99,3 +99,12 @@ func (*UserDataAccessObject) FindByPhone(phone string) (User, bool) {
 	logger.LogIfError(err)
 	return user, has
 }
+
+func (*UserDataAccessObject) FindByOpenid(
+	openid string) (User, bool) {
+	var user User
+	has, err := orm.Table(UserDAO.TableName()).
+		Where("openid=?", openid).Get(&user)
+	logger.LogIfError(err)
+	return user, has
+}

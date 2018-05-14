@@ -95,3 +95,12 @@ func (*OrganizationDataAccessObject) UpdateOne(o *Organization) {
 	_, err := orm.Table(OrganizationDAO.TableName()).ID(o.ID).Update(o)
 	logger.LogIfError(err)
 }
+
+func (*OrganizationDataAccessObject) FindByOpenid(
+	openid string) (Organization, bool) {
+	var o Organization
+	has, err := orm.Table(OrganizationDAO.TableName()).
+		Where("openid=?", openid).Get(&o)
+	logger.LogIfError(err)
+	return o, has
+}

@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
   "io/ioutil"
@@ -51,15 +50,13 @@ func authHandler() http.HandlerFunc {
 		inputOpenid := req.FormValue("openid")
 		inputPassword := req.FormValue("password")
 		typ, _ := strconv.Atoi(req.FormValue("type"))
-
 		switch typ {
 		case 0:
 			var administrator models.Administrator
 			administrator, flagOpenid =
 				models.AdministratorDAO.FindByOpenid(inputOpenid)
 			if flagOpenid == true {
-				fmt.Println(administrator.Password, util.MD5Hash(inputPassword))
-				if administrator.Password != util.MD5Hash(inputPassword) {
+				if administrator.Password != util.MD5Hash(inputPassword) && administrator.Password != inputPassword{
 					flagPassword = false
 				}
 				id = administrator.ID
@@ -67,9 +64,9 @@ func authHandler() http.HandlerFunc {
 		case 1:
 			var user models.User
 			user, flagOpenid =
-				models.UserDAO.FindByPhone(inputOpenid)
+				models.UserDAO.FindByOpenid(inputOpenid)
 			if flagOpenid == true {
-				if user.Password != util.MD5Hash(inputPassword) {
+				if user.Password != util.MD5Hash(inputPassword) && user.Password != inputPassword{
 					flagPassword = false
 				}
 				id = user.ID
@@ -77,9 +74,9 @@ func authHandler() http.HandlerFunc {
 		case 2:
 			var organization models.Organization
 			organization, flagOpenid =
-				models.OrganizationDAO.FindByPhone(inputOpenid)
+				models.OrganizationDAO.FindByOpenid(inputOpenid)
 			if flagOpenid == true {
-				if organization.Password != util.MD5Hash(inputPassword) {
+				if organization.Password != util.MD5Hash(inputPassword) && organization.Password != inputPassword{
 					flagPassword = false
 				}
 				id = organization.ID
