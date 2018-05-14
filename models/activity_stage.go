@@ -16,6 +16,7 @@ type ActivityStage struct {
 	Location   string    `xorm:"location VARCHAR(50) NOTNULL" json:"location"`
 	Content    string    `xorm:"content VARCHAR(400) NOTNULL" json:"content"`
 	WechatURL  string 	 `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
+	SignUpURL  string    `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
 }
 
