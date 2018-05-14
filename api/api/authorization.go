@@ -44,20 +44,20 @@ func openidHandler() http.HandlerFunc {
 
 func authHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		flagUsername := true
+		flagOpenid := true
 		flagPassword := true
 		var id int
 		req.ParseForm()
-		inputUsername := req.FormValue("username")
+		inputOpenid := req.FormValue("openid")
 		inputPassword := req.FormValue("password")
 		typ, _ := strconv.Atoi(req.FormValue("type"))
 
 		switch typ {
 		case 0:
 			var administrator models.Administrator
-			administrator, flagUsername =
-				models.AdministratorDAO.FindByUsername(inputUsername)
-			if flagUsername == true {
+			administrator, flagOpenid =
+				models.AdministratorDAO.FindByOpenid(inputOpenid)
+			if flagOpenid == true {
 				fmt.Println(administrator.Password, util.MD5Hash(inputPassword))
 				if administrator.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
@@ -66,9 +66,9 @@ func authHandler() http.HandlerFunc {
 			}
 		case 1:
 			var user models.User
-			user, flagUsername =
-				models.UserDAO.FindByPhone(inputUsername)
-			if flagUsername == true {
+			user, flagOpenid =
+				models.UserDAO.FindByPhone(inputOpenid)
+			if flagOpenid == true {
 				if user.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}
@@ -76,9 +76,9 @@ func authHandler() http.HandlerFunc {
 			}
 		case 2:
 			var organization models.Organization
-			organization, flagUsername =
-				models.OrganizationDAO.FindByPhone(inputUsername)
-			if flagUsername == true {
+			organization, flagOpenid =
+				models.OrganizationDAO.FindByPhone(inputOpenid)
+			if flagOpenid == true {
 				if organization.Password != util.MD5Hash(inputPassword) {
 					flagPassword = false
 				}
@@ -86,7 +86,7 @@ func authHandler() http.HandlerFunc {
 			}
 		}
 
-		if flagUsername == false {
+		if flagOpenid == false {
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "用户名不存在", nil))
 			return

@@ -41,3 +41,13 @@ func (*AdministratorDataAccessObject) FindByUsername(
 	logger.LogIfError(err)
 	return admin, has
 }
+
+func (*AdministratorDataAccessObject) FindByOpenid(
+	openid string) (Administrator, bool) {
+
+	var admin Administrator
+	has, err := orm.Table(AdministratorDAO.TableName()).
+		Where("openid=?", openid).Get(&admin)
+	logger.LogIfError(err)
+	return admin, has
+}

@@ -9,6 +9,7 @@ import (
 // User Model
 type User struct {
 	ID              int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	OpenID          string    `xorm:"phone VARCHAR(50) NOTNULL" json:"openid"`
 	Phone           string    `xorm:"phone VARCHAR(20) NOTNULL" json:"phone"`
 	Password        string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
 	Username        string    `xorm:"username VARCHAR(20) NOTNULL" json:"username"`
