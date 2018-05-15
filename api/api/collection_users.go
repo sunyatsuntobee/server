@@ -332,13 +332,15 @@ func usersCreateHandler() http.HandlerFunc {
 		user.AvatarURL = ""
 		user.BackgroundURL = ""
 
-		_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
-		if flagPhone == true {
-			formatter.JSON(w, http.StatusBadRequest,
+		if user.Phone != "" {
+			_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
+			if flagPhone == true {
+				formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "此号码已被使用", nil))
 			return
+			}
 		}
-
+		
 		models.UserDAO.InsertOne(&user)
 
 		formatter.JSON(w, http.StatusCreated,
