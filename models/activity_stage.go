@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/sunyatsuntobee/server/logger"
@@ -95,11 +94,7 @@ func (*ActivityStageDataAccessObject) FindFullByDay(
 	end := time.Date(endDate.Year(), endDate.Month(), endDate.Day(),
 		0, 0, 0, 0, time.Local).Format(mysqlTimeFormat)
 	result := make([]ActivityStageFull, 0)
-	//err := orm.Table(ActivityStageDAO.TableName()).
-		//Where("start_time>=?", start).And("end_time<?", end).
-		//Join("INNER", ActivityDAO.TableName(),
-		//	"activity_stages.activity_id=activities.id").
-		//Find(&result)
+
 	err := orm.Table(ActivityDAO.TableName()).
 		Where("activity_stages.activity_id=activities.id").
 		Join("INNER", ActivityStageDAO.TableName(),
@@ -117,7 +112,6 @@ func (*ActivityStageDataAccessObject) FindFullByMonth(
 	end := start.AddDate(0, 1, 0).AddDate(0, 0, -1)
 	result := make([][]ActivityStageFull, 0)
 	for i := start.Day(); i <= end.Day(); i++ {
-		fmt.Println(i)
 		curDate := time.Date(date.Year(), date.Month(), i, 0, 0, 0, 0,
 			time.Local)
 		result = append(result, ActivityStageDAO.FindFullByDay(curDate))

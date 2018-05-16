@@ -68,7 +68,8 @@ func activityStagesPostHandler() http.HandlerFunc {
 		activityID, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		stage.ActivityID = activityID
 		models.ActivityStageDAO.InsertOne(&stage)
-		formatter.JSON(w, http.StatusCreated, nil)
+		formatter.JSON(w, http.StatusOK,
+			NewJSON("created", "活动阶段创建成功", stage))
 	}
 
 }
