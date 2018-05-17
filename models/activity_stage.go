@@ -120,4 +120,10 @@ func (*ActivityStageDataAccessObject) FindFullByMonth(
 	return result
 }
 
-
+// FindByID finds activityStage by ID
+func (*ActivityStageDataAccessObject) FindByID(id int) (ActivityStage, bool) {
+	var result ActivityStage
+	has, err := orm.Table(ActivityStageDAO.TableName()).ID(id).Get(&result) 
+	logger.LogIfError(err)
+	return result, has
+}
