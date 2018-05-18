@@ -61,4 +61,11 @@ func InitSql() {
 			
 		models.ActivityStageDAO.UpdateOne(&v)
 	}
+	activities := models.ActivityDAO.FindAll()
+	for _,v := range activities {
+		if v.School == "" {
+			v.School =  "中山大学"
+		}	
+		models.ActivityDAO.UpdateOne(&v)
+	}
 }

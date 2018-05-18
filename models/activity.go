@@ -148,3 +148,12 @@ func (*ActivityDataAccessObject) FindFullByAID(id int) (ActivityAndStage, bool) 
 	logger.LogIfError(err)
 	return l, has
 }
+
+// FindAll finds all activities
+func (*ActivityDataAccessObject) FindAll() []Activity {
+	activities := make([]Activity, 0)
+	err := orm.Table(ActivityDAO.TableName()).
+		Find(&activities)
+	logger.LogIfError(err)
+	return activities
+}
