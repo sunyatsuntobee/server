@@ -11,6 +11,7 @@ type Activity struct {
 	Name               string `xorm:"name VARCHAR(50) NOTNULL" json:"name"`
 	Description        string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
 	Category           string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
+	School			   string `xorm:"school VARCHAR(45) " json:"school"`
 	Range			   string `xorm:"range VARCHAR(45)" json:"range"`
 	Type			   string `xorm:"type VARCHAR(45)" json:"type"`
 	PosterURL          string `xorm:"poster_url VARCHAR(50)" json:"poster_url"`
