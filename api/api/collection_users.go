@@ -71,7 +71,44 @@ func initCollectionUsersRouter(router *mux.Router) {
 	// DELETE /users_follow_activities/ID
 	router.HandleFunc("/api/users_follow_activities/{ID}",
 		usersFollowActivitiesDeleteHandler()).Methods(http.MethodDelete)
+	
+	// PATCH /users/{ID}/coin
+	router.HandleFunc(url+"/{ID}/coin",
+	    usersChangeCoinHandler()).Methods(http.MethodPatch)
+
 }
+
+func usersChangeCoinHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		_, has := models.UserDAO.FindByID(ID)
+		if !has {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "用户对象不存在", nil))
+			return
+		}
+
+		var data models.User
+		decoder := json.NewDecoder(req.Body)
+		err := decoder.Decode(&data)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		
+		data.ID = ID
+
+		models.UserDAO.UpdateOne(&data)
+
+		newData, _ := models.UserDAO.FindByID(ID) 
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("created", "修改用户图币成功", newData))
+	}
+}
+
 func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -80,6 +117,7 @@ func usersFollowUsersDeleteHandler() http.HandlerFunc {
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
+
 func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -88,6 +126,7 @@ func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
 }
+
 func usersFollowOrganizationsCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		defer req.Body.Close()
@@ -146,6 +185,7 @@ func usersFollowActivitiesCreateHandler() http.HandlerFunc {
 			NewJSON("Created", "关注活动成功", usersFollowActivities))
 	}
 }
+
 func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -173,6 +213,7 @@ func usersFollowCreateHandler() http.HandlerFunc {
 			NewJSON("Created", "关注用户成功", usersFollowUsers))
 	}
 }
+
 func usersGetFollowHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -198,6 +239,7 @@ func usersGetFollowHandler() http.HandlerFunc {
 		}
 	}
 }
+
 func organizationsGetFollowHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -225,6 +267,7 @@ func organizationsGetFollowHandler() http.HandlerFunc {
 		}
 	}
 }
+
 func usersGetByIDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -263,6 +306,7 @@ func usersUploadAvatarHandler() http.HandlerFunc {
 			NewJSON("created", "用户头像上传成功", user))
 	}
 }
+
 func usersUploadBackgroundHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
@@ -286,6 +330,7 @@ func usersUploadBackgroundHandler() http.HandlerFunc {
 			NewJSON("created", "用户背景图像上传成功", user))
 	}
 }
+
 func usersGetHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {

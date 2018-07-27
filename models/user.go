@@ -27,12 +27,14 @@ type User struct {
 	Astrology       string    `xorm:"astrology VARCHAR(10)" json:"astrology"`
 	QQ              string    `xorm:"qq VARCHAR(10)" json:"qq"`
 	BackgroundURL   string    `xorm:"background_url VARCHAR(50)" json:"background_url"`
+
+	TobeeCoin       int       `xorm:"tobee_coin INT" json:"tobee_coin"` //有待商榷
 }
 
 // NewUser creates a new user
 func NewUser(phone, password, username, nickname, email string,
 	cityID, vip int, camera, description, college string,
-	enrollTime int, institute, astrology, qq string) *User {
+	enrollTime int, institute, astrology, qq string, tobeeCoin int) *User {
 	return &User{
 		Phone:       phone,
 		Password:    password,
@@ -49,6 +51,7 @@ func NewUser(phone, password, username, nickname, email string,
 		Institute:   institute,
 		Astrology:   astrology,
 		QQ:          qq,
+		TobeeCoin:   tobeeCoin,
 	}
 }
 
