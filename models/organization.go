@@ -12,6 +12,8 @@ type Organization struct {
 	CollegeDistrict string `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
 	LogoURL         string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	Description     string `xorm:"description VARCHAR(200)" json:"description"`
+
+	InvitationCode  string `xorm:"invitation_code VARCHAR(50)" json:"invitation_code"` //邀请码
 }
 
 // NewOrganization creates a new organization
