@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
+	"github.com/sunyatsuntobee/server/models"
 )
 
 const (
@@ -19,6 +20,8 @@ func NewServer() *negroni.Negroni {
 	InitRouter(router)
 
 	n.UseHandler(router)
+
+	InitSql();
 
 	return n
 }
@@ -46,4 +49,23 @@ func optionsHandler() http.HandlerFunc {
 		w.WriteHeader(http.StatusNoContent)
 	}
 
+}
+
+func InitSql() {
+	data := models.ActivityStageDAO.FindAll()
+	for _,v := range data {
+		activity,_ := models.ActivityDAO.FindByID(v.ActivityID)
+		if v.WechatURL == "" {
+			v.WechatURL =  activity.WechatURL
+		}
+			
+		models.ActivityStageDAO.UpdateOne(&v)
+	}
+	activities := models.ActivityDAO.FindAll()
+	for _,v := range activities {
+		if v.School == "" {
+			v.School =  "中山大学"
+		}	
+		models.ActivityDAO.UpdateOne(&v)
+	}
 }

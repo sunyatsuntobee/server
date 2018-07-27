@@ -76,6 +76,10 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc(url+"/{ID}/coin",
 	    usersChangeCoinHandler()).Methods(http.MethodPatch)
 
+	// GET /users
+	router.HandleFunc(url+"/{ID}/organizations",
+		usersparticipatedOrganizationsHandler()).Methods(http.MethodGet)
+	
 }
 
 func usersChangeCoinHandler() http.HandlerFunc {
@@ -180,6 +184,11 @@ func usersFollowActivitiesCreateHandler() http.HandlerFunc {
 			return
 		}
 		usersFollowActivities.Timestamp = time.Now()
+		//修改activity关注人数
+		activity, _ := models.ActivityDAO.FindByID(usersFollowActivities.ActivityID)
+		activity.AttentionNum++
+		models.ActivityDAO.UpdateOne(&activity)
+
 		models.UsersFollowActivitiesDAO.InsertOne(&usersFollowActivities)
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "关注活动成功", usersFollowActivities))
@@ -190,6 +199,14 @@ func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		usersFollowActivitiesIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+
+		usersFollowActivities := models.UsersFollowActivitiesDAO.FindByID(usersFollowActivitiesIDInt)
+		
+		//修改activity关注人数
+		activity, _ := models.ActivityDAO.FindByID(usersFollowActivities.ActivityID)
+		activity.AttentionNum--
+		models.ActivityDAO.UpdateOne(&activity)
+		
 		models.UsersFollowActivitiesDAO.DeleteByID(usersFollowActivitiesIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
@@ -359,16 +376,28 @@ func usersCreateHandler() http.HandlerFunc {
 		user.AvatarURL = ""
 		user.BackgroundURL = ""
 
-		_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
-		if flagPhone == true {
-			formatter.JSON(w, http.StatusBadRequest,
+		if user.Phone != "" {
+			_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
+			if flagPhone == true {
+				formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "此号码已被使用", nil))
 			return
+			}
 		}
-
+		
 		models.UserDAO.InsertOne(&user)
 
 		formatter.JSON(w, http.StatusCreated,
 			NewJSON("Created", "注册成功", user))
+	}
+}
+
+func usersparticipatedOrganizationsHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		req.ParseForm()
+		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		data := models.UsersParticipateOrganizationsDAO.FindByUID(id)
+		formatter.JSON(w, http.StatusOK,
+			NewJSON("OK", "获取用户社团信息成功", data))
 	}
 }

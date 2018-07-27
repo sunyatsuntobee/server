@@ -1,11 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/sunyatsuntobee/server/logger"
 	"github.com/sunyatsuntobee/server/models"
 )
 
@@ -19,6 +21,10 @@ func initCollectionActivityStagesRouter(router *mux.Router) {
 	// GET /activity_stages/yy-mm-dd
 	router.HandleFunc(url+"/{date}",
 		activityStagesDateGetHandler()).Methods(http.MethodGet)
+	
+	// PUT /activity_stages/{ID}
+	router.HandleFunc(url, activityStagesPutHandler()).
+		Methods(http.MethodPut)
 }
 
 func activityStagesDateGetHandler() http.HandlerFunc {
@@ -64,3 +70,30 @@ func activityStagesGetHandler() http.HandlerFunc {
 	}
 
 }
+
+func activityStagesPutHandler() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		var t models.ActivityStage
+		decoder := json.NewDecoder(req.Body)
+		err := decoder.Decode(&t)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		_, has := models.ActivityStageDAO.FindByID(t.ID)
+		if (!has) {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("created", "无此活动阶段", nil))
+		} else {
+			models.ActivityStageDAO.UpdateOne(&t)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("ok", "成功修改活动阶段", t))
+		}
+
+	}
+
+}
+

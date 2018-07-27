@@ -9,6 +9,7 @@ import (
 // User Model
 type User struct {
 	ID              int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	OpenID          string    `xorm:"openid VARCHAR(50) NOTNULL" json:"openid"`
 	Phone           string    `xorm:"phone VARCHAR(20) NOTNULL" json:"phone"`
 	Password        string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
 	Username        string    `xorm:"username VARCHAR(20) NOTNULL" json:"username"`
@@ -98,6 +99,15 @@ func (*UserDataAccessObject) FindByID(id int) (User, bool) {
 func (*UserDataAccessObject) FindByPhone(phone string) (User, bool) {
 	var user User
 	has, err := orm.Table(UserDAO.TableName()).Where("phone=?", phone).Get(&user)
+	logger.LogIfError(err)
+	return user, has
+}
+
+func (*UserDataAccessObject) FindByOpenid(
+	openid string) (User, bool) {
+	var user User
+	has, err := orm.Table(UserDAO.TableName()).
+		Where("openid=?", openid).Get(&user)
 	logger.LogIfError(err)
 	return user, has
 }

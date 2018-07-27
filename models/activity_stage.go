@@ -14,21 +14,22 @@ type ActivityStage struct {
 	EndTime    time.Time `xorm:"end_time DATETIME NOTNULL" json:"end_time"`
 	Location   string    `xorm:"location VARCHAR(50) NOTNULL" json:"location"`
 	Content    string    `xorm:"content VARCHAR(400) NOTNULL" json:"content"`
+	WechatURL  string 	 `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
+	SignUpURL  string    `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
-	EnrollURL  string    `xorm:"enroll_url VARCHAR(45) NOTNULL" json:"enroll_url"`
 }
 
 // NewActivityStage creates a new activity stage
 func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,
-	location string, content string, activityID int, enrollURL string) *ActivityStage {
+	location string, content string, wechatURL string, activityID int) *ActivityStage {
 	return &ActivityStage{
 		StageNum:   stageNum,
 		StartTime:  startTime,
 		EndTime:    endTime,
 		Location:   location,
 		Content:    content,
+		WechatURL:  wechatURL,
 		ActivityID: activityID,
-		EnrollURL:  enrollURL,
 	}
 }
 
@@ -54,6 +55,15 @@ func (*ActivityStageDataAccessObject) FindByAID(aid int) []ActivityStage {
 	l := make([]ActivityStage, 0)
 	err := orm.Table(ActivityStageDAO.TableName()).Where("activity_id=?", aid).
 		Find(&l)
+	
+	logger.LogIfError(err)
+	return l
+}
+
+func (*ActivityStageDataAccessObject) FindAll() []ActivityStage {
+	l := make([]ActivityStage, 0)
+	err := orm.Table(ActivityStageDAO.TableName()).Find(&l)
+
 	logger.LogIfError(err)
 	return l
 }
@@ -63,6 +73,13 @@ func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
 	var buf ActivityStage
 	_, err := orm.Table(ActivityStageDAO.TableName()).
 		Where("activity_id=?", aid).Delete(&buf)
+	logger.LogIfError(err)
+}
+
+//updateOne
+func (*ActivityStageDataAccessObject) UpdateOne(activityStage *ActivityStage) {
+	_, err := orm.Table(ActivityStageDAO.TableName()).ID(activityStage.ID).
+		Update(activityStage)
 	logger.LogIfError(err)
 }
 
@@ -77,10 +94,11 @@ func (*ActivityStageDataAccessObject) FindFullByDay(
 	end := time.Date(endDate.Year(), endDate.Month(), endDate.Day(),
 		0, 0, 0, 0, time.Local).Format(mysqlTimeFormat)
 	result := make([]ActivityStageFull, 0)
-	err := orm.Table(ActivityStageDAO.TableName()).
-		Where("start_time>=?", start).And("end_time<?", end).
-		Join("INNER", ActivityDAO.TableName(),
-			"activity_stages.activity_id=activities.id").
+
+	err := orm.Table(ActivityDAO.TableName()).
+		Where("activity_stages.activity_id=activities.id").
+		Join("INNER", ActivityStageDAO.TableName(),
+		"start_time>=?", start).And("end_time<?", end).
 		Find(&result)
 	logger.LogIfError(err)
 	return result
@@ -98,5 +116,14 @@ func (*ActivityStageDataAccessObject) FindFullByMonth(
 			time.Local)
 		result = append(result, ActivityStageDAO.FindFullByDay(curDate))
 	}
+
 	return result
+}
+
+// FindByID finds activityStage by ID
+func (*ActivityStageDataAccessObject) FindByID(id int) (ActivityStage, bool) {
+	var result ActivityStage
+	has, err := orm.Table(ActivityStageDAO.TableName()).ID(id).Get(&result) 
+	logger.LogIfError(err)
+	return result, has
 }

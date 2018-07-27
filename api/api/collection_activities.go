@@ -68,7 +68,8 @@ func activityStagesPostHandler() http.HandlerFunc {
 		activityID, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		stage.ActivityID = activityID
 		models.ActivityStageDAO.InsertOne(&stage)
-		formatter.JSON(w, http.StatusCreated, nil)
+		formatter.JSON(w, http.StatusOK,
+			NewJSON("created", "活动阶段创建成功", stage))
 	}
 
 }
@@ -105,6 +106,8 @@ func activitiesGetHandler() http.HandlerFunc {
 		} else {
 			oid, _ := strconv.Atoi(req.FormValue("oid"))
 			data := models.ActivityDAO.FindByOID(oid)
+		
+			
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取活动列表成功", data))
 		}
@@ -113,9 +116,12 @@ func activitiesGetHandler() http.HandlerFunc {
 
 			} else {
 				actid, _ := strconv.Atoi(req.FormValue("actid"))
-				data,_:= models.ActivityDAO.FindFullByactID(actid)
-				//data:= models.ActivityDAO.FindFullAll()
-				
+				data,_:= models.ActivityDAO.FindFullByAID(actid)
+				if data.ID == 0 {
+					data.Name = "该活动尚未录入信息"
+					data.ShortName = "该活动尚未录入信息"
+					data.Description = "可以到图蜂后台录入信息"
+				}
 				formatter.JSON(w, http.StatusOK,
 					NewJSON("OK", "获取活动信息成功", data))
 			}

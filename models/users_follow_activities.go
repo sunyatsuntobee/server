@@ -31,6 +31,13 @@ type UsersFollowActivitiesDataAccessObject struct{}
 var UsersFollowActivitiesDAO *UsersFollowActivitiesDataAccessObject
 
 
+func (*UsersFollowActivitiesDataAccessObject) FindByID(id int) UsersFollowActivities {
+	var usersFollowActivities UsersFollowActivities
+	_, err := orm.Table(UsersFollowActivitiesDAO.TableName()).ID(id).Get(&usersFollowActivities)
+	logger.LogIfError(err)
+	return usersFollowActivities
+}
+
 func (*UsersFollowActivitiesDataAccessObject) InsertOne(
 	r *UsersFollowActivities) {
 	_, err := orm.Table(UsersFollowActivitiesDAO.TableName()).
