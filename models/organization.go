@@ -1,24 +1,31 @@
 package models
 
-import "github.com/sunyatsuntobee/server/logger"
+import (
+	"time"
+	"github.com/sunyatsuntobee/server/logger"
+)
 
 // Organization Model
 type Organization struct {
-	ID              int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
-	Name            string `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
-	Phone           string `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
-	Password        string `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	College         string `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
-	CollegeDistrict string `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
-	LogoURL         string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
-	Description     string `xorm:"description VARCHAR(200)" json:"description"`
+	ID              int       `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR" json:"id"`
+	Name            string    `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
+	Phone           string    `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
+	Password        string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
+	College         string    `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
+	CollegeDistrict string    `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
+	LogoURL         string    `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
+	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
 
-	InvitationCode  string `xorm:"invitation_code VARCHAR(50)" json:"invitation_code"` //邀请码
+	InvitationCode  string    `xorm:"invitation_code VARCHAR(50)" json:"invitation_code"` //邀请码
+	SpreadFlag      bool      `xorm:"spread_flag " json:"spread_flag"` //是否被推广
+	SpreadDay       int       `xorm:"spread_day " json:"spread_day"`   //推广天数
+	SpreadStartTime time.Time `xorm:"spread_start_time DATETIME" json:"spread_start_time"` //推广开始时间
 }
 
 // NewOrganization creates a new organization
 func NewOrganization(name, phone, password, college, collegeDistrict,
-	logoURL, description string) *Organization {
+	logoURL, description, invitationCode string, spreadFlag bool,
+	spreadDay int, spreadStartTime time.Time) *Organization {
 	return &Organization{
 		Name:            name,
 		Phone:           phone,
@@ -27,6 +34,10 @@ func NewOrganization(name, phone, password, college, collegeDistrict,
 		CollegeDistrict: collegeDistrict,
 		LogoURL:         logoURL,
 		Description:     description,
+		InvitationCode:  invitationCode,
+		SpreadFlag:      spreadFlag,
+		SpreadDay:       spreadDay,
+		SpreadStartTime: spreadStartTime,
 	}
 }
 
