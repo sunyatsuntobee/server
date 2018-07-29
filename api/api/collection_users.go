@@ -33,8 +33,9 @@ func initCollectionUsersRouter(router *mux.Router) {
 		usersFollowCreateHandler()).Methods(http.MethodPost)
 
 	// DELETE /users_follow_users/{ID}
+	//添加认证功能
 	router.HandleFunc("/api/users_follow_organizations/{ID}",
-		usersFollowUsersDeleteHandler()).Methods(http.MethodDelete)
+		handlerSecure(usersFollowUsersDeleteHandler())).Methods(http.MethodDelete)
 
 	// GET /users_follow_organizations{?user_ID,organization_ID}
 	router.HandleFunc("/api/users_follow_organizations",
@@ -214,6 +215,8 @@ func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
 
 func usersFollowCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		claims := util.ParseClaims(getTokenString(req))
+
 		defer req.Body.Close()
 		decoder := json.NewDecoder(req.Body)
 		var usersFollowUsers models.UsersFollowUsers
@@ -224,6 +227,14 @@ func usersFollowCreateHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
+
+		//认证目前携带的token是否和用户关注用户的发起关注的用户ID一致
+		if usersFollowUsers.UserID != int(claims["aud"].(float64)) {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("bad requset", "id不匹配", nil))
+			return
+		}
+
 		usersFollowUsers.Timestamp = time.Now()
 		models.UsersFollowUsersDAO.InsertOne(&usersFollowUsers)
 		formatter.JSON(w, http.StatusCreated,

@@ -42,7 +42,7 @@ func NewJWT(id int, typ int) string {
 		"aud":  id,
 		"type": typ,
 	})
-	signed, err := token.SignedString([]byte("abcd"))
+	signed, err := token.SignedString([]byte("abcd"))   //括号里面的[]byte("abcd")是客户端密钥
 	logger.LogIfError(err)
 	return signed
 }
@@ -67,3 +67,23 @@ func SaveBase64AsPNG(code string, path string) {
 	logger.LogIfError(err)
 	png.Encode(file, img)
 }
+
+func ParseClaims(tokenString string) jwt.MapClaims {
+	token, err := jwt.Parse(tokenString,
+		func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("Unexpected signing method: %v",
+					token.Header["alg"])
+			}
+
+			return []byte("abcd"), nil
+		})
+
+	if err != nil {
+		panic(err)
+	}
+
+	claims, _ := token.Claims.(jwt.MapClaims)
+	return claims
+}
+

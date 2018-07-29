@@ -61,6 +61,7 @@ func authHandler() http.HandlerFunc {
 				}
 				id = administrator.ID
 			}
+			break
 		case 1:
 			var user models.User
 			user, flagOpenid =
@@ -71,6 +72,7 @@ func authHandler() http.HandlerFunc {
 				}
 				id = user.ID
 			}
+			break
 		case 2:
 			var organization models.Organization
 			organization, flagOpenid =
@@ -81,6 +83,7 @@ func authHandler() http.HandlerFunc {
 				}
 				id = organization.ID
 			}
+			break
 		}
 
 		if flagOpenid == false {

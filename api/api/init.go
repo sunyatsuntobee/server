@@ -4,6 +4,8 @@ import (
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/unrolled/render"
+	"strings"
+	"net/http"
 )
 
 // JSON is a standard form of response data
@@ -43,4 +45,25 @@ func NewJSON(status, msg string, data interface{}) *JSON {
 		Message: msg,
 		Data:    data,
 	}
+}
+
+//用于从http报文中提取token的字符串形式
+func getTokenString(req *http.Request) string {
+	return strings.Split(req.Header.Get("Authorization"), " ")[1]
+}
+
+func handlerSecure(handler http.HandlerFunc) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		err := jwtMiddleware.CheckJWT(w, req)
+		if err != nil {
+			formatter.JSON(w, http.StatusUnauthorized, NewJSON(
+				"认证中间件失败", "Permission denied", nil))
+			return
+		}
+		if handler != nil {
+			handler(w, req)
+		}
+	}
+
 }

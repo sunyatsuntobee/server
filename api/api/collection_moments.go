@@ -39,6 +39,7 @@ func initCollectionMomentsRouter(router *mux.Router) {
 	router.HandleFunc("/api/users_like_moments",
 		momentCommentsDeleteHandler()).Methods(http.MethodDelete)
 }
+
 func usersLikeMomentsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
