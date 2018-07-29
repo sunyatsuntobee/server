@@ -30,12 +30,12 @@ func initCollectionUsersRouter(router *mux.Router) {
 
 	// POST /users_follow_users
 	router.HandleFunc("/api/users_follow_users",
-		usersFollowCreateHandler()).Methods(http.MethodPost)
+		handlerSecure(usersFollowCreateHandler())).Methods(http.MethodPost)
 
 	// DELETE /users_follow_users/{ID}
 	//添加认证功能
 	router.HandleFunc("/api/users_follow_organizations/{ID}",
-		handlerSecure(usersFollowUsersDeleteHandler())).Methods(http.MethodDelete)
+		usersFollowUsersDeleteHandler()).Methods(http.MethodDelete)
 
 	// GET /users_follow_organizations{?user_ID,organization_ID}
 	router.HandleFunc("/api/users_follow_organizations",
