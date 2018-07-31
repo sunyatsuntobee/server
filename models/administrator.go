@@ -13,11 +13,13 @@ type Administrator struct {
 }
 
 // NewAdministrator creates a new administrator
-func NewAdministrator(name string, password string, level int) *Administrator {
+func NewAdministrator(name string, password string, level int,
+	organizationID int) *Administrator {
 	return &Administrator{
-		Name:     name,
-		Password: password,
-		Level:    level,
+		Name:           name,
+		Password:       password,
+		Level:          level,
+		OrganizationID: organizationID,
 	}
 }
 
