@@ -18,6 +18,8 @@ type ActivityStage struct {
 	SignUpURL  string    `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	ActivityID int       `xorm:"activity_id INT NOTNULL INDEX(activity_id_idx)" json:"activity_id"`
 }
+//参与环节可以额外增加时间段， 分活动环节，核心环节，参与环节（之后有瞬间时间点）
+//管理员的总数等于社团的部门数+3
 
 // NewActivityStage creates a new activity stage
 func NewActivityStage(stageNum int, startTime time.Time, endTime time.Time,

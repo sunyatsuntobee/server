@@ -94,3 +94,11 @@ func (*UsersFollowOrganizationsDataAccessObject) DeleteByID(id int) {
 		ID(id).Delete(&usersFollowOrganizations)
 	logger.LogIfError(err)
 }
+
+//FindByID find a user-organization relationship by its ID
+func (*UsersFollowOrganizationsDataAccessObject) FindByID(id int) (UsersFollowOrganizations, bool) {
+	var ufo UsersFollowOrganizations
+	has, err := orm.Table(UsersFollowOrganizationsDAO.TableName()).ID(id).Get(&ufo)
+	logger.LogIfError(err)
+	return ufo, has
+}

@@ -92,3 +92,12 @@ func (*UsersFollowUsersDataAccessObject) DeleteByID(id int) {
 		ID(id).Delete(&usersFollowUsers)
 	logger.LogIfError(err)
 }
+
+//FindByID find a user-user relationship by its ID
+func (*UsersFollowUsersDataAccessObject) FindByID(id int) (UsersFollowUsers, bool) {
+	var ufu UsersFollowUsers
+	has, err := orm.Table(UsersFollowUsersDAO.TableName()).ID(id).Get(&ufu)
+	logger.LogIfError(err)
+	return ufu, has
+}
+

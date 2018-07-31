@@ -4,10 +4,12 @@ import "github.com/sunyatsuntobee/server/logger"
 
 // Administrator Model
 type Administrator struct {
-	ID       int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
-	Name     string `xorm:"name VARCHAR(20) NOTNULL"`
-	Password string `xorm:"password VARCHAR(50) NOTNULL"`
-	Level    int    `xorm:"level INT NOTNULL"`
+	ID             int    `xorm:"id INT PK NOTNULL UNIQUE AUTOINCR"`
+	Name           string `xorm:"name VARCHAR(20) NOTNULL"`
+	Password       string `xorm:"password VARCHAR(50) NOTNULL"`
+	Level          int    `xorm:"level INT NOTNULL"`
+
+	OrganizationID int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"` //新增社团ID字段
 }
 
 // NewAdministrator creates a new administrator

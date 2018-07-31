@@ -29,25 +29,28 @@ func initCollectionUsersRouter(router *mux.Router) {
 		usersGetFollowHandler()).Methods(http.MethodGet)
 
 	// POST /users_follow_users
+	//添加认证功能
 	router.HandleFunc("/api/users_follow_users",
 		handlerSecure(usersFollowCreateHandler())).Methods(http.MethodPost)
 
 	// DELETE /users_follow_users/{ID}
 	//添加认证功能
-	router.HandleFunc("/api/users_follow_organizations/{ID}",
-		usersFollowUsersDeleteHandler()).Methods(http.MethodDelete)
+	router.HandleFunc("/api/users_follow_users/{ID}",
+		handlerSecure(usersFollowUsersDeleteHandler())).Methods(http.MethodDelete)
 
 	// GET /users_follow_organizations{?user_ID,organization_ID}
 	router.HandleFunc("/api/users_follow_organizations",
 		organizationsGetFollowHandler()).Methods(http.MethodGet)
 
 	// POST /users_follow_organizations
+	//添加认证功能
 	router.HandleFunc("/api/users_follow_organizations",
-		usersFollowOrganizationsCreateHandler()).Methods(http.MethodPost)
+		handlerSecure(usersFollowOrganizationsCreateHandler())).Methods(http.MethodPost)
 
 	// DELETE /users_follow_organizations/{ID}
+	//添加认证功能
 	router.HandleFunc("/api/users_follow_organizations/{ID}",
-		usersFollowOrganizationsDeleteHandler()).Methods(http.MethodDelete)
+		handlerSecure(usersFollowOrganizationsDeleteHandler())).Methods(http.MethodDelete)
 
 	// POST /users
 	router.HandleFunc(url,
@@ -118,6 +121,19 @@ func usersFollowUsersDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		usersFollowUsersIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
+		tempUsersFollowUsers, has := models.UsersFollowUsersDAO.FindByID(usersFollowUsersIDInt)
+		if has == false {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "该用户关注用户的关联ID不存在", nil))
+		}
+		claims := util.ParseClaims(getTokenString(req))  //解析token
+
+		//认证目前携带的token是否和用户关注用户的发起关注的用户ID一致
+		if tempUsersFollowUsers.UserID != int(claims["aud"].(float64)) {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("bad requset", "id不匹配", nil))
+			return
+		}
 		models.UsersFollowUsersDAO.DeleteByID(usersFollowUsersIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
 	}
@@ -127,8 +143,25 @@ func usersFollowOrganizationsDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		usersFollowOrganizationsIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
-		models.UsersFollowUsersDAO.DeleteByID(usersFollowOrganizationsIDInt)
+		tempUsersFollowOrganizations, has := models.UsersFollowOrganizationsDAO.FindByID(usersFollowOrganizationsIDInt)
+		if has == false {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "该用户关注社团的关联ID不存在", nil))
+			return
+		}
+
+		claims := util.ParseClaims(getTokenString(req))  //解析token
+
+		//认证目前携带的token是否和用户关注用户的发起关注的用户ID一致
+		if tempUsersFollowOrganizations.UserID != int(claims["aud"].(float64)) {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("bad requset", "id不匹配", nil))
+			return
+		}
+		models.UsersFollowOrganizationsDAO.DeleteByID(usersFollowOrganizationsIDInt)
 		formatter.JSON(w, http.StatusNoContent, nil)
+		
+	
 	}
 }
 
@@ -144,6 +177,16 @@ func usersFollowOrganizationsCreateHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
+
+		claims := util.ParseClaims(getTokenString(req))  //解析token
+
+		//认证目前携带的token是否和用户关注用户的发起关注的用户ID一致
+		if usersFollowOrganizations.UserID != int(claims["aud"].(float64)) {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("bad requset", "id不匹配", nil))
+			return
+		}
+
 		usersFollowOrganizations.Timestamp = time.Now()
 		models.UsersFollowOrganizationsDAO.InsertOne(&usersFollowOrganizations)
 		formatter.JSON(w, http.StatusCreated,
@@ -215,7 +258,7 @@ func usersFollowActivitiesDeleteHandler() http.HandlerFunc {
 
 func usersFollowCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		claims := util.ParseClaims(getTokenString(req))
+		claims := util.ParseClaims(getTokenString(req))  //解析token
 
 		defer req.Body.Close()
 		decoder := json.NewDecoder(req.Body)
