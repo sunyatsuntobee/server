@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-
+	
 	"github.com/gorilla/mux"
 	"github.com/sunyatsuntobee/server/logger"
 	"github.com/sunyatsuntobee/server/models"
@@ -16,8 +16,9 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	url := "/api/organizations"
 
 	// PUT /organizations/{ID}
+	//添加认证
 	router.HandleFunc(url+"/{ID}",
-		organizationsPutHandler()).Methods(http.MethodPut)
+	    handlerSecure(organizationsPutHandler())).Methods(http.MethodPut)
 
 	// POST /organizations
 	router.HandleFunc(url,
@@ -32,8 +33,9 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	    organizationsGetSpreadHandler()).Methods(http.MethodGet)
 
 	// POST /handle_applicants_and_members
+	//添加认证
 	router.HandleFunc("/api/handle_applicants_and_members",
-		organizationsApplyandMembersManageHandler()).Methods(http.MethodPost)
+	handlerSecure(organizationsApplyandMembersManageHandler())).Methods(http.MethodPost)
 }
 
 func organizationsGetSpreadHandler() http.HandlerFunc {
@@ -76,16 +78,20 @@ func organizationsGetHandler() http.HandlerFunc {
 
 func organizationsCreateHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		
+
 		defer req.Body.Close()
-		decoder := json.NewDecoder(req.Body)
+		decoder := json.NewDecoder(req.Body)		
 		var organization models.Organization
 		err := decoder.Decode(&organization)
+		
 		if err != nil {
 			logger.E.Println(err)
 			formatter.JSON(w, http.StatusBadRequest,
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
+
 		organization.LogoURL = ""
 		organization.Password = util.MD5Hash(organization.Password)
 		_, flagPhone := models.OrganizationDAO.FindByPhone(organization.Phone)
@@ -109,6 +115,7 @@ func organizationsCreateHandler() http.HandlerFunc {
 func organizationsPutHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
+        
 		var data models.Organization
 		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		decoder := json.NewDecoder(req.Body)
@@ -119,6 +126,28 @@ func organizationsPutHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
+	
+		//进行管理员权限认证
+		claims := util.ParseClaims(getTokenString(req))
+        if int(claims["type"].(float64)) != 0 {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("Unauthorized", "需要此社团管理员权限", nil))
+			return
+		}
+		adms, has := models.AdministratorDAO.FindByID(int(claims["aud"].(float64)))
+		if !has {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("Bad request", "不存在此管理员", nul))
+			return
+		}
+		if adms.OrganizationID != id {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("Unauthorized", "需要此社团管理员权限", nil))
+			return
+		}
+
+		//
+
 		old, has := models.OrganizationDAO.FindByID(id)
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest, util.Error{
@@ -138,6 +167,8 @@ func organizationsPutHandler() http.HandlerFunc {
 
 func organizationsApplyandMembersManageHandler() http.HandlerFunc {
 	return func (w http.ResponseWriter, r *http.Request) {
+		
+		
 		defer r.Body.Close()
 		decoder := json.NewDecoder(r.Body)
 		var t models.UsersParticipateOrganizations
@@ -148,6 +179,26 @@ func organizationsApplyandMembersManageHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", err))
 			return
 		}
+
+		//进行管理员权限认证
+		claims := util.ParseClaims(getTokenString(r))
+        if int(claims["type"].(float64)) != 0 {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("Unauthorized", "需要管理员权限", nil))
+			return
+		}
+		adms, has := models.AdministratorDAO.FindByID(int(claims["aud"].(float64)))
+		if !has {
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("Bad request", "不存在此管理员", nul))
+			return
+		}
+		if adms.OrganizationID != t.OrganizationID {
+			formatter.JSON(w, http.StatusUnauthorized,
+				NewJSON("Unauthorized", "需要此社团管理员权限", nil))
+			return
+		}
+
 		
 		data := models.UsersParticipateOrganizationsDAO.FindByUOID(t.UserID, t.OrganizationID)
 		data.Privilege = t.Privilege
