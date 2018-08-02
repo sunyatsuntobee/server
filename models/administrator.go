@@ -58,7 +58,7 @@ func (*AdministratorDataAccessObject) FindByOpenid(
 
 // FindByID finds a administrator by ID
 func (*AdministratorDataAccessObject) FindById(
-	id string) (Administrator, bool) {
+	id int) (Administrator, bool) {
 
 	var admin Administrator
 	has, err := orm.Table(AdministratorDAO.TableName()).

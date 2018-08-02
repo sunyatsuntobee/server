@@ -210,10 +210,10 @@ func organizationsPutHandler() http.HandlerFunc {
 				NewJSON("Unauthorized", "需要此社团管理员权限", nil))
 			return
 		}
-		adms, has := models.AdministratorDAO.FindByID(int(claims["aud"].(float64)))
+		adms, has := models.AdministratorDAO.FindById(int(claims["aud"].(float64)))
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest,
-				NewJSON("Bad request", "不存在此管理员", nul))
+				NewJSON("Bad request", "不存在此管理员", nil))
 			return
 		}
 		if adms.OrganizationID != id {
@@ -263,10 +263,10 @@ func organizationsApplyandMembersManageHandler() http.HandlerFunc {
 				NewJSON("Unauthorized", "需要管理员权限", nil))
 			return
 		}
-		adms, has := models.AdministratorDAO.FindByID(int(claims["aud"].(float64)))
+		adms, has := models.AdministratorDAO.FindById(int(claims["aud"].(float64)))
 		if !has {
 			formatter.JSON(w, http.StatusBadRequest,
-				NewJSON("Bad request", "不存在此管理员", nul))
+				NewJSON("Bad request", "不存在此管理员", nil))
 			return
 		}
 		if adms.OrganizationID != t.OrganizationID {
