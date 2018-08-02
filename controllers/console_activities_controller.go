@@ -1,5 +1,5 @@
 package controllers
-
+/*
 import (
 	"net/http"
 	"strconv"
@@ -36,3 +36,5 @@ func consoleActivityGetHandler() http.HandlerFunc {
 	}
 
 }
+以上两个函数有待修改
+*/

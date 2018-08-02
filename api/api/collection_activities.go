@@ -13,11 +13,11 @@ import (
 func initCollectionActivitiesRouter(router *mux.Router) {
 	url := "/api/activities"
 
-	// GET /activities{?oid}
+	// GET /activities{?oid} //需要修改
 	router.HandleFunc(url,
 		activitiesGetHandler()).Methods(http.MethodGet)
 
-	// GET /activities{?actid}
+	// GET /activities{?actid} //需要修改
 	router.HandleFunc(url,
 		activitiesGetHandler()).Methods(http.MethodGet)
 
@@ -105,26 +105,25 @@ func activitiesGetHandler() http.HandlerFunc {
 
 		} else {
 			oid, _ := strconv.Atoi(req.FormValue("oid"))
-			data := models.ActivityDAO.FindByOID(oid)
+			data := models.OrganizationsHostActivitiesDAO.FindActivitiesByOrganizationID(oid)
 		
-			
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取活动列表成功", data))
 		}
 
 		if req.FormValue("actid") == "" {
 
-			} else {
-				actid, _ := strconv.Atoi(req.FormValue("actid"))
-				data,_:= models.ActivityDAO.FindFullByAID(actid)
-				if data.ID == 0 {
-					data.Name = "该活动尚未录入信息"
-					data.ShortName = "该活动尚未录入信息"
-					data.Description = "可以到图蜂后台录入信息"
-				}
-				formatter.JSON(w, http.StatusOK,
-					NewJSON("OK", "获取活动信息成功", data))
+		} else {
+			actid, _ := strconv.Atoi(req.FormValue("actid"))
+			data,_:= models.ActivityDAO.FindFullByAID(actid)
+			if data.ID == 0 {
+				data.Name = "该活动尚未录入信息"
+				data.ShortName = "该活动尚未录入信息"
+				data.Description = "可以到图蜂后台录入信息"
 			}
+			formatter.JSON(w, http.StatusOK,
+			    NewJSON("OK", "获取活动信息成功", data))
+		}
 	}
 
 }

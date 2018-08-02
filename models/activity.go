@@ -23,7 +23,6 @@ type Activity struct {
 	PublicServiceHours string `xorm:"public_service_hours VARCHAR(50)" json:"public_service_hours"`
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
 	OtherPrize         string `xorm:"other_prize VARCHAR(100)" json:"other_prize"`
-	OrganizationID     int    `xorm:"organization_id INT NOTNULL INDEX(organization_id_idx)" json:"organization_id"`
 	AttentionNum       int    `xorm:"attention_num INT NOTNULL" json:"attention_num"`
 }
 
@@ -37,7 +36,7 @@ var ActivityDAO *ActivityDataAccessObject
 func NewActivity(shortName, name string, description string, category string,
 	posterURL string, logoURL string, wechatURL string,
 	sportsMedals string, publicServiceHours string, prize string,
-	otherPrize string, organizationID int, attentionNum int, liveURL string) *Activity {
+	otherPrize string, attentionNum int, liveURL string) *Activity {
 	return &Activity{
 		ShortName:          shortName,
 		Name:               name,
@@ -50,7 +49,6 @@ func NewActivity(shortName, name string, description string, category string,
 		PublicServiceHours: publicServiceHours,
 		Prize:              prize,
 		OtherPrize:         otherPrize,
-		OrganizationID:     organizationID,
 		AttentionNum:       attentionNum,
 		LiveURL:            liveURL,
 	}
@@ -76,6 +74,7 @@ func (*ActivityDataAccessObject) FindByID(id int) (Activity, bool) {
 	return activity, has
 }
 
+/*
 // FindFullByID finds joined activities according to an ID
 func (*ActivityDataAccessObject) FindFullByID(id int) []ActivityFull {
 	l := make([]ActivityFull, 0)
@@ -116,8 +115,9 @@ func (*ActivityDataAccessObject) FindFullAll() []ActivityFull {
 		Find(&activities)
 	logger.LogIfError(err)
 	return activities
-}
+}*/
 
+/*
 // FindByOID finds activities according to an organization ID
 func (*ActivityDataAccessObject) FindByOID(oid int) []ActivityAndStage {
 	l := make([]ActivityAndStage, 0)
@@ -129,6 +129,7 @@ func (*ActivityDataAccessObject) FindByOID(oid int) []ActivityAndStage {
 	logger.LogIfError(err)
 	return l
 }
+*/
 
 // InsertOne inserts an activity
 func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
@@ -136,7 +137,7 @@ func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
 	logger.LogIfError(err)
 }
 
-// FindFullByID finds activities and stages according to an actID
+// FindFullByAID finds activities and stages according to an actID
 func (*ActivityDataAccessObject) FindFullByAID(id int) (ActivityAndStage, bool) {
 	var l ActivityAndStage
 

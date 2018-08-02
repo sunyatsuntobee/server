@@ -27,6 +27,10 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	router.HandleFunc(url,
 		organizationsGetHandler()).Methods(http.MethodGet)
 
+	// GET /organizations{?aid} //由于数据库更改，已经添加了根据活动ID获取社团的api
+	router.HandleFunc(url,
+		organizationsGetHandler()).Methods(http.MethodGet)
+	
 	// GET /spread_organizations
 	router.HandleFunc(url+"/spread_organizations",
 	    organizationsGetSpreadHandler()).Methods(http.MethodGet)
@@ -34,6 +38,68 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	// POST /handle_applicants_and_members
 	router.HandleFunc("/api/handle_applicants_and_members",
 		organizationsApplyandMembersManageHandler()).Methods(http.MethodPost)
+
+	// PATCH /organizations/{ID}/coin
+	router.HandleFunc(url+"/{ID}/coin",
+		organizationPatchCoinHandler()).Methods(http.MethodPatch)
+		
+	// POST /organizations_host_activities
+	router.HandleFunc("/api/organizations_host_activities",
+		organizationsHostActivitiesCreateHandler()).Methods(http.MethodPost)
+
+	// PATCH关于推广社团时间天数设置的路由
+}
+
+func organizationsHostActivitiesCreateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		defer req.Body.Close()
+		decoder := json.NewDecoder(req.Body)
+		var organizationsHostActivities models.OrganizationsHostActivities
+		err := decoder.Decode(&organizationsHostActivities)
+		if err != nil {
+			logger.E.Println(err)
+			formatter.JSON(w, http.StatusBadRequest,
+				NewJSON("bad request", "数据格式错误", nil))
+			return
+		}
+		organizationsHostActivities.Timestamp = time.Now()
+
+		models.OrganizationsHostActivitiesDAO.InsertOne(&organizationsHostActivities)
+		formatter.JSON(w, http.StatusCreated,
+			NewJSON("Created", "关注活动成功", organizationsHostActivities))
+	}
+}
+
+func organizationPatchCoinHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+			req.ParseForm()
+			ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
+			_, has := models.OrganizationDAO.FindByID(ID)
+			if !has {
+				formatter.JSON(w, http.StatusBadRequest,
+					NewJSON("bad request", "该社团不存在", nil))
+				return
+			}
+	
+			var data models.Organization
+			decoder := json.NewDecoder(req.Body)
+			err := decoder.Decode(&data)
+			if err != nil {
+				logger.E.Println(err)
+				formatter.JSON(w, http.StatusBadRequest,
+					NewJSON("bad request", "数据格式错误", nil))
+				return
+			}
+			
+			data.ID = ID
+	
+			models.OrganizationDAO.UpdateOne(&data)
+	
+			newData, _ := models.UserDAO.FindByID(ID) 
+			formatter.JSON(w, http.StatusCreated,
+				NewJSON("created", "修改社团积分成功", newData))
+		
+	}
 }
 
 func organizationsGetSpreadHandler() http.HandlerFunc {
@@ -67,9 +133,19 @@ func organizationsGetSpreadHandler() http.HandlerFunc {
 
 func organizationsGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		organizations := models.OrganizationDAO.FindAll()
-		formatter.JSON(w, http.StatusOK,
+		req.ParseForm()
+		if req.FormValue("aid") == "" {
+			organizations := models.OrganizationDAO.FindAll()
+		    formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取社团列表成功", organizations))
+		} else {
+			aid, _ := strconv.Atoi(req.FormValue("aid"))
+			data := models.OrganizationsHostActivitiesDAO.FindOrganizationsByActivityID(aid)
+		
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "根据活动id获取社团列表成功", data))
+		}
+		
 	}
 
 }

@@ -16,10 +16,11 @@ type Organization struct {
 	LogoURL         string    `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
 
-	InvitationCode  string    `xorm:"invitation_code VARCHAR(50)" json:"invitation_code"` //邀请码
-	SpreadFlag      bool      `xorm:"spread_flag " json:"spread_flag"` //是否被推广
-	SpreadDay       int       `xorm:"spread_day " json:"spread_day"`   //推广天数
+	InvitationCode  string    `xorm:"invitation_code VARCHAR(50) NOTNULL" json:"invitation_code"` //邀请码
+	SpreadFlag      bool      `xorm:"spread_flag BOOL NOTNULL" json:"spread_flag"` //是否被推广
+	SpreadDay       int       `xorm:"spread_day INT" json:"spread_day"`   //推广天数
 	SpreadStartTime time.Time `xorm:"spread_start_time DATETIME" json:"spread_start_time"` //推广开始时间
+	TobeeCoin       int       `xorm:"tobee_coin INT" json:"tobee_coin"`   //图币
 }
 
 // NewOrganization creates a new organization

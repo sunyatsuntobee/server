@@ -6,6 +6,6 @@ func initConsoleRouter(router *mux.Router) {
 	initConsolePhotosRouter(router)
 	initConsolePhotoLivesRouter(router)
 	initConsoleOrganizationsRouter(router)
-	initConsoleActivitiesRouter(router)
+	//initConsoleActivitiesRouter(router)
 	initConsoleUsersRouter(router)
 }

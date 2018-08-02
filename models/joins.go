@@ -31,7 +31,7 @@ type OrganizationFull struct {
 type ActivityFull struct {
 	Activity      `xorm:"extends" json:"activity"`
 	ActivityStage `xorm:"extends" json:"activity_stage"`
-	Organization  `xorm:"extends" json:"organization"`
+	Organizations []Organization  `xorm:"extends" json:"organizations"`
 }
 
 // ActivityStageFull contains all information for an Entity Activity Stage

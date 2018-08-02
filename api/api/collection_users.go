@@ -76,9 +76,9 @@ func initCollectionUsersRouter(router *mux.Router) {
 	router.HandleFunc("/api/users_follow_activities/{ID}",
 		usersFollowActivitiesDeleteHandler()).Methods(http.MethodDelete)
 	
-	// PATCH /users/{ID}/coin
-	router.HandleFunc(url+"/{ID}/coin",
-	    usersChangeCoinHandler()).Methods(http.MethodPatch)
+	// PATCH /users/{ID}/integration
+	router.HandleFunc(url+"/{ID}/integration",
+	    usersChangeIntegrationHandler()).Methods(http.MethodPatch)
 
 	// GET /users
 	router.HandleFunc(url+"/{ID}/organizations",
@@ -86,7 +86,7 @@ func initCollectionUsersRouter(router *mux.Router) {
 	
 }
 
-func usersChangeCoinHandler() http.HandlerFunc {
+func usersChangeIntegrationHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
 		ID, _ := strconv.Atoi(mux.Vars(req)["ID"])
@@ -113,7 +113,7 @@ func usersChangeCoinHandler() http.HandlerFunc {
 
 		newData, _ := models.UserDAO.FindByID(ID) 
 		formatter.JSON(w, http.StatusCreated,
-			NewJSON("created", "修改用户图币成功", newData))
+			NewJSON("created", "修改用户积分成功", newData))
 	}
 }
 
@@ -429,6 +429,10 @@ func usersCreateHandler() http.HandlerFunc {
 		user.VIP = 0
 		user.AvatarURL = ""
 		user.BackgroundURL = ""
+		//判断积分字段是否为空，为空就置为0
+		if strconv.Itoa(user.Integration) == "" {
+			user.Integration = 0
+		}
 
 		if user.Phone != "" {
 			_, flagPhone := models.UserDAO.FindByPhone(user.Phone)
