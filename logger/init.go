@@ -13,7 +13,7 @@ var E *log.Logger
 
 func init() {
 	truncate()
-
+	
 	infoFile, err := os.OpenFile(IPath, os.O_CREATE|os.O_RDWR, os.ModePerm)
 	if err != nil {
 		panic(err)

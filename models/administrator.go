@@ -55,3 +55,14 @@ func (*AdministratorDataAccessObject) FindByOpenid(
 	logger.LogIfError(err)
 	return admin, has
 }
+
+// FindByID finds a administrator by ID
+func (*AdministratorDataAccessObject) FindById(
+	id string) (Administrator, bool) {
+
+	var admin Administrator
+	has, err := orm.Table(AdministratorDAO.TableName()).
+		Where("id=?", id).Get(&admin)
+	logger.LogIfError(err)
+	return admin, has
+}
