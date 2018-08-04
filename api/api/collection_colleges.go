@@ -104,7 +104,7 @@ func collegesCreateHandler() http.HandlerFunc {
 		college.LogoURL = ""
 		college.ImageURL = ""
 
-		if college.name != "" {
+		if college.Name != "" {
 			_, flagName := models.CollegeDAO.FindByName(college.Name)
 			if flagName {
 				formatter.JSON(w, http.StatusBadRequest,
@@ -125,7 +125,7 @@ func collegesDeleteHandler() http.HandlerFunc {
 		req.ParseForm()
 		collegeIDInt, _ := strconv.Atoi(mux.Vars(req)["ID"])
 
-		college,has := models.CollegeDAO.FindByID(collegeIDInt)
+		_,has := models.CollegeDAO.FindByID(collegeIDInt)
 
 		if has == false {
 			formatter.JSON(w, http.StatusBadRequest,

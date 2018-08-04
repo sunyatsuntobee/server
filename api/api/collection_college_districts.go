@@ -62,7 +62,7 @@ func collegeDistrictsGetHandler() http.HandlerFunc {
 func collegeDistrictsPutHandler() http.HandlerFunc {
     return func(w http.ResponseWriter, req *http.Request) {
         
-		var data models.CollegeDistricts
+		var data models.CollegeDistrict
 		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
 		decoder := json.NewDecoder(req.Body)
 		err := decoder.Decode(&data)
@@ -117,7 +117,7 @@ func collegeDistrictsCreateHandler() http.HandlerFunc {
 		models.CollegeDistrictDAO.InsertOne(&collegeDistrict)
 
 		formatter.JSON(w, http.StatusCreated,
-			NewJSON("Created", "添加成功", college))
+			NewJSON("Created", "添加成功", collegeDistrict))
 	}
 }
 
@@ -126,7 +126,7 @@ func collegeDistrictsDeleteHandler() http.HandlerFunc {
 		req.ParseForm()
 		id, _ := strconv.Atoi(mux.Vars(req)["ID"])
 
-		college,has := models.CollegeDistrictDAO.FindByID(id)
+		_,has := models.CollegeDistrictDAO.FindByID(id)
 
 		if has == false {
 			formatter.JSON(w, http.StatusBadRequest,

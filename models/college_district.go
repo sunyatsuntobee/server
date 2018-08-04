@@ -33,7 +33,7 @@ func (*CollegeDistrictDataAccessObject) FindAll() []CollegeDistrict {
 	collegeDistricts := make([]CollegeDistrict, 0)
 	err := orm.Table(CollegeDistrictDAO.TableName()).Find(&collegeDistricts)
 	logger.LogIfError(err)
-	return colleges
+	return collegeDistricts
 }
 
 
