@@ -177,7 +177,6 @@ CREATE TABLE IF NOT EXISTS `tobeeNew`.`activities` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `tobeeNew`.`activity_stages`
 -- -----------------------------------------------------
@@ -202,6 +201,35 @@ CREATE TABLE IF NOT EXISTS `tobeeNew`.`activity_stages` (
 ENGINE = InnoDB
 COMMENT = '社团活动阶段';
 
+
+-- -----------------------------------------------------
+-- Table `tobeeNew`.`colleges`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobeeNew`.`colleges` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  `logo_url` VARCHAR(50) NULL,
+  `image_url` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `tobeeNew`.`college_districts`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tobeeNew`.`college_districts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  `college_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `college_id_idx` (`college_id` ASC),
+  CONSTRAINT `fk_college_districts_college_id`
+    FOREIGN KEY (`college_id`)
+    REFERENCES `tobeeNew`.`colleges` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `tobeeNew`.`photo_lives`
