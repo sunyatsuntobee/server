@@ -63,6 +63,7 @@ func (*ActivityStageDataAccessObject) FindByAID(aid int) []ActivityStage {
 	return l
 }
 
+// FindAll find all activity stages
 func (*ActivityStageDataAccessObject) FindAll() []ActivityStage {
 	l := make([]ActivityStage, 0)
 	err := orm.Table(ActivityStageDAO.TableName()).Find(&l)
@@ -79,7 +80,7 @@ func (*ActivityStageDataAccessObject) DeleteByAID(aid int) {
 	logger.LogIfError(err)
 }
 
-//updateOne
+//UpdateOne update an activity stage
 func (*ActivityStageDataAccessObject) UpdateOne(activityStage *ActivityStage) {
 	_, err := orm.Table(ActivityStageDAO.TableName()).ID(activityStage.ID).
 		Update(activityStage)
