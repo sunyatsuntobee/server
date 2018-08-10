@@ -119,7 +119,7 @@ func activitiesGetHandler() http.HandlerFunc {
 
 		} else {
 			cdid, _ := strconv.Atoi(req.FormValue("cdid"))
-			data,_:= models.ActivityDAO.FindByCDID(cdid)
+			data:= models.ActivityDAO.FindByCDID(cdid)
 			formatter.JSON(w, http.StatusOK,
 			    NewJSON("OK", "获取校区活动列表成功", data))
 		}
