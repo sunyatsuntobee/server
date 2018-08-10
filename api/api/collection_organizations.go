@@ -48,6 +48,10 @@ func initCollectionOrganizationsRouter(router *mux.Router) {
 	// POST /organizations_host_activities
 	router.HandleFunc("/api/organizations_host_activities",
 		organizationsHostActivitiesCreateHandler()).Methods(http.MethodPost)
+
+	// GET //organizations/{?cdid}
+	router.HandleFunc(url,
+		organizationsGetHandler()).Methods(http.MethodGet)
 	
 	// PATCH关于推广社团时间天数设置的路由
 }
@@ -136,7 +140,12 @@ func organizationsGetSpreadHandler() http.HandlerFunc {
 func organizationsGetHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		req.ParseForm()
-		if req.FormValue("aid") == "" {
+		if req.FormValue("cdid") != "" {
+			cdid, _ :=strconv.Atoi(req.FormValue("cdid"))
+			organizations := models.OrganizationDAO.FindByCDID(cdid)
+			formatter.JSON(w, http.StatusOK,
+				NewJSON("OK", "获取校区社团列表成功", organizations))
+		} else if req.FormValue("aid") == "" {
 			organizations := models.OrganizationDAO.FindAll()
 		    formatter.JSON(w, http.StatusOK,
 			NewJSON("OK", "获取社团列表成功", organizations))

@@ -5,10 +5,10 @@ import (
 	"github.com/go-xorm/xorm"
 )
 
-const (		 const (
+const (
 	// dbDSN string = "tobee:Passw0r_@tcp(120.79.53.185)/tobee"
 	//dbDSN  string = "tobee:Passw0r_@/tobee"
-	dbDSN string = "root:@tcp(localhost:3306)/tobee"
+	dbDSN string = "root:517694502cd@/tobee"
 	mysqlTimeFormat string = "2006-01-02 15:04:05"
 )
 

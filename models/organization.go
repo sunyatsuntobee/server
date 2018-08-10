@@ -11,8 +11,8 @@ type Organization struct {
 	Name            string    `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
 	Phone           string    `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
 	Password        string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	College         string    `xorm:"college VARCHAR(20) NOTNULL" json:"college"`
-	CollegeDistrict string    `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
+	College         int       `xorm:"college INT NOTNULL" json:"college"`
+	CollegeDistrict int       `xorm:"college_district INT NOTNULL" json:"college_district"`
 	LogoURL         string    `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
 
@@ -24,9 +24,10 @@ type Organization struct {
 }
 
 // NewOrganization creates a new organization
-func NewOrganization(name, phone, password, college, collegeDistrict,
+func NewOrganization(name, phone, password,
 	logoURL, description, invitationCode string, spreadFlag bool,
-	spreadDay int, spreadStartTime time.Time) *Organization {
+	college, collegeDistrict, spreadDay int, 
+	spreadStartTime time.Time) *Organization {
 	return &Organization{
 		Name:            name,
 		Phone:           phone,
@@ -117,4 +118,13 @@ func (*OrganizationDataAccessObject) FindByOpenid(
 		Where("openid=?", openid).Get(&o)
 	logger.LogIfError(err)
 	return o, has
+}
+
+// FindByCDID find all organizations by collegedistrictid
+func (*OrganizationDataAccessObject) FindByCDID(cdid int) []Organization {
+    organizations := make([]Organization, 0)
+	err := orm.Table(OrganizationDAO.TableName()).Where("college_district=?", cdid).
+	Find(& organizations)
+	logger.LogIfError(err)
+	return organizations;
 }
