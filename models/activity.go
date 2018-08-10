@@ -12,6 +12,7 @@ type Activity struct {
 	Name               string `xorm:"name VARCHAR(50) NOTNULL" json:"name"`
 	Description        string `xorm:"description VARCHAR(200) NOTNULL" json:"description"`
 	Category           string `xorm:"category VARCHAR(10) NOTNULL" json:"category"`
+	CollegeDistrict    int    `xorm:"college_district INT NOTNULL" json:"college_district"`
 	School			   string `xorm:"school VARCHAR(45) " json:"school"`
 	Range			   string `xorm:"range VARCHAR(45)" json:"range"`
 	Type			   string `xorm:"type VARCHAR(45)" json:"type"`
@@ -19,7 +20,7 @@ type Activity struct {
 	LogoURL            string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	WechatURL          string `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
 	LiveURL			   string `xorm:"live_url VARCHAR(50)" json:"live_url"`
-	SignUpURL		   string `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
+	//SignUpURL		   string `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	SportsMedals       string `xorm:"sports_medals VARCHAR(50)" json:"sports_medals"`
 	PublicServiceHours string `xorm:"public_service_hours VARCHAR(50)" json:"public_service_hours"`
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
@@ -36,6 +37,7 @@ var ActivityDAO *ActivityDataAccessObject
 // NewActivity creates a new activity
 func NewActivity(shortName, name string, description string, category string,
 	posterURL string, logoURL string, wechatURL string,
+	college_district int,
 	sportsMedals string, publicServiceHours string, prize string,
 	otherPrize string, attentionNum int, liveURL string) *Activity {
 	return &Activity{
@@ -43,6 +45,7 @@ func NewActivity(shortName, name string, description string, category string,
 		Name:               name,
 		Description:        description,
 		Category:           category,
+	    CollegeDistrict:    college_district,
 		PosterURL:          posterURL,
 		LogoURL:            logoURL,
 		WechatURL:          wechatURL,
@@ -160,4 +163,13 @@ func (*ActivityDataAccessObject) FindAll() []Activity {
 		Find(&activities)
 	logger.LogIfError(err)
 	return activities
+}
+
+// FindByCDID find all activities with CollegeDistrict ID
+func (*ActivityDataAccessObject) FindByCDID(cdid int) []Activity {
+	activities := make([]Activity, 0)
+	err := orm.Table(ActivityDAO.TableName()).Where("college_district=?", cdid).
+	Find(&activities)
+	logger.LogIfError(err)
+	return activities;
 }

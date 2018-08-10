@@ -32,6 +32,10 @@ func initCollectionActivitiesRouter(router *mux.Router) {
 	// PUT /activities/{ID}
 	router.HandleFunc(url+"/{ID}", activitiesPutHandler()).
 		Methods(http.MethodPut)
+
+	// GET /activities{?cdid}  //从校区ID获取活动
+	router.HandleFunc(url,
+		activitiesGetHandler()).Methods(http.MethodGet)
 }
 
 func activitiesCreateHandler() http.HandlerFunc {
@@ -109,6 +113,15 @@ func activitiesGetHandler() http.HandlerFunc {
 		
 			formatter.JSON(w, http.StatusOK,
 				NewJSON("OK", "获取活动列表成功", data))
+		}
+
+		if req.FormValue("cdid") == "" {
+
+		} else {
+			cdid, _ := strconv.Atoi(req.FormValue("cdid"))
+			data,_:= models.ActivityDAO.FindByCDID(cdid)
+			formatter.JSON(w, http.StatusOK,
+			    NewJSON("OK", "获取校区活动列表成功", data))
 		}
 
 		if req.FormValue("actid") == "" {
