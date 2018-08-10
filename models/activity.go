@@ -19,7 +19,7 @@ type Activity struct {
 	LogoURL            string `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	WechatURL          string `xorm:"wechat_url VARCHAR(50)" json:"wechat_url"`
 	LiveURL			   string `xorm:"live_url VARCHAR(50)" json:"live_url"`
-	SignUpURL		   string `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
+	//SignUpURL		   string `xorm:"signup_url VARCHAR(50)" json:"signup_url"`
 	SportsMedals       string `xorm:"sports_medals VARCHAR(50)" json:"sports_medals"`
 	PublicServiceHours string `xorm:"public_service_hours VARCHAR(50)" json:"public_service_hours"`
 	Prize              string `xorm:"prize VARCHAR(100)" json:"prize"`
