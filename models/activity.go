@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/sunyatsuntobee/server/logger"
+	"fmt"
 )
 
 // Activity Model
@@ -133,7 +134,9 @@ func (*ActivityDataAccessObject) FindByOID(oid int) []ActivityAndStage {
 
 // InsertOne inserts an activity
 func (*ActivityDataAccessObject) InsertOne(activity *Activity) {
+	fmt.Println("start")
 	_, err := orm.Table(ActivityDAO.TableName()).InsertOne(activity)
+	fmt.Println("end")
 	logger.LogIfError(err)
 }
 

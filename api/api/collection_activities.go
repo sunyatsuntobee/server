@@ -13,11 +13,11 @@ import (
 func initCollectionActivitiesRouter(router *mux.Router) {
 	url := "/api/activities"
 
-	// GET /activities{?oid} //需要修改
+	// GET /activities{?oid} //由于数据库更改，已经修改为和原来不同的获取方式
 	router.HandleFunc(url,
 		activitiesGetHandler()).Methods(http.MethodGet)
 
-	// GET /activities{?actid} //需要修改
+	// GET /activities{?actid}
 	router.HandleFunc(url,
 		activitiesGetHandler()).Methods(http.MethodGet)
 
