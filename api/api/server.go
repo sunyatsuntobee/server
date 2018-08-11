@@ -41,6 +41,7 @@ func InitRouter(router *mux.Router) {
 	initCollectionOrganizationsRouter(router)
 	initCollectionMomentsRouter(router)
 	initCollectionCollegesRouter(router)
+	initCollectionCollegeDistrictsRouter(router)
 }
 
 func optionsHandler() http.HandlerFunc {
