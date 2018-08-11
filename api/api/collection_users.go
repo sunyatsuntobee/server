@@ -424,6 +424,7 @@ func usersCreateHandler() http.HandlerFunc {
 				NewJSON("bad request", "数据格式错误", nil))
 			return
 		}
+		user.OpenId = ""
 		user.Password = util.MD5Hash(user.Password)
 		user.CreateTime = time.Now()
 		user.VIP = 0

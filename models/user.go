@@ -21,8 +21,7 @@ type User struct {
 	VIP             int       `xorm:"vip INT NOTNULL" json:"vip"`
 	Camera          string    `xorm:"camera VARCHAR(50)" json:"camera"`
 	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
-	College         string    `xorm:"college VARCHAR(50) NOTNULL" json:"college"`
-	CollegeDistrict string    `xorm:"college_district VARCHAR(20) NOTNULL" json:"college_district"`
+	CollegeDistrict int       `xorm:"college_district INT NOTNULL" json:"college_district"`
 	EnrollTime      int       `xorm:"enroll_time INT" json:"enroll_time"`
 	Institute       string    `xorm:"institute VARCHAR(50)" json:"institute"`
 	Astrology       string    `xorm:"astrology VARCHAR(10)" json:"astrology"`
@@ -34,7 +33,7 @@ type User struct {
 
 // NewUser creates a new user
 func NewUser(phone, password, username, nickname, email string,
-	cityID, vip int, camera, description, college string,
+	cityID, college_district, vip int, camera, description string,
 	enrollTime int, institute, astrology, qq string, integration int) *User {
 	return &User{
 		Phone:       phone,
@@ -47,7 +46,7 @@ func NewUser(phone, password, username, nickname, email string,
 		VIP:         vip,
 		Camera:      camera,
 		Description: description,
-		College:     college,
+		CollegeDistrict:     college_district,
 		EnrollTime:  enrollTime,
 		Institute:   institute,
 		Astrology:   astrology,

@@ -11,7 +11,6 @@ type Organization struct {
 	Name            string    `xorm:"name VARCHAR(20) NOTNULL" json:"name"`
 	Phone           string    `xorm:"phone VARCHAR(20) NOTNULL UNIQUE" json:"phone"`
 	Password        string    `xorm:"password VARCHAR(50) NOTNULL" json:"password"`
-	College         int       `xorm:"college INT NOTNULL" json:"college"`
 	CollegeDistrict int       `xorm:"college_district INT NOTNULL" json:"college_district"`
 	LogoURL         string    `xorm:"logo_url VARCHAR(50)" json:"logo_url"`
 	Description     string    `xorm:"description VARCHAR(200)" json:"description"`
@@ -32,7 +31,6 @@ func NewOrganization(name, phone, password,
 		Name:            name,
 		Phone:           phone,
 		Password:        password,
-		College:         college,
 		CollegeDistrict: collegeDistrict,
 		LogoURL:         logoURL,
 		Description:     description,
