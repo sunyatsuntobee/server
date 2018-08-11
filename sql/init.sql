@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`provinces` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 
 
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`cities` (
   `name` VARCHAR(20) NOT NULL,
   `province_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_cities_province_id_idx` (`province_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_cities_province_id_idx` (`province_id` ASC) ,
   CONSTRAINT `fk_cities_province_id`
     FOREIGN KEY (`province_id`)
     REFERENCES `tobee`.`provinces` (`id`)
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users` (
   `integration` INT NULL,
   `openid` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_users_city_id_idx` (`city_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_users_city_id_idx` (`city_id` ASC) ,
   CONSTRAINT `fk_users_city_id`
     FOREIGN KEY (`city_id`)
     REFERENCES `tobee`.`cities` (`id`)
@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`colleges` (
   `name` VARCHAR(50) NOT NULL,
   `logo_url` VARCHAR(50) NOT NULL,
   `image_url` VARCHAR(50) NOT NULL,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE);
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) );
 
 
 -- -----------------------------------------------------
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`college_districts` (
   `name` VARCHAR(50) NOT NULL,
   `college_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_college_districts_college_id`
     FOREIGN KEY (`college_id`)
     REFERENCES `tobee`.`colleges` (`id`)
@@ -128,11 +128,11 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organizations` (
   `spread_start_time` DATETIME NULL,
   `tobee_coin` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE,
-  UNIQUE INDEX `invitation_code_UNIQUE` (`invitation_code` ASC) VISIBLE,
-  INDEX `fk_organization_college_id_idx` (`college` ASC) VISIBLE,
-  INDEX `fk_organization_college_district_id_idx` (`college_district` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) ,
+  UNIQUE INDEX `invitation_code_UNIQUE` (`invitation_code` ASC) ,
+  INDEX `fk_organization_college_id_idx` (`college` ASC) ,
+  INDEX `fk_organization_college_district_id_idx` (`college_district` ASC) ,
   CONSTRAINT `fk_organization_college_id`
     FOREIGN KEY (`college`)
     REFERENCES `tobee`.`colleges` (`id`)
@@ -161,9 +161,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photos` (
   `user_id` INT NOT NULL,
   `organization_id` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `photographer_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_photos_organization_id_idx` (`organization_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `photographer_id_idx` (`user_id` ASC) ,
+  INDEX `fk_photos_organization_id_idx` (`organization_id` ASC) ,
   CONSTRAINT `fk_photos_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -185,8 +185,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organization_departments` (
   `name` VARCHAR(20) NOT NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `organization_id_idx` (`organization_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `organization_id_idx` (`organization_id` ASC) ,
   CONSTRAINT `fk_organization_departments_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
@@ -218,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activities` (
   `college_district` INT NOT NULL,
   `school` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_activitiy_college_district_idx` (`college_district` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_activitiy_college_district_idx` (`college_district` ASC) ,
   CONSTRAINT `fk_activitiy_college_district`
     FOREIGN KEY (`college_district`)
     REFERENCES `tobee`.`college_districts` (`id`)
@@ -242,8 +242,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`activity_stages` (
   `activity_id` INT NOT NULL,
   `signup_url` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `activity_id_idx` (`activity_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `activity_id_idx` (`activity_id` ASC) ,
   CONSTRAINT `fk_activity_stages_activity_id`
     FOREIGN KEY (`activity_id`)
     REFERENCES `tobee`.`activities` (`id`)
@@ -264,10 +264,10 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photo_lives` (
   `manager_id` INT NULL,
   `photographer_manager_id` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `activity_stage_id_idx` (`activity_stage_id` ASC) VISIBLE,
-  INDEX `manager_id_idx` (`manager_id` ASC) VISIBLE,
-  INDEX `photographer_manager_id_idx` (`photographer_manager_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `activity_stage_id_idx` (`activity_stage_id` ASC) ,
+  INDEX `manager_id_idx` (`manager_id` ASC) ,
+  INDEX `photographer_manager_id_idx` (`photographer_manager_id` ASC) ,
   CONSTRAINT `activity_stage_id_1`
     FOREIGN KEY (`activity_stage_id`)
     REFERENCES `tobee`.`activity_stages` (`id`)
@@ -296,8 +296,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`administrators` (
   `level` INT NOT NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `organization_id_idx` (`organization_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `organization_id_idx` (`organization_id` ASC) ,
   CONSTRAINT `fk_administrators_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
@@ -315,9 +315,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_organizations` (
   `organization_id` INT NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `organization_id_idx` (`organization_id` ASC) VISIBLE,
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `organization_id_idx` (`organization_id` ASC) ,
+  INDEX `user_id_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_users_focus_organizations_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -340,9 +340,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_users` (
   `followed_user_id` INT NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `liked_user_id_idx` (`followed_user_id` ASC) VISIBLE,
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `liked_user_id_idx` (`followed_user_id` ASC) ,
+  INDEX `user_id_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_users_focus_users_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -365,9 +365,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_follow_activities` (
   `activity_id` INT NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `activity_id_idx` (`activity_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `user_id_idx` (`user_id` ASC) ,
+  INDEX `activity_id_idx` (`activity_id` ASC) ,
   CONSTRAINT `fk_users_focus_activities_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -392,9 +392,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_participate_organizations` (
   `privilege` INT NOT NULL,
   `applying` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `organization_id_idx` (`organization_id` ASC) VISIBLE,
-  INDEX `contact_id_idx` (`user_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `organization_id_idx` (`organization_id` ASC) ,
+  INDEX `contact_id_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_users_participate_organizations_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
@@ -416,9 +416,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`photo_lives_supervisors` (
   `photo_live_id` INT NOT NULL,
   `supervisor_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `photo_live_id_idx` (`photo_live_id` ASC) VISIBLE,
-  INDEX `supervisor_id_idx` (`supervisor_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `photo_live_id_idx` (`photo_live_id` ASC) ,
+  INDEX `supervisor_id_idx` (`supervisor_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `photo_live_id_1`
     FOREIGN KEY (`photo_live_id`)
     REFERENCES `tobee`.`photo_lives` (`id`)
@@ -441,9 +441,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_sign_activities` (
   `activity_id` INT NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_users_sign_activities_user_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_users_sign_activities_activity_id_idx` (`activity_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_users_sign_activities_user_id_idx` (`user_id` ASC) ,
+  INDEX `fk_users_sign_activities_activity_id_idx` (`activity_id` ASC) ,
   CONSTRAINT `fk_users_sign_activities_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -476,18 +476,18 @@ CREATE TABLE IF NOT EXISTS `tobee`.`moments` (
   `photo_8_id` INT NULL,
   `photo_9_id` INT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_moments_user_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_moments_organization_id_idx` (`organization_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_1_id_idx` (`photo_1_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_2_id_idx` (`photo_2_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_3_id_idx` (`photo_3_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_4_id_idx` (`photo_4_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_5_id_idx` (`photo_5_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_6_id_idx` (`photo_6_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_7_id_idx` (`photo_7_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_8_id_idx` (`photo_8_id` ASC) VISIBLE,
-  INDEX `fk_moments_photo_9_id_idx` (`photo_9_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_moments_user_id_idx` (`user_id` ASC) ,
+  INDEX `fk_moments_organization_id_idx` (`organization_id` ASC) ,
+  INDEX `fk_moments_photo_1_id_idx` (`photo_1_id` ASC) ,
+  INDEX `fk_moments_photo_2_id_idx` (`photo_2_id` ASC) ,
+  INDEX `fk_moments_photo_3_id_idx` (`photo_3_id` ASC) ,
+  INDEX `fk_moments_photo_4_id_idx` (`photo_4_id` ASC) ,
+  INDEX `fk_moments_photo_5_id_idx` (`photo_5_id` ASC) ,
+  INDEX `fk_moments_photo_6_id_idx` (`photo_6_id` ASC) ,
+  INDEX `fk_moments_photo_7_id_idx` (`photo_7_id` ASC) ,
+  INDEX `fk_moments_photo_8_id_idx` (`photo_8_id` ASC) ,
+  INDEX `fk_moments_photo_9_id_idx` (`photo_9_id` ASC) ,
   CONSTRAINT `fk_moments_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -556,9 +556,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`moment_comments` (
   `content` VARCHAR(200) NOT NULL,
   `timestamp` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_moment_comments_moment_id_idx` (`moment_id` ASC) VISIBLE,
-  INDEX `fk_moment_comments_user_id_idx` (`user_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_moment_comments_moment_id_idx` (`moment_id` ASC) ,
+  INDEX `fk_moment_comments_user_id_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_moment_comments_moment_id`
     FOREIGN KEY (`moment_id`)
     REFERENCES `tobee`.`moments` (`id`)
@@ -580,9 +580,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`users_like_moments` (
   `user_id` INT NOT NULL,
   `moment_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_users_like_moments_user_id_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_users_like_moments_moment_id_idx` (`moment_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_users_like_moments_user_id_idx` (`user_id` ASC) ,
+  INDEX `fk_users_like_moments_moment_id_idx` (`moment_id` ASC) ,
   CONSTRAINT `fk_users_like_moments_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `tobee`.`users` (`id`)
@@ -604,8 +604,8 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organization_honors` (
   `honor` VARCHAR(50) NOT NULL,
   `organization_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_organization_honors_organization_id_idx` (`organization_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_organization_honors_organization_id_idx` (`organization_id` ASC) ,
   CONSTRAINT `fk_organization_honors_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
@@ -637,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organization_albums` (
   `photos_id` VARCHAR(200) NULL,
   `organizations_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_organization_albums_organizations1_idx` (`organizations_id` ASC) VISIBLE,
+  INDEX `fk_organization_albums_organizations1_idx` (`organizations_id` ASC) ,
   CONSTRAINT `fk_organization_albums_organizations1`
     FOREIGN KEY (`organizations_id`)
     REFERENCES `tobee`.`organizations` (`id`)
@@ -654,9 +654,9 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organization_departments_address_list` (
   `name` VARCHAR(45) NOT NULL,
   `department_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `department_id_UNIQUE` (`department_id` ASC) VISIBLE,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `department_id_UNIQUE` (`department_id` ASC) ,
   CONSTRAINT `fk_organization_departments_address_list_department_id`
     FOREIGN KEY (`department_id`)
     REFERENCES `tobee`.`organization_departments` (`id`)
@@ -672,10 +672,10 @@ CREATE TABLE IF NOT EXISTS `tobee`.`organizations_host_activities` (
   `organization_id` INT NOT NULL,
   `activity_id` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `activity_id_idx` (`activity_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `activity_id_idx` (`activity_id` ASC) ,
   PRIMARY KEY (`id`),
-  INDEX `organization_id_idx` (`organization_id` ASC) VISIBLE,
+  INDEX `organization_id_idx` (`organization_id` ASC) ,
   CONSTRAINT `fk_organizations_host_activities_organization_id`
     FOREIGN KEY (`organization_id`)
     REFERENCES `tobee`.`organizations` (`id`)
