@@ -241,7 +241,7 @@ func organizationsPutHandler() http.HandlerFunc {
 		}
 		old.Name = data.Name
 		old.Phone = data.Phone
-		old.College = data.College
+		old.CollegeDistrict = data.CollegeDistrict
 		old.Description = data.Description
 		models.OrganizationDAO.UpdateOne(&old)
 		formatter.JSON(w, http.StatusCreated,
