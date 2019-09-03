@@ -173,3 +173,15 @@ func (*ActivityDataAccessObject) FindByCDID(cdid int) []Activity {
 	logger.LogIfError(err)
 	return activities;
 }
+
+// FindFullByID finds activities and stages according to an actID
+func (*ActivityDataAccessObject) FindFullByactID(id int) []ActivityFull {
+	l := make([]ActivityFull, 0)
+	err := orm.Table(ActivityDAO.TableName()).
+		Join("INNER", ActivityStageDAO.TableName(),
+			"activities.id=activity_stages.activity_id").
+		Where("activities.id=?", id).Asc("stage_num").
+		Find(&l)
+	logger.LogIfError(err)
+	return l
+}
